@@ -30,6 +30,8 @@
 - Windows 環境向けのプラットフォーム固有処理
 
 ## Rydia. Runtime.Macos, Linuxはまだ作っていません
+MacosはGoogle Angle for Metal
+LinuxはGoogle Angle for Vulkanを使用する予定です。
 
 ## Rydia.Runtime.Droid
 
@@ -42,6 +44,7 @@
 - Android 環境向けのプラットフォーム固有処理
 
 ## Rydia. Runtime.iOSはまだ作っていません
+Google Angle for Metalを使用する予定です。
 
 ## Rydia. Runtime.NintendoSwitch, PlayStation5はまだ作っていません
 
@@ -62,7 +65,12 @@ Rydia Engine は、以下のプロジェクトで構成されています。
 |---|---|
 | `Rydia.Runtime` | クロスプラットフォーム対応のための共通ランタイム |
 | `Rydia.Runtime.Windows` | Windows 向けランタイム |
+| `Rydia.Runtime.Macos` | macOS 向けランタイム |
+| `Rydia.Runtime.Linux` | Linux 向けランタイム |
 | `Rydia.Runtime.Droid` | Android 向けランタイム |
+| `Rydia.Runtime.iOS` | iOS 向けランタイム |
+| `Rydia.Runtime.NintendoSwitch` | Nintendo Switch 向けランタイム |
+| `Rydia.Runtime.PlayStation5` | PlayStation5 向けランタイム |
 | `Rydia.Engine` | ゲームの実行に必要な機能を提供するゲームエンジン |
 | `Rydia.GameStudio` | ゲームオブジェクトやコンポーネントを作成・管理するためのエディター |
 
