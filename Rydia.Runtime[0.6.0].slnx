@@ -1,0 +1,100 @@
+<Solution>
+  <Folder Name="/0000-Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Folder Name="/1000-Runtime/" />
+  <Folder Name="/1000-Runtime/1100-Lib/">
+    <Project Path="Source/Runtime/Lib/Rydia.Diagnostics/Rydia.Diagnostics.shproj" Id="d1348e79-a58b-4189-9ad2-687ddf786463" />
+    <Project Path="Source/Runtime/Lib/Rydia.Physics/Rydia.Physics.shproj" Id="8a213178-04ac-4b17-a9c2-6199c956c0b1" />
+    <Project Path="Source/Runtime/Lib/Rydia.Primitives/Rydia.Primitives.shproj" Id="f895a511-30d7-4a30-83fe-ed5b32fa5cf4" />
+    <Project Path="Source/Runtime/Lib/Rydia.Randomizer/Rydia.Randomizer.shproj" Id="880ee0b7-073d-471f-bd3d-88f2e7d6ea4f" />
+    <Project Path="Source/Runtime/Lib/Rydia.Serialization/Rydia.Serialization.shproj" Id="006c9f26-6fa8-45cb-b2d4-ce716f5c60b6" />
+    <Project Path="Source/Runtime/Lib/Rydia/Rydia.shproj" Id="8ba16d4d-0767-483f-9232-4782924cb4e3" />
+    <Project Path="Source/Runtime/Rydia.Runtime.Core/Rydia.Runtime.Core.shproj" Id="4ccb0314-92ea-4e60-9f4c-a3372e93d666" />
+  </Folder>
+  <Folder Name="/1000-Runtime/1200-Runtime/">
+    <Project Path="Source/Runtime/Rydia.Runtime/Rydia.Runtime.csproj" />
+  </Folder>
+  <Folder Name="/1000-Runtime/1300-Api/">
+    <Project Path="Source/Runtime/Api/Rydia.Audio.Api.NVorbis/Rydia.Audio.Api.NVorbis.shproj" Id="99c9a6b6-00ad-401f-865a-73f57f2d5297" />
+    <Project Path="Source/Runtime/Api/Rydia.Audio.Api.OpenAL/Rydia.Audio.Api.OpenAL.shproj" Id="3f310f20-6d7c-472c-8a04-2f385ec8118f" />
+    <Project Path="Source/Runtime/Api/Rydia.Graphics.Api.ES30.OpenTKBindings/Rydia.Graphics.Api.ES30.OpenTKBindings.shproj" Id="584781e6-0b78-4ec3-8e44-097ce89d32d4" />
+    <Project Path="Source/Runtime/Api/Rydia.Graphics.Api.ES30/Rydia.Graphics.Api.ES30.shproj" Id="9b866439-6210-4815-9430-dc85721ce9f2" />
+  </Folder>
+  <Folder Name="/1000-Runtime/1400-Platform/">
+    <Project Path="Source/Platform/Rydia.Runtime.Droid/Rydia.Runtime.Droid.csproj" />
+    <Project Path="Source/Platform/Rydia.Runtime.Windows/Rydia.Runtime.Windows.csproj" />
+  </Folder>
+  <Folder Name="/1000-Runtime/1700-Samples/" />
+  <Folder Name="/1000-Runtime/1700-Samples/1710-Engine/">
+    <Project Path="Source/Runtime/Samples/SampleEngine/SampleEngine.shproj" Id="1aa4aff5-b295-420e-96cf-119b60040c5d" />
+  </Folder>
+  <Folder Name="/1000-Runtime/1700-Samples/1720-Converter/">
+    <Project Path="Source/Editor/Rydia.ResourceConverter/Rydia.ResourceConverter.csproj" />
+  </Folder>
+  <Folder Name="/1000-Runtime/1700-Samples/1730-Sources/">
+    <Project Path="Source/Runtime/Samples/Rydia.Runtime.OooglesSamples.Shared/Rydia.Runtime.GLES2Samples.Shared.shproj" Id="83e8c81b-2609-470e-9378-435e813b013c" />
+  </Folder>
+  <Folder Name="/1000-Runtime/1700-Samples/1740-Launcher/">
+    <Project Path="Source/Launcher/Rydia.Runtime.Droid.App/Rydia.Runtime.Droid.App.csproj">
+      <Deploy Solution="Debug|*" />
+    </Project>
+    <Project Path="Source/Launcher/Rydia.Runtime.Windows.App/Rydia.Runtime.Windows.App.csproj" />
+  </Folder>
+  <Folder Name="/1000-Runtime/1900-Tests/">
+    <Project Path="Source/Runtime/Tests/Rydia.Primitives.Tests/Rydia.Primitives.Tests.csproj" />
+    <Project Path="Source/Runtime/Tests/Rydia.Tests/Rydia.Tests.csproj" />
+  </Folder>
+  <Folder Name="/2000-Engine/" />
+  <Folder Name="/2000-Engine/2100-Lib/" />
+  <Folder Name="/2000-Engine/2200-Api/" />
+  <Folder Name="/2000-Engine/2300-Engine/">
+    <Project Path="Source/Engine/Rydia.Engine/Rydia.Engine.csproj" />
+  </Folder>
+  <Folder Name="/2000-Engine/2600-Launcher/">
+    <Project Path="Source/Engine/Rydia.Engine.Windows.App/Rydia.Engine.Windows.App.csproj" />
+  </Folder>
+  <Folder Name="/2000-Engine/2800-Samples/" />
+  <Folder Name="/2000-Engine/2900-Tests/" />
+  <Folder Name="/3000-Editor/" />
+  <Folder Name="/3000-Editor/3100-Lib/">
+    <Project Path="Source/Editor/Lib/Rydia.Windows.Forms.ColorControls/Rydia.Windows.Forms.ColorControls.shproj" Id="80d80faf-8ead-400b-a379-bd5a36280fb4" />
+    <Project Path="Source/Editor/Lib/Rydia.Windows.Forms.Core/Rydia.Windows.Forms.Core.shproj" Id="47c1342b-d08c-456f-9ccc-dd3a6ca0d512" />
+    <Project Path="Source/Editor/Lib/Rydia.Windows.Forms.DesktopIntegration/Rydia.Windows.Forms.DesktopIntegration.shproj" Id="3ffac5f9-de27-47c0-9785-2e75352143bc" />
+    <Project Path="Source/Editor/Lib/Rydia.Windows.Forms.Docking/Rydia.Windows.Forms.Docking.shproj" Id="551bf23f-fd4f-47bd-a809-f144683f48a3" />
+    <Project Path="Source/Editor/Lib/Rydia.Windows.Forms.PopupControl/Rydia.Windows.Forms.PopupControl.shproj" Id="94e90868-0a71-46b3-8707-f885f5587944" />
+    <Project Path="Source/Editor/Lib/Rydia.Windows.Forms.PropertyEditing/Rydia.Windows.Forms.PropertyEditing.shproj" Id="2e2346bb-3e71-4dcc-ad49-2dfa96500906" />
+    <Project Path="Source/Editor/Lib/Rydia.Windows.Forms.TimelineControls/Rydia.Windows.Forms.TimelineControls.shproj" Id="f0496118-7ea0-47b6-a4b9-4a93b7cf2061" />
+    <Project Path="Source/Editor/Lib/Rydia.Windows.Forms.TreeView/Rydia.Windows.Forms.TreeView.shproj" Id="be91c21f-923b-4848-b35c-d473c5b6f2eb" />
+    <Project Path="Source/Editor/Lib/Rydia.Windows.Forms/Rydia.Windows.Forms.csproj" />
+  </Folder>
+  <Folder Name="/3000-Editor/3200-Editor/">
+    <Project Path="Source/Editor/Rydia.GameStudio.App/Rydia.GameStudio.App.csproj" />
+  </Folder>
+  <Folder Name="/3000-Editor/3900-Tests/">
+    <Project Path="Source/Editor/Rydia.SolutionBuilder.App/Rydia.SolutionBuilder.App.csproj" />
+  </Folder>
+  <Folder Name="/4000-Website/">
+    <Project Path="Docs/" Type="Website" DisplayName="Docs">
+      <BuildType Project="Debug" />
+      <Properties Name="WebsiteProperties">
+        <Property Name="Debug.AspNetCompiler.Debug" Value="&quot;True&quot;" />
+        <Property Name="Debug.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+        <Property Name="Debug.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+        <Property Name="Debug.AspNetCompiler.PhysicalPath" Value="&quot;Docs\&quot;" />
+        <Property Name="Debug.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_51309\&quot;" />
+        <Property Name="Debug.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+        <Property Name="Debug.AspNetCompiler.VirtualPath" Value="&quot;/localhost_51309&quot;" />
+        <Property Name="Release.AspNetCompiler.Debug" Value="&quot;False&quot;" />
+        <Property Name="Release.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+        <Property Name="Release.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+        <Property Name="Release.AspNetCompiler.PhysicalPath" Value="&quot;Docs\&quot;" />
+        <Property Name="Release.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_51309\&quot;" />
+        <Property Name="Release.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+        <Property Name="Release.AspNetCompiler.VirtualPath" Value="&quot;/localhost_51309&quot;" />
+        <Property Name="TargetFrameworkMoniker" Value="&quot;.NETFramework,Version%3Dv4.8&quot;" />
+        <Property Name="VWDPort" Value="&quot;51309&quot;" />
+      </Properties>
+    </Project>
+  </Folder>
+</Solution>

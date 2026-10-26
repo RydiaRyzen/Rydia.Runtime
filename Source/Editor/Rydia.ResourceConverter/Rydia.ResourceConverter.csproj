@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="x64\SoXWrapper_x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="x86\SoXWrapper_x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="SixLabors.ImageSharp" Version="4.1.3" />
+		<PackageReference Include="SixLabors.ImageSharp.Drawing" Version="3.1.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="x64\" />
+	  <Folder Include="x86\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Platform\Rydia.Runtime.Windows\Rydia.Runtime.Windows.csproj" />
+	  <ProjectReference Include="..\Lib\Rydia.Windows.Forms\Rydia.Windows.Forms.csproj" />
+	</ItemGroup>
+
+	<Import Project="..\..\Runtime\Samples\SampleEngine\SampleEngine.projitems" Label="Shared" />
+</Project>
