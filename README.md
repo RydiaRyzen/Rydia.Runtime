@@ -25,7 +25,7 @@
 
 主な機能は以下のとおりです。
 
-- Google Angleを使用したOpenGL ES 2.0 / 3.0 によるグラフィックス処理
+- Google Angle for Direct3Dを使用したOpenGL ES 2.0 / 3.0 によるグラフィックス処理
 - OpenAL によるオーディオ処理
 - Windows 環境向けのプラットフォーム固有処理
 
