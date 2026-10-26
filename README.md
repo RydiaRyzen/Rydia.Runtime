@@ -49,6 +49,7 @@ Google Angle for Metalを使用する予定です。
 
 ## Rydia. Runtime.NintendoSwitch, PlayStation5はまだ作っていません
 Nintendo SwitchはOpenGL ESを使用する予定です。
+
 PlayStation5はps5-openglを使用する予定です。
 
 ## Rydia Engine
