@@ -28,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\UserInput\IUserInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UserInput\IUserInputSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UserInput\UserInputEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runtime\GameConsole\IGameConsolePlatform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runtime\Shared\AppRunner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runtime\Shared\CrossPlatform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runtime\Desktop\IDesktopPlatform.cs" />

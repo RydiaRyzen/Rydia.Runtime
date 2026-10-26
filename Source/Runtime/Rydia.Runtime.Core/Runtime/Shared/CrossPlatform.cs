@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Versioning;
 using System.Text;
 using Rydia.Runtime.Desktop;
+using Rydia.Runtime.GameConsole;
 using Rydia.Runtime.Mobile;
 using Rydia.Runtime.Shared;
 
@@ -75,6 +76,15 @@ namespace Rydia.Runtime
         /// </summary>
         /// <param name="platform">使用するモバイルプラットフォームを指定します。</param>
         public CrossPlatform(IMobilePlatform platform)
+        {
+            Platform = platform;
+        }
+
+        /// <summary>
+        /// <see cref="CrossPlatform"/> クラスの新しいインスタンスを初期化します。
+        /// </summary>
+        /// <param name="platform">使用するゲームコンソールプラットフォームを指定します。</param>
+        public CrossPlatform(IGameConsolePlatform platform)
         {
             Platform = platform;
         }

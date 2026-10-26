@@ -5,6 +5,7 @@
 - `IMessageService` — メッセージサービスに関するインターフェース
 - `IDesktopPlatform` — Desktop プラットフォーム向けのインターフェース
 - `IMobilePlatform` — Mobile プラットフォーム向けのインターフェース
+- `IGameConsolePlatform` — Game Console プラットフォーム向けのインターフェース
 
 などDesktop および Mobile プラットフォームでクロスプラットフォームを実現するために必要なインターフェースやクラスを提供します。
 
