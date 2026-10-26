@@ -30,7 +30,8 @@
 - Windows 環境向けのプラットフォーム固有処理
 
 ## Rydia. Runtime.Macos, Linuxはまだ作っていません
-MacosはGoogle Angle for Metal
+MacosはGoogle Angle for Metalを使用する予定です。
+
 LinuxはGoogle Angle for Vulkanを使用する予定です。
 
 ## Rydia.Runtime.Droid
