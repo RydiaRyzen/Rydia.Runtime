@@ -2,16 +2,16 @@
 
 ## `Rydia.Runtime`
 
+主なインターフェースは以下のとおりです。
 - `IMessageService` — メッセージサービスに関するインターフェース
 - `IDesktopPlatform` — Desktop プラットフォーム向けのインターフェース
 - `IMobilePlatform` — Mobile プラットフォーム向けのインターフェース
 - `IGameConsolePlatform` — Game Console プラットフォーム向けのインターフェース
 
-などDesktop および Mobile,Game Console プラットフォームでクロスプラットフォームを実現するために必要なインターフェースやクラスを提供します。
+などDesktop および Mobile, Game Console プラットフォームでクロスプラットフォームを実現するために必要なインターフェースやクラスを提供します。
 
 プラットフォーム固有の処理を抽象化し、異なる実行環境で共通のコードを利用できるようにすることを目的としています。
 
-主なインターフェースは以下のとおりです。
 
 ### 対応プラットフォーム
 
