@@ -14,7 +14,7 @@ namespace Rydia.Tests.IO
         {
             var resources = new Rydia.IO.EmbeddedResources<IOTests>();
 
-            using (var stream = resources.Open("Assets.TestResource.txt"))
+            using (var stream = resources.Open("Rydia.Tests.Assets.TestResource.txt"))
             {
                 Assert.IsNotNull(stream, "ストリームがnullです");
                 using (var reader = new StreamReader(stream))
@@ -31,7 +31,7 @@ namespace Rydia.Tests.IO
         {
             var resources = new Rydia.IO.EmbeddedResources<IOTests>();
 
-            var bytes = resources.Load("Assets.TestResource.txt");
+            var bytes = resources.Load("Rydia.Tests.Assets.TestResource.txt");
             Assert.IsNotNull(bytes, "バイト配列がnullです");
 
             var text = Encoding.UTF8.GetString(bytes);
@@ -47,7 +47,7 @@ namespace Rydia.Tests.IO
         {
             var resources = new Rydia.IO.EmbeddedResources<IOTests>();
 
-            var text = resources.LoadText("Assets.TestResource.txt");
+            var text = resources.LoadText("Rydia.Tests.Assets.TestResource.txt");
             if (text.Length > 0 && text[0] == '\uFEFF')
                 text = text.Substring(1);
 
