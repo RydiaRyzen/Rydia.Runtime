@@ -326,7 +326,7 @@ namespace Rydia.GameStudio
                     logForm.AppendLog("ソリューション生成を開始します。");
 
                     // ソリューションのパスを設定
-                    solutionFile.Path = Path.Combine(sourceDirectory, solutionFile.Name);
+                    solutionFile.Path = Path.Combine(sourceDirectory);
 
                     // プロジェクトCを生成
                     var projectC = new ProjectFile(projectName + ".Shared", ProjectType.Shared);

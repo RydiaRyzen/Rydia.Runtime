@@ -34,7 +34,7 @@ namespace Rydia.GameStudio.App
             }
 
             // ImGuiベースのアプリケーションを起動するか、WinFormsベースのアプリケーションを起動するかを切り替えるフラグ
-            var onImGui = false;
+            var onImGui = true;
             // サンプル用アプリケーションを起動するかどうかを切り替えるフラグ
             var isSample = true;
 

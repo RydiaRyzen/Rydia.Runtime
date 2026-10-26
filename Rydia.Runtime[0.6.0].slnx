@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/0000-Solution Items/">
     <File Path=".editorconfig" />
+    <File Path="README.md" />
   </Folder>
   <Folder Name="/1000-Runtime/" />
   <Folder Name="/1000-Runtime/1100-Lib/">

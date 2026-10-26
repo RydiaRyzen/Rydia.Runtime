@@ -123,7 +123,7 @@ namespace Rydia.GameStudio
         {
             ProjectPath = path;
             ProjectName = Path.GetFileNameWithoutExtension(path);
-            SolutionPath = Path.Combine(path, "Source", "Code", ProjectName, Path.GetFileName(path) + ".sln");
+            SolutionPath = Path.Combine(path, "Source", "Code", ProjectName + ".slnx");
             AssetsPath = Path.Combine(path, "Assets");
             MediaPath = Path.Combine(path, "Media");
         }

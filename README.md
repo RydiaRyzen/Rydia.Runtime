@@ -39,7 +39,7 @@
 - OpenAL によるオーディオ処理
 - Android 環境向けのプラットフォーム固有処理
 
-## Rydia. Runtime.Macos, Linux, iOSはまだ作っていません
+## Rydia. Runtime.Macos, Linux, iOS, Nintendo Switch, PlayStation5はまだ作っていません
 
 ## Rydia Engine
 
