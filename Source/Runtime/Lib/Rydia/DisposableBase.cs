@@ -52,8 +52,6 @@ namespace Rydia
 		{
 			if (!IsDisposed)
 			{
-				// TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、
-				// TODO: ファイナライザーをオーバーライドします
 				Disposing(disposing);
 				IsDisposed = true;
 				Disposed(disposing);

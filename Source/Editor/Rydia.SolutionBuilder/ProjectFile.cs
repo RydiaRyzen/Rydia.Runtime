@@ -227,7 +227,7 @@ namespace Rydia.SolutionBuilder
             <Project Sdk="Microsoft.NET.Sdk">
 
               <PropertyGroup>
-                <TargetFramework>net9.0</TargetFramework>
+                <TargetFramework>net10.0</TargetFramework>
                 <ImplicitUsings>enable</ImplicitUsings>
                 <Nullable>enable</Nullable>
               </PropertyGroup>
@@ -279,7 +279,7 @@ namespace Rydia.SolutionBuilder
 
       <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net9.0-windows</TargetFramework>
+        <TargetFramework>net10.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>

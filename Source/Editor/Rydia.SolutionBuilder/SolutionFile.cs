@@ -96,7 +96,7 @@ namespace Rydia.SolutionBuilder
         {
             string solutionPath = System.IO.Path.Combine(
         Path,
-        Name + ".sln");
+        Name + ".slnx");
 
             // ソリューションが存在しない場合のみ生成する
             if (!File.Exists(solutionPath))
@@ -108,7 +108,70 @@ namespace Rydia.SolutionBuilder
                     "--name",
                     Name,
                     "--format",
-                    "sln");
+                    "slnx");
+            }
+
+            var document = System.Xml.Linq.XDocument.Load(solutionPath);
+
+            var root = document.Root;
+
+            if (root == null)
+            {
+                throw new InvalidOperationException(
+                    "The solution file does not contain a root element.");
+            }
+
+            foreach (var project in this._projects)
+            {
+                string extension =
+                    project.ProjectType == ProjectType.Shared
+                        ? ".shproj"
+                        : ".csproj";
+
+                string relativePath = System.IO.Path.Combine(
+                    project.Name,
+                    project.Name + extension);
+
+                relativePath = relativePath.Replace('\\', '/');
+
+                // 同じプロジェクトが既に登録されている場合はスキップ
+                bool exists = root.Elements("Project").Any(element =>
+                    string.Equals(
+                        (string?)element.Attribute("Path"),
+                        relativePath,
+                        StringComparison.OrdinalIgnoreCase));
+
+                if (exists)
+                {
+                    continue;
+                }
+
+                // プロジェクトを追加
+                root.Add(
+                    new System.Xml.Linq.XElement(
+                        "Project",
+                        new System.Xml.Linq.XAttribute(
+                            "Path",
+                            relativePath)));
+            }
+            // 変更したソリューションファイルを保存
+            document.Save(solutionPath);
+            /*
+            string solutionPath = System.IO.Path.Combine(
+                Path,
+                Name + ".slnx");
+
+            // ソリューションが存在しない場合のみ生成する
+            if (!File.Exists(solutionPath))
+            {
+                RunDotNet(
+                    Path,
+                    "new",
+                    "sln",
+                    "--name",
+                    Name,
+                    "--format",
+                    "slnx");
             }
 
             var lines = File.ReadAllLines(solutionPath).ToList();
@@ -177,6 +240,7 @@ namespace Rydia.SolutionBuilder
                 solutionPath,
                 string.Join("\r\n", lines) + "\r\n",
                 new System.Text.UTF8Encoding(true));
+            */
         }
 
         /// <summary>
@@ -186,7 +250,7 @@ namespace Rydia.SolutionBuilder
         {
             string solutionPath = System.IO.Path.Combine(
                 Path,
-                Name + ".sln");
+                Name + ".slnx");
 
             RunDotNet(
                 Path,
@@ -244,15 +308,12 @@ namespace Rydia.SolutionBuilder
             if (!string.IsNullOrEmpty(error))
                 Debug.WriteLine(error);
 
-            string standardOutput = process.StandardOutput.ReadToEnd();
-            string standardError = process.StandardError.ReadToEnd();
-
             if (process.ExitCode != 0)
             {
                 throw new InvalidOperationException(
         $"dotnet exited with code {process.ExitCode}.\n" +
-        $"標準出力:\n{standardOutput}\n" +
-        $"標準エラー:\n{standardError}");
+        $"標準出力:\n{output}\n" +
+        $"標準エラー:\n{error}");
             }
         }
 
@@ -261,7 +322,7 @@ namespace Rydia.SolutionBuilder
         /// </summary>
         public void Open()
         {
-            string solutionPath = System.IO.Path.Combine(Path, Name + ".sln");
+            string solutionPath = System.IO.Path.Combine(Path, Name + ".slnx");
 
             Process.Start(new ProcessStartInfo
             {
