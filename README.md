@@ -29,6 +29,8 @@
 - OpenAL によるオーディオ処理
 - Windows 環境向けのプラットフォーム固有処理
 
+## Rydia. Runtime.Macos, Linuxはまだ作っていません
+
 ## Rydia.Runtime.Droid
 
 `Rydia.Runtime.Droid` は、Android 環境で OpenGL ES および OpenAL を実行するために必要なランタイムを提供します。
@@ -39,7 +41,9 @@
 - OpenAL によるオーディオ処理
 - Android 環境向けのプラットフォーム固有処理
 
-## Rydia. Runtime.Macos, Linux, iOS, Nintendo Switch, PlayStation5はまだ作っていません
+## Rydia. Runtime.iOSはまだ作っていません
+
+## Rydia. Runtime.NintendoSwitch, PlayStation5はまだ作っていません
 
 ## Rydia Engine
 
