@@ -17,7 +17,7 @@
 |---|---|
 | Desktop | Windows、macOS、Linux |
 | Mobile | Android、iOS |
-| Game Console | Nintendo Switch、PlayStation5 |
+| Game Console | Nintendo Switch |
 
 ## Rydia.Runtime.Windows
 
@@ -47,10 +47,8 @@ LinuxはGoogle Angle for Vulkan or OpenGLを使用する予定です。
 ## Rydia. Runtime.iOSはまだ作っていません
 Google Angle for Metalを使用する予定です。
 
-## Rydia. Runtime.NintendoSwitch, PlayStation5はまだ作っていません
+## Rydia. Runtime.NintendoSwitchはまだ作っていません
 Nintendo SwitchはOpenGL ESを使用する予定です。
-
-PlayStation5はps5-openglを使用してグラフィックス処理を実現する予定です。
 
 ## Rydia Engine
 
@@ -74,7 +72,6 @@ Rydia Engine は、以下のプロジェクトで構成されています。
 | `Rydia.Runtime.Droid` | Android 向けランタイム |
 | `Rydia.Runtime.iOS` | iOS 向けランタイム |
 | `Rydia.Runtime.NintendoSwitch` | Nintendo Switch 向けランタイム |
-| `Rydia.Runtime.PlayStation5` | PlayStation5 向けランタイム |
 | `Rydia.Engine` | ゲームの実行に必要な機能を提供するゲームエンジン |
 | `Rydia.GameStudio` | ゲームオブジェクトやコンポーネントを作成・管理するためのエディター |
 
