@@ -48,7 +48,7 @@ LinuxはGoogle Angle for Vulkan or OpenGLを使用する予定です。
 Google Angle for Metalを使用する予定です。
 
 ## Rydia. Runtime.NintendoSwitchはまだ作っていません
-Nintendo SwitchはOpenGL ES, OpenALをスイッチ用に書き換えるラッパークラスを使用する予定です。
+Nintendo SwitchはOpenGL ES, OpenALをスイッチ用に書き換えるラッパークラスを作成し、使用する予定です。
 
 ## Rydia Engine
 
