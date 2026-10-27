@@ -41,6 +41,10 @@ namespace Rydia.IO
             Debug.Assert(this._assembly != null, "Did you forget to call Initialize()?");
             var names = this._assembly.GetManifestResourceNames();
             var modules = this._assembly.GetLoadedModules();
+            if(!names.Contains(filename))
+            {
+                throw new Exception();
+            }
             return this._assembly.GetManifestResourceStream(filename); //(_prefix + filename);
         }
 

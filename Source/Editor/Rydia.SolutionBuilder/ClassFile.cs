@@ -16,6 +16,8 @@ namespace Rydia.SolutionBuilder
         private readonly List<MethodDefinition> _methods = new();
         private readonly List<string> _usings = new();
         private readonly string? _baseClass;
+        private string? _ClassAttribute;
+        private string? _Constructer;
 
         /// <summary>
         /// このクラスで使用する using ディレクティブの一覧を取得します。
@@ -186,6 +188,16 @@ namespace Rydia.SolutionBuilder
             this._methods.Add(method);
         }
 
+        public void AddClassAttribute(string attribute)
+        {
+            this._ClassAttribute = attribute;
+        }
+
+        public void AddConstructer(string constructer)
+        {
+            this._Constructer = constructer;
+        }
+
         /// <summary>
         /// クラスの C# ソースコードを生成します。
         /// </summary>
@@ -212,6 +224,11 @@ namespace Rydia.SolutionBuilder
                 sb.AppendLine();
             }
 
+            if(!string.IsNullOrEmpty(this._ClassAttribute))
+            {
+                sb.AppendLine(this._ClassAttribute);
+            }
+
             sb.AppendLine($"public class {Name}");
             if (!string.IsNullOrWhiteSpace(this._baseClass))
             {
@@ -220,6 +237,10 @@ namespace Rydia.SolutionBuilder
             }
             sb.AppendLine("{");
 
+            if(!string.IsNullOrEmpty(this._Constructer))
+            {
+                sb.AppendLine(this._Constructer);
+            }
             foreach (var property in this._properties)
             {
                 sb.AppendLine(

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Rydia.SolutionBuilder
 {
 
@@ -17,6 +18,9 @@ namespace Rydia.SolutionBuilder
         private readonly List<ProjectFile> _references = new();
         private readonly ProjectType _projectType;
         private readonly List<AssemblyReference> _assemblyReferences = new();
+        private readonly List<TextFileDefinition> _TextFiles = new();
+        private readonly List<ProjectReferenceDefinition> _ProjectRef = new();
+        private readonly List<BinaryFileDefinition> _BinaryFiles = new();
 
         /// <summary>
         /// プロジェクトの種類を取得します。
@@ -126,6 +130,33 @@ namespace Rydia.SolutionBuilder
             }
         }
 
+        public void AddFile(string fileName, string text)
+        {
+            var file = new TextFileDefinition(fileName, text);
+            if (!this._TextFiles.Contains(file))
+            {
+                this._TextFiles.Add(file);
+            }
+        }
+
+        public void AddFile(string fileName, byte[] bytes)
+        {
+            var file = new BinaryFileDefinition(fileName, bytes);
+            if (!this._BinaryFiles.Contains(file))
+            {
+                this._BinaryFiles.Add(file);
+            }
+        }
+
+        public void AddReference(string asmName, string path)
+        {
+            var projectReference = new ProjectReferenceDefinition(asmName, path);
+            if (!this._ProjectRef.Contains(projectReference))
+            {
+                this._ProjectRef.Add(projectReference);
+            }
+        }
+
         /// <summary>
         /// アセンブリ参照を追加します。
         /// </summary>
@@ -188,6 +219,14 @@ namespace Rydia.SolutionBuilder
                     classFile.Generate());
             }
 
+            foreach(var file in this._TextFiles)
+            {
+                File.WriteAllText(file.FileName, file.Text);
+            }
+            foreach(var file in this._BinaryFiles)
+            {
+                File.WriteAllBytes(file.FileName, file.Bytes);
+            }
             GenerateProjectFile();
         }
 
@@ -208,6 +247,9 @@ namespace Rydia.SolutionBuilder
 
                 case ProjectType.WindowsApplication:
                     GenerateWindowsApplication();
+                    break;
+                case ProjectType.AndroidApplication:
+                    GenerateDroidApplication();
                     break;
             }
         }
@@ -237,7 +279,10 @@ namespace Rydia.SolutionBuilder
             {
                 GenerateProjectReference(sb);
             }
-
+            if(this._ProjectRef.Count > 0)
+            {
+                GenerateProjectReference(sb, this._ProjectRef);
+            }
             if (this._assemblyReferences.Count > 0)
             {
                 sb.AppendLine();
@@ -285,11 +330,16 @@ namespace Rydia.SolutionBuilder
         <Nullable>enable</Nullable>
     <StartupObject>Rydia.{Name}.Program</StartupObject>
       </PropertyGroup>
+
     """);
 
             if (this._references.Count > 0)
             {
                 GenerateProjectReference(sb);
+            }
+            if (this._ProjectRef.Count > 0)
+            {
+                GenerateProjectReference(sb, this._ProjectRef);
             }
 
             if (this._assemblyReferences.Count > 0)
@@ -319,6 +369,82 @@ namespace Rydia.SolutionBuilder
                     DirectoryPath,
                     Name + ".csproj"),
                 sb.ToString());
+        }
+
+        /// <summary>
+        /// Androidアプリケーションのプロジェクトファイル（.csproj）を生成します。
+        /// </summary>
+        private void GenerateDroidApplication()
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"""
+    <Project Sdk="Microsoft.NET.Sdk">
+
+      <PropertyGroup>
+        <TargetFramework>net10.0-android</TargetFramework>
+    	  <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+    	  <OutputType>Exe</OutputType>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    	  <ApplicationId>com.companyname.Rydia.Runtime.Droid.App</ApplicationId>
+    	  <ApplicationVersion>1</ApplicationVersion>
+    	  <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    	  <!--
+          Enables trim analyzers and full trimming during Release mode.
+          To learn more, see: https://learn.microsoft.com/dotnet/core/deploying/trimming/trimming-options#trimming-granularity
+        -->
+    	  <TrimMode>full</TrimMode>
+    	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      </PropertyGroup>
+    """);
+
+            if (this._references.Count > 0)
+            {
+                GenerateProjectReference(sb);
+            }
+            if (this._ProjectRef.Count > 0)
+            {
+                GenerateProjectReference(sb, this._ProjectRef);
+            }
+
+            if (this._assemblyReferences.Count > 0)
+            {
+                sb.AppendLine();
+                sb.AppendLine("  <ItemGroup>");
+
+                foreach (var reference in this._assemblyReferences)
+                {
+                    sb.AppendLine(
+                        $"    <Reference Include=\"{System.Security.SecurityElement.Escape(reference.Name)}\">");
+
+                    sb.AppendLine(
+                        $"      <HintPath>{System.Security.SecurityElement.Escape(reference.HintPath)}</HintPath>");
+
+                    sb.AppendLine("    </Reference>");
+                }
+
+                sb.AppendLine("  </ItemGroup>");
+            }
+
+            sb.AppendLine();
+            sb.AppendLine("</Project>");
+
+            File.WriteAllText(
+                Path.Combine(
+                    DirectoryPath,
+                    Name + ".csproj"),
+                sb.ToString());
+        }
+
+        private void GenerateProjectReference(StringBuilder sb, List<ProjectReferenceDefinition> projectRef)
+        {
+            sb.AppendLine("<ItemGroup>");
+            foreach (var pref in projectRef)
+            {
+                sb.AppendLine($"<ProjectReference Include = \"{pref.Path}\" />");
+            }
+            sb.AppendLine("</ItemGroup>");
         }
 
         /// <summary>
@@ -433,7 +559,6 @@ namespace Rydia.SolutionBuilder
                 }
             }
         }
-
 
     }
 

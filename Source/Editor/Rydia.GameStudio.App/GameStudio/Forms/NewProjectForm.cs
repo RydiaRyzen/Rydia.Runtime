@@ -4,9 +4,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Rydia.GameStudio.App;
+using Rydia.IO;
 using Rydia.SolutionBuilder;
 
 namespace Rydia.GameStudio
@@ -385,7 +388,7 @@ namespace Rydia.GameStudio
                         solutionFile.AddProject(projectA);
                     }
 
-                    var projectB = new ProjectFile(projectName + ".Debugger", ProjectType.WindowsApplication);
+                    var projectB = new ProjectFile(projectName + ".Windows.Debugger", ProjectType.WindowsApplication);
                     {
                         // アセンブリ参照を追加
                         projectB.AddAssemblyReference("Rydia.Runtime", editordirectory + "/Rydia.Runtime.dll");
@@ -396,7 +399,7 @@ namespace Rydia.GameStudio
                         var classA = new ClassFile("Program");
                         {
                             // 名前空間を設定
-                            classA.Namespace = "Rydia." + projectName + ".Debugger";
+                            classA.Namespace = "Rydia." + projectName + ".Windows.Debugger";
 
                             // usingを追加
                             classA.AddUsing("System");
@@ -475,7 +478,7 @@ namespace Rydia.GameStudio
                             // プロジェクトAにクラスAを追加
                             projectB.AddClass(classA);
                         }
-                        var classB = new ClassFile("LauncherApp", "Rydia." + projectName + ".Debugger", "AppRunner");
+                        var classB = new ClassFile("LauncherApp", "Rydia." + projectName + ".Windows.Debugger", "AppRunner");
                         {
 
                             // usingを追加
@@ -506,6 +509,142 @@ namespace Rydia.GameStudio
                             projectB.AddClass(classB);
                         }
                         solutionFile.AddProject(projectB);
+                    }
+
+                    var projectD = new ProjectFile(projectName + ".Droid.Debugger", ProjectType.AndroidApplication);
+                    {
+                        // アセンブリ参照を追加
+                        projectD.AddAssemblyReference("Rydia.Runtime", editordirectory + "/Rydia.Runtime.dll");
+                        projectD.AddAssemblyReference("Rydia.Engine", editordirectory + "/Rydia.Engine.dll");
+                        projectD.AddReference("Rydia.Runtime.Droid", "../../../../../../../../../../../Platform/Rydia.Runtime.Droid/Rydia.Runtime.Droid.csproj");
+
+                        // クラスAを生成
+                        var classA = new ClassFile("MainActivity", "Rydia." + projectName + ".Debugger", "GLActivity");
+                        {
+                            // usingを追加
+                            classA.AddUsing("System");
+                            classA.AddUsing("System.Collections.Generic");
+                            classA.AddUsing("System.Linq");
+                            classA.AddUsing("System.Text");
+                            classA.AddUsing("System.Reflection");
+                            classA.AddUsing("Rydia.Diagnostics");
+                            classA.AddUsing("Rydia.Engine");
+                            classA.AddUsing("Rydia.Runtime.Desktop");
+                            classA.AddUsing("Rydia.Graphics.Api.ES30");
+                            classA.AddUsing("Rydia.Runtime");
+                            classA.AddUsing("Rydia.Runtime.Droid");
+
+                            classA.AddClassAttribute("[Activity(Label = \"@string/app_name\", MainLauncher = true)]");
+                            classA.AddConstructer("""
+                                                        public MainActivity()
+                                    : base(new LauncherApp())
+                                {
+                                    // 既定のデバイスを使用
+                                    AudioOptions.DeviceName = null;
+                                    // サンプリング周波数を44.1kHzに設定
+                                    AudioOptions.Frequency = 44100;
+                                    // モノラル音源の数を16に設定
+                                    AudioOptions.MonoSources = 16;
+                                    // ステレオ音源の数を16に設定
+                                    AudioOptions.StereoSources = 16;
+                                    // 更新レートを60に設定
+                                    AudioOptions.Refresh = 60;
+                                    // クロック同期を無効に設定
+                                    AudioOptions.Sync = false;
+                                }
+                                """);
+
+                            projectD.AddClass(classA);
+                        }
+
+                        var classB = new ClassFile("LauncherApp", "Rydia." + projectName + ".Debugger", "AppRunner");
+                        {
+                            // usingを追加
+                            classB.AddUsing("System");
+                            classB.AddUsing("System.Collections.Generic");
+                            classB.AddUsing("System.Linq");
+                            classB.AddUsing("System.Text");
+                            classB.AddUsing("System.Reflection");
+                            classB.AddUsing("Rydia.Diagnostics");
+                            classB.AddUsing("Rydia.Engine");
+                            classB.AddUsing("Rydia.Runtime.Desktop");
+                            classB.AddUsing("Rydia.Graphics.Api.ES30");
+                            classB.AddUsing("Rydia.Runtime");
+                            // クラスAにプロパティとメソッドを追加
+                            classB.AddProperty("GL", "static IGLES30", """
+                                get
+                                {
+                                    return RuntimeHost.GLES30;
+                                }
+                                """);
+
+                            classB.AddOverrideMethod("Load", "// リソースを読み込む");
+                            classB.AddOverrideMethod("Update", "// ゲームの状態を更新する", ("float", "deltaTimeSec"), ("float", "totalTimeSec"));
+                            classB.AddOverrideMethod("Render", "// 描画処理");
+                            classB.AddOverrideMethod("Unload", "// リソースを解放する");
+
+                            projectD.AddClass(classB);
+                        }
+
+                        Directory.CreateDirectory($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources");
+                        Directory.CreateDirectory($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\layout");
+                        Directory.CreateDirectory($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-anydpi-v26");
+                        Directory.CreateDirectory($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-hdpi");
+                        Directory.CreateDirectory($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-mdpi");
+                        Directory.CreateDirectory($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xhdpi");
+                        Directory.CreateDirectory($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xxhdpi");
+                        Directory.CreateDirectory($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xxxhdpi");
+                        Directory.CreateDirectory($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\values");
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\AndroidManifest.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n  <application android:allowBackup=\"true\" android:icon=\"@mipmap/appicon\" android:label=\"@string/app_name\" android:roundIcon=\"@mipmap/appicon_round\" android:supportsRtl=\"true\">\r\n  </application>\r\n  <uses-permission android:name=\"android.permission.INTERNET\" />\r\n</manifest>");
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\layout\\activity_main.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n    <TextView \r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_centerInParent=\"true\"\r\n        android:text=\"@string/app_text\"\r\n    />\r\n</RelativeLayout>");
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-anydpi-v26\\appicon.xml", "<adaptive-icon xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n  <background android:drawable=\"@mipmap/appicon_background\" />\r\n  <foreground android:drawable=\"@mipmap/appicon_foreground\" />\r\n</adaptive-icon>");
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-anydpi-v26\\appicon_round.xml", "<adaptive-icon xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n  <background android:drawable=\"@mipmap/appicon_background\" />\r\n  <foreground android:drawable=\"@mipmap/appicon_foreground\" />\r\n</adaptive-icon>");
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\values\\ic_launcher_background.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"ic_launcher_background\">#2C3E50</color>\r\n</resources>");
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\values\\strings.xml", "<resources>\r\n    <string name=\"app_name\">Rydia.Runtime.Droid.App</string>\r\n    <string name=\"app_text\">Hello, Android!</string>\r\n</resources>\r\n");
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\AboutResources.txt", "Images, layout descriptions, binary blobs and string dictionaries can be included \r\nin your application as resource files.  Various Android APIs are designed to \r\noperate on the resource IDs instead of dealing with images, strings or binary blobs \r\ndirectly.\r\n\r\nFor example, a sample Android app that contains a user interface layout (main.xml),\r\nan internationalization string table (strings.xml) and some icons (drawable-XXX/icon.png) \r\nwould keep its resources in the \"Resources\" directory of the application:\r\n\r\nResources/\r\n    drawable/\r\n        icon.png\r\n\r\n    layout/\r\n        main.xml\r\n\r\n    values/\r\n        strings.xml\r\n\r\nIn order to get the build system to recognize Android resources, set the build action to\r\n\"AndroidResource\".  The native Android APIs do not operate directly with filenames, but \r\ninstead operate on resource IDs.  When you compile an Android application that uses resources, \r\nthe build system will package the resources for distribution and generate a class called \"Resource\" \r\n(this is an Android convention) that contains the tokens for each one of the resources \r\nincluded. For example, for the above Resources layout, this is what the Resource class would expose:\r\n\r\npublic class Resource {\r\n    public class Drawable {\r\n        public const int icon = 0x123;\r\n    }\r\n\r\n    public class Layout {\r\n        public const int main = 0x456;\r\n    }\r\n\r\n    public class Strings {\r\n        public const int first_string = 0xabc;\r\n        public const int second_string = 0xbcd;\r\n    }\r\n}\r\n\r\nYou would then use Resource.Drawable.icon to reference the drawable/icon.png file, or \r\nResource.Layout.main to reference the layout/main.xml file, or Resource.Strings.first_string \r\nto reference the first string in the dictionary file values/strings.xml.");
+
+                        var embedded = new EmbeddedResources<EditorApp>();
+                        var buffer1 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_hdpi.appicon.png");
+                        var buffer2 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_hdpi.appicon_background.png");
+                        var buffer3 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_hdpi.appicon_foreground.png");
+
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-hdpi\\appicon.png", buffer1);
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-hdpi\\appicon_background.png", buffer2);
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-hdpi\\appicon_foreground.png", buffer3);
+
+                        buffer1 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_mdpi.appicon.png");
+                        buffer2 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_mdpi.appicon_background.png");
+                        buffer3 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_mdpi.appicon_foreground.png");
+
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-mdpi\\appicon.png", buffer1);
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-mdpi\\appicon_background.png", buffer2);
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-mdpi\\appicon_foreground.png", buffer3);
+
+                        buffer1 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_xhdpi.appicon.png");
+                        buffer2 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_xhdpi.appicon_background.png");
+                        buffer3 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_xhdpi.appicon_foreground.png");
+
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xhdpi\\appicon.png", buffer1);
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xhdpi\\appicon_background.png", buffer2);
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xhdpi\\appicon_foreground.png", buffer3);
+
+                        buffer1 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_xxhdpi.appicon.png");
+                        buffer2 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_xxhdpi.appicon_background.png");
+                        buffer3 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_xxhdpi.appicon_foreground.png");
+
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xxhdpi\\appicon.png", buffer1);
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xxhdpi\\appicon_background.png", buffer2);
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xxhdpi\\appicon_foreground.png", buffer3);
+
+                        buffer1 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_xxxhdpi.appicon.png");
+                        buffer2 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_xxxhdpi.appicon_background.png");
+                        buffer3 = embedded.Load("Rydia.GameStudio.EmbeddedResources.mipmap_xxxhdpi.appicon_foreground.png");
+
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xxxhdpi\\appicon.png", buffer1);
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xxxhdpi\\appicon_background.png", buffer2);
+                        projectD.AddFile($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\mipmap-xxxhdpi\\appicon_foreground.png", buffer3);
+
+                        solutionFile.AddProject(projectD);
                     }
 
                     solutionFile.Generate();

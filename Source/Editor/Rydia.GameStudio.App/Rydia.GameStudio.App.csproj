@@ -18,6 +18,39 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="GameStudio\EmbeddedResources\mipmap-hdpi\appicon.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-hdpi\appicon_background.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-hdpi\appicon_foreground.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-mdpi\appicon.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-mdpi\appicon_background.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-mdpi\appicon_foreground.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-xhdpi\appicon.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-xhdpi\appicon_background.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-xhdpi\appicon_foreground.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-xxhdpi\appicon.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-xxhdpi\appicon_background.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-xxhdpi\appicon_foreground.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon_background.png" />
+    <None Remove="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon_foreground.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-hdpi\appicon.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-hdpi\appicon_background.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-hdpi\appicon_foreground.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-mdpi\appicon.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-mdpi\appicon_background.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-mdpi\appicon_foreground.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xhdpi\appicon.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xhdpi\appicon_background.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xhdpi\appicon_foreground.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xxhdpi\appicon.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xxhdpi\appicon_background.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xxhdpi\appicon_foreground.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon_background.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon_foreground.png" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\SplashLogo.png" />
   </ItemGroup>
 

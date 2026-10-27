@@ -23,7 +23,12 @@ namespace Rydia.SolutionBuilder
         /// <summary>
         /// Windows アプリケーションを表します。
         /// </summary>
-        WindowsApplication
+        WindowsApplication,
+
+        /// <summary>
+        /// Android アプリケーションを表します。
+        /// </summary>
+        AndroidApplication
     }
 
 }
