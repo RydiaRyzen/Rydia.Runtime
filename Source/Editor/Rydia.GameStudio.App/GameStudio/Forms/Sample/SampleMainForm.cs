@@ -26,7 +26,7 @@ namespace Rydia.GameStudio
         public SampleMainForm()
         {
             InitializeComponent();
-            Text = "Rydia GameStudio";
+            Text = "Rydia GameStudio - " + EditorContext.ProjectName;
             StartPosition = FormStartPosition.CenterScreen;
             ClientSize = new Size(1440, 900);
             MinimumSize = new Size(1000, 650);
@@ -45,12 +45,6 @@ namespace Rydia.GameStudio
                 //Theme = new VS2015DarkTheme()
             };
 
-            this.sceneView = new SceneView();
-            this.hierarchyView = new HierarchyView();
-            this.inspectorView = new InspectorView();
-            this.projectView = new ProjectView();
-            this.consoleView = new ConsoleView();
-
             Controls.Add(this.dockPanel);
             Controls.Add(toolbar);
             Controls.Add(menu);
@@ -59,6 +53,12 @@ namespace Rydia.GameStudio
 
             toolbar.Dock = DockStyle.Top;
             menu.Dock = DockStyle.Top;
+
+            this.sceneView = new SceneView();
+            this.hierarchyView = new HierarchyView();
+            this.inspectorView = new InspectorView();
+            this.projectView = new ProjectView();
+            this.consoleView = new ConsoleView();
 
             // ドッキング配置
             // 左上：シーン内のオブジェクト階層

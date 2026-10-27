@@ -1,4 +1,18 @@
-## Rydia.Runtime, Rydia Engine, Rydia.GameStudio
+## プロジェクト構成
+
+Rydia Engine は、以下のプロジェクトで構成されています。
+
+| プロジェクト | 説明 |
+|---|---|
+| `Rydia.Runtime` | クロスプラットフォーム対応のための共通ランタイム |
+| `Rydia.Runtime.Windows` | Windows 向けランタイム |
+| `Rydia.Runtime.Macos` | macOS 向けランタイム |
+| `Rydia.Runtime.Linux` | Linux 向けランタイム |
+| `Rydia.Runtime.Droid` | Android 向けランタイム |
+| `Rydia.Runtime.iOS` | iOS 向けランタイム |
+| `Rydia.Runtime.NintendoSwitch` | Nintendo Switch 向けランタイム |
+| `Rydia.Engine` | ゲームの実行に必要な機能を提供するゲームエンジン |
+| `Rydia.GameStudio` | ゲームオブジェクトやコンポーネントを作成・管理するためのエディター |
 
 ## `Rydia.Runtime`
 
@@ -59,21 +73,7 @@ Rydia Engine は、クロスプラットフォームでのゲーム開発を目�
 
 **公式サイト:** https://rydiaryzen.github.io/RydiaEngine.Docs/index.html
 
-## プロジェクト構成
 
-Rydia Engine は、以下のプロジェクトで構成されています。
-
-| プロジェクト | 説明 |
-|---|---|
-| `Rydia.Runtime` | クロスプラットフォーム対応のための共通ランタイム |
-| `Rydia.Runtime.Windows` | Windows 向けランタイム |
-| `Rydia.Runtime.Macos` | macOS 向けランタイム |
-| `Rydia.Runtime.Linux` | Linux 向けランタイム |
-| `Rydia.Runtime.Droid` | Android 向けランタイム |
-| `Rydia.Runtime.iOS` | iOS 向けランタイム |
-| `Rydia.Runtime.NintendoSwitch` | Nintendo Switch 向けランタイム |
-| `Rydia.Engine` | ゲームの実行に必要な機能を提供するゲームエンジン |
-| `Rydia.GameStudio` | ゲームオブジェクトやコンポーネントを作成・管理するためのエディター |
 
 ## Rydia.GameStudio
 
