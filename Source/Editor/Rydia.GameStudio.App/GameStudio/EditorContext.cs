@@ -111,7 +111,7 @@ namespace Rydia.GameStudio
         internal static void LoadResources()
         {
             // TODO: 各種サービスの初期化処理
-            EngineAssembly = typeof(Rydia.Engine.LauncherApp).Assembly;
+            EngineAssembly = typeof(Rydia.Engine.Backend.IBackend).Assembly;
             EditorAssembly = typeof(HubForm).Assembly;
         }
 

@@ -475,7 +475,36 @@ namespace Rydia.GameStudio
                             // プロジェクトAにクラスAを追加
                             projectB.AddClass(classA);
                         }
+                        var classB = new ClassFile("LauncherApp", "Rydia." + projectName + ".Debugger", "AppRunner");
+                        {
 
+                            // usingを追加
+                            classB.AddUsing("System");
+                            classB.AddUsing("System.Collections.Generic");
+                            classB.AddUsing("System.Linq");
+                            classB.AddUsing("System.Text");
+                            classB.AddUsing("System.Reflection");
+                            classB.AddUsing("Rydia.Diagnostics");
+                            classB.AddUsing("Rydia.Engine");
+                            classB.AddUsing("Rydia.Runtime.Windows");
+                            classB.AddUsing("Rydia.Runtime.Desktop");
+                            classB.AddUsing("Rydia.Graphics.Api.ES30");
+                            classB.AddUsing("Rydia.Runtime");
+                            // クラスAにプロパティとメソッドを追加
+                            classB.AddProperty("GL", "static IGLES30", """
+                                get
+                                {
+                                    return RuntimeHost.GLES30;
+                                }
+                                """);
+
+                            classB.AddOverrideMethod("Load", "// リソースを読み込む");
+                            classB.AddOverrideMethod("Update", "// ゲームの状態を更新する", ("float", "deltaTimeSec"), ("float", "totalTimeSec"));
+                            classB.AddOverrideMethod("Render", "// 描画処理");
+                            classB.AddOverrideMethod("Unload", "// リソースを解放する");
+
+                            projectB.AddClass(classB);
+                        }
                         solutionFile.AddProject(projectB);
                     }
 

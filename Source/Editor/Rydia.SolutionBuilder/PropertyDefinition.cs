@@ -21,6 +21,7 @@ namespace Rydia.SolutionBuilder
         /// プロパティの型を取得します。
         /// </summary>
         public string Type { get; }
+        public string Code { get; }
 
         /// <summary>
         /// <see cref="PropertyDefinition"/> クラスの新しいインスタンスを初期化します。
@@ -40,6 +41,13 @@ namespace Rydia.SolutionBuilder
 
             Name = name;
             Type = type;
+            Code = "get; set;";
+        }
+
+        public PropertyDefinition(string name, string type, string code)
+            : this(name, type)
+        {
+            Code = code;
         }
     }
 

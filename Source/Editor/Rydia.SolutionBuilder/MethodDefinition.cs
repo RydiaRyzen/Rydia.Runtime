@@ -29,6 +29,11 @@ namespace Rydia.SolutionBuilder
         public string Body { get; set; } = string.Empty;
 
         /// <summary>
+        /// メソッドの引数一覧を取得します。
+        /// </summary>
+        public List<(string Type, string Name)> Parameters { get; } = new();
+
+        /// <summary>
         /// 指定したメソッド名と戻り値の型を使用して、
         /// <see cref="MethodDefinition"/> クラスの新しいインスタンスを初期化します。
         /// </summary>
