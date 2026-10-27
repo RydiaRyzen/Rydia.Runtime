@@ -171,8 +171,7 @@ namespace Rydia.SolutionBuilder
         {
             if (this._methods.Any(method => method.Name == name))
             {
-                throw new InvalidOperationException(
-                    $"The method '{name}' has already been added.");
+                throw new InvalidOperationException($"The method '{name}' has already been added.");
             }
 
             var method = new MethodDefinition(name, "override void")
@@ -182,12 +181,17 @@ namespace Rydia.SolutionBuilder
 
             foreach (var parameter in parameters)
             {
+                // 
                 method.Parameters.Add(parameter);
             }
 
             this._methods.Add(method);
         }
 
+        /// <summary>
+        /// Classの属性を追加します
+        /// </summary>
+        /// <param name="attribute">The attribute.</param>
         public void AddClassAttribute(string attribute)
         {
             this._ClassAttribute = attribute;
