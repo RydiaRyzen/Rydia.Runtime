@@ -107,6 +107,7 @@ Rydia Engine では、以下の API を利用したグラフィックスおよ�
 |エディターの構築(WinForms)||
 |エディターの構築(ImGui)| ImGuiの実装によりエディターがWindows, Macos, Linuxへの対応になる|
 |Rydia.Runtime.Linux, Macos, iOS, NintendoSwitchへの対応|これによりランチャー側が6プラットフォーム対応になる|
+|難読化への対応||
 |Live2Dへの対応||
 |無償版(非商用)|2Dのみ, Windows, Androidの2プラットフォームのみ|
 |有償版Pro(商用)|買い切り, 6プラットフォーム, 2D & 3D, マイナーアップデートあり|
