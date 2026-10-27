@@ -9,6 +9,8 @@ namespace Rydia.GameStudio.App
     internal class EditorApp : AppRunner // AppRunnerを継承してますが、LauncherAppを継承する可能性があります
     {
 
+        // IGLESを宣言してますが、IGraphicsDebiceを使用して、描画する必要があります
+
         public static IGLES20 GL
         {
             get
@@ -17,38 +19,29 @@ namespace Rydia.GameStudio.App
             }
         }
 
-        public SandboxApp SandboxApp
-        {
-            get;
-            private set;
-        }
-
         public EditorApp()
         {
-            SandboxApp = new SandboxApp();
+
         }
 
         public override void Load()
         {
-            SandboxApp.Init(Platform, Width, Height);
-            SandboxApp.Load();
             GL.ClearColor(Rydia.Drawing.ColorRgba.CornflowerBlue);
         }
 
         public override void Update(float deltaTimeSec, float totalTimeSec)
         {
-            SandboxApp.Update();
+
         }
 
         public override void Render()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            SandboxApp.Render();
         }
 
         public override void Unload()
         {
-            SandboxApp.Unload();
+
         }
 
     }
