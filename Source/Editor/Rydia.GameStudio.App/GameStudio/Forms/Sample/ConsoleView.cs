@@ -131,7 +131,7 @@ namespace Rydia.GameStudio
             if (message == null)
                 return;
 
-            string text = GetMessageText(message);
+            string text = message.Message;
             string category = Classify(message, text, source);
 
             var entry = new LogEntry
@@ -277,30 +277,30 @@ namespace Rydia.GameStudio
 
             if (!string.IsNullOrEmpty(source))
             {
-                if (source.Equals("CoreLog",
+                if (source.Equals("Core",
                     StringComparison.OrdinalIgnoreCase))
-                    return "CoreLog";
+                    return "Core";
 
-                if (source.Equals("EditorLog",
+                if (source.Equals("Editor",
                     StringComparison.OrdinalIgnoreCase))
-                    return "EditorLog";
+                    return "Editor";
 
-                if (source.Equals("GameLog",
+                if (source.Equals("Game",
                     StringComparison.OrdinalIgnoreCase))
-                    return "GameLog";
+                    return "Game";
             }
 
             if (typeName.IndexOf("Core",
                 StringComparison.OrdinalIgnoreCase) >= 0)
-                return "CoreLog";
+                return "Core";
 
             if (typeName.IndexOf("Editor",
                 StringComparison.OrdinalIgnoreCase) >= 0)
-                return "EditorLog";
+                return "Editor";
 
             if (typeName.IndexOf("Game",
                 StringComparison.OrdinalIgnoreCase) >= 0)
-                return "GameLog";
+                return "Game";
 
             return "Info";
         }
@@ -308,11 +308,6 @@ namespace Rydia.GameStudio
         private static bool ContainsAny(string text, params string[] values)
         {
             return values.Any(value => text.Contains(value));
-        }
-
-        private static string GetMessageText(ILogMessage message)
-        {
-            return message.Message;
         }
 
         private static string GetPropertyString(
