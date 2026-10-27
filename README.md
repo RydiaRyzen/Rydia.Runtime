@@ -99,3 +99,14 @@ Rydia Engine では、以下の API を利用したグラフィックスおよ�
 導入方法、プロジェクト構成、開発に関する情報については、公式ドキュメントを参照してください。
 
 **[Rydia Engine 公式ドキュメント](https://rydiaryzen.github.io/RydiaEngine.Docs/index.html)**
+
+## ロードマップ
+|対応|補足|
+|---|---|
+|ECS(Entity Component System)の構築||
+|エディターの構築(WinForms)||
+|エディターの構築(ImGui)| ImGuiの実装によりエディターがWindows, Macos, Linuxへの対応になる|
+|Rydia.Runtime.Linux, Macos, iOS, NintendoSwitchへの対応|これによりランチャー側が6プラットフォーム対応になる|
+|Live2Dへの対応|2D機能の強化|
+|2D機能の強化||
+|3D機能の強化||
