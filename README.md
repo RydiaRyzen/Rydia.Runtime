@@ -71,10 +71,6 @@ Rydia Engine は、クロスプラットフォームでのゲーム開発を目�
 共通ランタイム、ゲームエンジン、エディターを分離することで、ゲームの実行に必要な機能を提供し、
 プラットフォーム固有の処理をランタイム側に分離することで、複数のプラットフォームに対応したゲーム開発環境を提供します。
 
-**公式サイト:** https://rydiaryzen.github.io/RydiaEngine.Docs/index.html
-
-
-
 ## Rydia.GameStudio
 
 `Rydia.GameStudio` は、`Rydia.Engine` で使用するゲームオブジェクトやコンポーネントを動的に作成・管理するためのツールです。
