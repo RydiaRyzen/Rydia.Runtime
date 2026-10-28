@@ -1,0 +1,6 @@
+
+
+AndroidはEmbeddedResourceで対応するので、Rydia.AssemblyBuilderを作成し、自動ビルドする
+WindowsはEmbeddedResourceで対応する必要ないけど、共有プロジェクトにファイルを追加するので、
+EmbeddedResourceクラスにはプレフィックスを設定できるようにして、同じ名前で読み込むようにしましょうか
+
