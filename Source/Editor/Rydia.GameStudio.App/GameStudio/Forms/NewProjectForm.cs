@@ -622,10 +622,12 @@ namespace Rydia.GameStudio
                     logForm.SetStatus("プロジェクトをビルドしています...");
                     logForm.AppendLog("ビルドを開始します。");
 
-                    solutionFile.LogReceived += (message) =>
+                    Action<string> appendLog = (message) =>
                     {
                         logForm.AppendLog(message);
                     };
+
+                    solutionFile.LogReceived += appendLog;
 
                     solutionFile.Build();
 
@@ -640,7 +642,7 @@ namespace Rydia.GameStudio
                     logForm.AppendLog("プロジェクトを開始します。");
                     logForm.SetStatus("プロジェクトを開始しています。");
                     success = true;
-                    Task.Delay(5000).Wait(); // 5秒待機してログを閉じる
+                    solutionFile.LogReceived -= appendLog;
                 });
 
             }
@@ -666,7 +668,7 @@ namespace Rydia.GameStudio
             if (success)
             {
 
-                await Task.Delay(5000);
+                await Task.Delay(5000); // 5秒待機してログを閉じる
 
                 EditorContext.OpenProject(projectDirectory);
                 // ソリューションを開く
