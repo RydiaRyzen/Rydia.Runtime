@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Android.Media;
+using Rydia.Drawing;
 using Rydia.Graphics.Api.ES20;
 using Rydia.Graphics.Backend;
 using Rydia.Runtime.ES30;
@@ -74,7 +76,7 @@ namespace Rydia.Runtime.GLES2Samples
             this._attrPosition = new VertexAttribute(this._program, "vPosition");
 
             // Set clear color to black
-            GL.ClearColor(0, 0, 0, 0);
+            GL.ClearColor(ColorRgba.DarkBlue);
         }
 
         public override void Render()
