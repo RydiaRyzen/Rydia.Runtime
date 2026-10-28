@@ -130,6 +130,11 @@ namespace Rydia.SolutionBuilder
             }
         }
 
+        /// <summary>
+        /// 指定されたテキストファイルを追加します
+        /// </summary>
+        /// <param name="fileName">ファイル名</param>
+        /// <param name="text">内容</param>
         public void AddFile(string fileName, string text)
         {
             var file = new TextFileDefinition(fileName, text);
@@ -139,6 +144,11 @@ namespace Rydia.SolutionBuilder
             }
         }
 
+        /// <summary>
+        /// 指定されたバイナリファイルを追加します
+        /// </summary>
+        /// <param name="fileName">ファイル名</param>
+        /// <param name="bytes">バイナリ</param>
         public void AddFile(string fileName, byte[] bytes)
         {
             var file = new BinaryFileDefinition(fileName, bytes);
@@ -148,6 +158,11 @@ namespace Rydia.SolutionBuilder
             }
         }
 
+        /// <summary>
+        /// 指定されたパス文字列を使用して、プロジェクト参照を追加します
+        /// </summary>
+        /// <param name="asmName">アセンブリ名</param>
+        /// <param name="path">パス文字列</param>
         public void AddReference(string asmName, string path)
         {
             var projectReference = new ProjectReferenceDefinition(asmName, path);

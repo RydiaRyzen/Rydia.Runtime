@@ -16,8 +16,8 @@ namespace Rydia.SolutionBuilder
         private readonly List<MethodDefinition> _methods = new();
         private readonly List<string> _usings = new();
         private readonly string? _baseClass;
-        private string? _ClassAttribute;
-        private string? _Constructer;
+        private string? _classAttribute;
+        private string? _constructer;
 
         /// <summary>
         /// このクラスで使用する using ディレクティブの一覧を取得します。
@@ -112,8 +112,17 @@ namespace Rydia.SolutionBuilder
                     type));
         }
 
+        /// <summary>
+        /// 指定された型とコードを使用してプロパティをクラスに追加します。
+        /// </summary>
+        /// <param name="name">プロパティ名。</param>
+        /// <param name="type">プロパティの型。</param>
+        /// <param name="code">プロパティのアクセサーなどを表すコード。</param>
         public void AddProperty(string name, string type, string code)
         {
+            ArgumentException.ThrowIfNullOrWhiteSpace(name);
+            ArgumentException.ThrowIfNullOrWhiteSpace(type);
+
             this._properties.Add(
                 new PropertyDefinition(
                     name,
@@ -143,14 +152,22 @@ namespace Rydia.SolutionBuilder
         }
 
         /// <summary>
-        /// Load メソッドを追加します。
+        /// 指定された名前とメソッド本体を使用して、オーバーライドメソッドを追加します。
         /// </summary>
-        /// <param name="body">メソッド本体。</param>
+        /// <param name="name">オーバーライドするメソッド名。</param>
+        /// <param name="body">メソッド本体。既定値は空文字列です。</param>
         public void AddOverrideMethod(string name, string body = "")
         {
             AddLifecycleMethod(name, body);
         }
 
+        /// <summary>
+        /// 指定された名前、メソッド本体および引数を使用して、
+        /// オーバーライドメソッドを追加します。
+        /// </summary>
+        /// <param name="name">オーバーライドするメソッド名。</param>
+        /// <param name="body">メソッド本体。</param>
+        /// <param name="parameters">引数の型と名前の組み合わせ。</param>
         public void AddOverrideMethod(string name,
             string body,
             params (string Type, string Name)[] parameters)
@@ -159,11 +176,15 @@ namespace Rydia.SolutionBuilder
         }
 
         /// <summary>
+        /// 指定された名前、メソッド本体および引数を使用して、
         /// ライフサイクルメソッドを追加します。
         /// </summary>
         /// <param name="name">メソッド名。</param>
         /// <param name="body">メソッド本体。</param>
-        /// <param name="parameters">引数の型と名前。</param>
+        /// <param name="parameters">引数の型と名前の組み合わせ。</param>
+        /// <exception cref="InvalidOperationException">
+        /// 同じ名前のメソッドが既に追加されている場合にスローされます。
+        /// </exception>
         private void AddLifecycleMethod(
             string name,
             string body,
@@ -189,17 +210,21 @@ namespace Rydia.SolutionBuilder
         }
 
         /// <summary>
-        /// Classの属性を追加します
+        /// クラスに属性を設定します。
         /// </summary>
-        /// <param name="attribute">The attribute.</param>
+        /// <param name="attribute">クラス宣言の前に出力する属性のコード。</param>
         public void AddClassAttribute(string attribute)
         {
-            this._ClassAttribute = attribute;
+            this._classAttribute = attribute;
         }
 
+        /// <summary>
+        /// クラスのコンストラクターを設定します。
+        /// </summary>
+        /// <param name="constructor">出力するコンストラクターのコード。</param>
         public void AddConstructer(string constructer)
         {
-            this._Constructer = constructer;
+            this._constructer = constructer;
         }
 
         /// <summary>
@@ -228,9 +253,9 @@ namespace Rydia.SolutionBuilder
                 sb.AppendLine();
             }
 
-            if(!string.IsNullOrEmpty(this._ClassAttribute))
+            if(!string.IsNullOrEmpty(this._classAttribute))
             {
-                sb.AppendLine(this._ClassAttribute);
+                sb.AppendLine(this._classAttribute);
             }
 
             sb.AppendLine($"public class {Name}");
@@ -241,9 +266,9 @@ namespace Rydia.SolutionBuilder
             }
             sb.AppendLine("{");
 
-            if(!string.IsNullOrEmpty(this._Constructer))
+            if(!string.IsNullOrEmpty(this._constructer))
             {
-                sb.AppendLine(this._Constructer);
+                sb.AppendLine(this._constructer);
             }
             foreach (var property in this._properties)
             {
@@ -290,62 +315,6 @@ namespace Rydia.SolutionBuilder
             sb.AppendLine("}");
 
             return sb.ToString();
-            /*
-            var sb = new StringBuilder();
-
-            foreach (var usingNamespace in this._usings)
-            {
-                sb.AppendLine($"using {usingNamespace};");
-            }
-
-            if (this._usings.Count > 0)
-            {
-                sb.AppendLine();
-            }
-
-            if (!string.IsNullOrWhiteSpace(Namespace))
-            {
-                sb.AppendLine($"namespace {Namespace};");
-                sb.AppendLine();
-            }
-
-            sb.AppendLine($"public class {Name}");
-            sb.AppendLine("{");
-
-            foreach (var property in this._properties)
-            {
-                sb.AppendLine(
-                    $"    public {property.Type} {property.Name} {{ {property.Code} }}");
-            }
-
-            if (this._properties.Count > 0 &&
-                this._methods.Count > 0)
-            {
-                sb.AppendLine();
-            }
-
-            foreach (var method in this._methods)
-            {
-                sb.AppendLine(
-                    $"    public {method.ReturnType} {method.Name}()");
-                sb.AppendLine("    {");
-
-                if (!string.IsNullOrWhiteSpace(method.Body))
-                {
-                    foreach (string line in method.Body.Replace("\r\n", "\n").Split('\n'))
-                    {
-                        sb.AppendLine($"        {line}");
-                    }
-                }
-
-                sb.AppendLine("    }");
-                sb.AppendLine();
-            }
-
-            sb.AppendLine("}");
-
-            return sb.ToString();
-            */
         }
 
     }
