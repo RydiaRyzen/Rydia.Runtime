@@ -11,7 +11,7 @@ Rydia Engine は、以下のプロジェクトで構成されています。
 | `Rydia.Runtime.Droid` | Android 向けランタイム |
 | `Rydia.Runtime.iOS` | iOS 向けランタイム |
 | `Rydia.Runtime.NintendoSwitch` | Nintendo Switch 向けランタイム |
-| `Rydia.Engine` | ゲームの実行に必要な機能を提供するゲームエンジン |
+| `Rydia.Engine` | ECS(Entity Component System)などのゲームの実行に必要な機能を提供するゲームエンジン |
 | `Rydia.GameStudio` | ゲームオブジェクトやコンポーネントを作成・管理するためのエディター |
 
 ソリューションファイルを開くときにはC:\などの浅い階層で開いてください
