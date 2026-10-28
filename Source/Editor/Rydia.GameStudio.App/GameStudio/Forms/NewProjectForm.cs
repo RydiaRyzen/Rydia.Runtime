@@ -331,26 +331,46 @@ namespace Rydia.GameStudio
                     // ソリューションのパスを設定
                     solutionFile.Path = Path.Combine(sourceDirectory);
 
-                    // プロジェクトCを生成
+                    // プロジェクトC: 共有プロジェクトを生成
                     var projectC = new ProjectFile(projectName + ".Shared", ProjectType.Shared);
                     {
-                        var classB = new ClassFile("Class1");
+
+
+                        var classB = new ClassFile("LauncherApp", "Rydia." + projectName , "AppRunner");
                         {
-                            // 名前空間を設定
-                            classB.Namespace = "Rydia." + projectName;
                             // usingを追加
                             classB.AddUsing("System");
                             classB.AddUsing("System.Collections.Generic");
                             classB.AddUsing("System.Linq");
                             classB.AddUsing("System.Text");
-                            classB.AddUsing("Rydia");
+                            classB.AddUsing("System.Reflection");
+                            classB.AddUsing("Rydia.Diagnostics");
+                            classB.AddUsing("Rydia.Engine");
+                            classB.AddUsing("Rydia.Runtime.Desktop");
+                            classB.AddUsing("Rydia.Graphics.Api.ES30");
+                            classB.AddUsing("Rydia.Runtime");
+                            // クラスAにプロパティとメソッドを追加
+                            classB.AddProperty("GL", "static IGLES30", """
+                                get
+                                {
+                                    return RuntimeHost.GLES30;
+                                }
+                                """);
+
+                            classB.AddOverrideMethod("Load", "// リソースを読み込む");
+                            classB.AddOverrideMethod("Update", "// ゲームの状態を更新する", ("float", "deltaTimeSec"), ("float", "totalTimeSec"));
+                            classB.AddOverrideMethod("Render", "// 描画処理");
+                            classB.AddOverrideMethod("Unload", "// リソースを解放する");
 
                             projectC.AddClass(classB);
                         }
+
+
                         solutionFile.AddProject(projectC);
                     }
 
-                    // プロジェクトAを生成
+                    /*
+                    // プロジェクトA: ライブラリを生成
                     var projectA = new ProjectFile(projectName, ProjectType.ClassLibrary);
                     {
                         // アセンブリ参照を追加
@@ -387,13 +407,16 @@ namespace Rydia.GameStudio
 
                         solutionFile.AddProject(projectA);
                     }
+                    */
 
+                    // プロジェクトB: WindowsDebuggerを生成
                     var projectB = new ProjectFile(projectName + ".Windows.Debugger", ProjectType.WindowsApplication);
                     {
                         // アセンブリ参照を追加
                         projectB.AddAssemblyReference("Rydia.Runtime", editordirectory + "/Rydia.Runtime.dll");
                         projectB.AddAssemblyReference("Rydia.Engine", editordirectory + "/Rydia.Engine.dll");
                         projectB.AddAssemblyReference("Rydia.Runtime.Windows", editordirectory + "/Rydia.Runtime.Windows.dll");
+                        projectB.AddReference(projectC);
 
                         // クラスAを生成
                         var classA = new ClassFile("Program");
@@ -478,45 +501,18 @@ namespace Rydia.GameStudio
                             // プロジェクトAにクラスAを追加
                             projectB.AddClass(classA);
                         }
-                        var classB = new ClassFile("LauncherApp", "Rydia." + projectName + ".Windows.Debugger", "AppRunner");
-                        {
 
-                            // usingを追加
-                            classB.AddUsing("System");
-                            classB.AddUsing("System.Collections.Generic");
-                            classB.AddUsing("System.Linq");
-                            classB.AddUsing("System.Text");
-                            classB.AddUsing("System.Reflection");
-                            classB.AddUsing("Rydia.Diagnostics");
-                            classB.AddUsing("Rydia.Engine");
-                            classB.AddUsing("Rydia.Runtime.Windows");
-                            classB.AddUsing("Rydia.Runtime.Desktop");
-                            classB.AddUsing("Rydia.Graphics.Api.ES30");
-                            classB.AddUsing("Rydia.Runtime");
-                            // クラスAにプロパティとメソッドを追加
-                            classB.AddProperty("GL", "static IGLES30", """
-                                get
-                                {
-                                    return RuntimeHost.GLES30;
-                                }
-                                """);
-
-                            classB.AddOverrideMethod("Load", "// リソースを読み込む");
-                            classB.AddOverrideMethod("Update", "// ゲームの状態を更新する", ("float", "deltaTimeSec"), ("float", "totalTimeSec"));
-                            classB.AddOverrideMethod("Render", "// 描画処理");
-                            classB.AddOverrideMethod("Unload", "// リソースを解放する");
-
-                            projectB.AddClass(classB);
-                        }
                         solutionFile.AddProject(projectB);
                     }
 
+                    // プロジェクトD: DroidDebuggerを生成
                     var projectD = new ProjectFile(projectName + ".Droid.Debugger", ProjectType.AndroidApplication);
                     {
                         // アセンブリ参照を追加
                         projectD.AddAssemblyReference("Rydia.Runtime", editordirectory + "/Rydia.Runtime.dll");
                         projectD.AddAssemblyReference("Rydia.Engine", editordirectory + "/Rydia.Engine.dll");
                         projectD.AddReference("Rydia.Runtime.Droid", "../../../../../../../../../../../Platform/Rydia.Runtime.Droid/Rydia.Runtime.Droid.csproj");
+                        projectD.AddReference(projectC);
 
                         // クラスAを生成
                         var classA = new ClassFile("MainActivity", "Rydia." + projectName + ".Debugger", "GLActivity");
@@ -557,34 +553,6 @@ namespace Rydia.GameStudio
                             projectD.AddClass(classA);
                         }
 
-                        var classB = new ClassFile("LauncherApp", "Rydia." + projectName + ".Debugger", "AppRunner");
-                        {
-                            // usingを追加
-                            classB.AddUsing("System");
-                            classB.AddUsing("System.Collections.Generic");
-                            classB.AddUsing("System.Linq");
-                            classB.AddUsing("System.Text");
-                            classB.AddUsing("System.Reflection");
-                            classB.AddUsing("Rydia.Diagnostics");
-                            classB.AddUsing("Rydia.Engine");
-                            classB.AddUsing("Rydia.Runtime.Desktop");
-                            classB.AddUsing("Rydia.Graphics.Api.ES30");
-                            classB.AddUsing("Rydia.Runtime");
-                            // クラスAにプロパティとメソッドを追加
-                            classB.AddProperty("GL", "static IGLES30", """
-                                get
-                                {
-                                    return RuntimeHost.GLES30;
-                                }
-                                """);
-
-                            classB.AddOverrideMethod("Load", "// リソースを読み込む");
-                            classB.AddOverrideMethod("Update", "// ゲームの状態を更新する", ("float", "deltaTimeSec"), ("float", "totalTimeSec"));
-                            classB.AddOverrideMethod("Render", "// 描画処理");
-                            classB.AddOverrideMethod("Unload", "// リソースを解放する");
-
-                            projectD.AddClass(classB);
-                        }
 
                         Directory.CreateDirectory($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources");
                         Directory.CreateDirectory($"Projects\\{projectName}\\Source\\Code\\{projectName}.Droid.Debugger\\Resources\\layout");
