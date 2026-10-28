@@ -17,6 +17,9 @@ namespace Rydia.SolutionBuilder
 
         private readonly List<ProjectFile> _projects = new();
 
+
+        public event Action<string>? LogReceived;
+
         /// <summary>
         /// ソリューション名を取得します。
         /// </summary>
@@ -183,7 +186,7 @@ namespace Rydia.SolutionBuilder
         /// <exception cref="InvalidOperationException">
         /// .NET CLI プロセスを起動できない場合、または実行結果の終了コードが 0 以外の場合にスローされます。
         /// </exception>
-        private static void RunDotNet(
+        private void RunDotNet(
             string workingDirectory,
             params string[] arguments)
         {
@@ -197,7 +200,10 @@ namespace Rydia.SolutionBuilder
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                // 標準出力と標準エラー出力を UTF-8 で読み取る
+                StandardOutputEncoding = Encoding.UTF8,
+                StandardErrorEncoding = Encoding.UTF8
             };
 
             foreach (string argument in arguments)
@@ -209,26 +215,30 @@ namespace Rydia.SolutionBuilder
                 ?? throw new InvalidOperationException(
                     "Failed to start dotnet.");
 
-            string output =
-                process.StandardOutput.ReadToEnd();
+            process.OutputDataReceived += (_, e) =>
+            {
+                if (e.Data != null)
+                {
+                    LogReceived?.Invoke(e.Data);
+                }
+            };
 
-            string error =
-                process.StandardError.ReadToEnd();
+            process.ErrorDataReceived += (_, e) =>
+            {
+                if (e.Data != null)
+                {
+                    LogReceived?.Invoke("[Error] " + e.Data);
+                }
+            };
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
 
             process.WaitForExit();
-
-            if (!string.IsNullOrEmpty(output))
-                Console.WriteLine(output);
-
-            if (!string.IsNullOrEmpty(error))
-                Debug.WriteLine(error);
 
             if (process.ExitCode != 0)
             {
                 throw new InvalidOperationException(
-        $"dotnet exited with code {process.ExitCode}.\n" +
-        $"標準出力:\n{output}\n" +
-        $"標準エラー:\n{error}");
+                    $"dotnet exited with code {process.ExitCode}.");
             }
         }
 

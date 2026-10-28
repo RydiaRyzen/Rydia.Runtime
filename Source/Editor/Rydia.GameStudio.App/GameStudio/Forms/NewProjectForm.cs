@@ -622,59 +622,12 @@ namespace Rydia.GameStudio
                     logForm.SetStatus("プロジェクトをビルドしています...");
                     logForm.AppendLog("ビルドを開始します。");
 
-                    string solutionPath = System.IO.Path.Combine(
-                        solutionFile.Path,
-                        solutionFile.Name + ".slnx");
-
-                    var arguments = new string[]{
-                        "build",
-                        solutionPath,
-                        "--configuration",
-                        "Debug"};
-                    logForm.AppendLog("dotnet " + string.Join(" ", arguments));
-                    var startInfo = new ProcessStartInfo
+                    solutionFile.LogReceived += (message) =>
                     {
-                        WorkingDirectory = solutionFile.Path,
-                        FileName = "dotnet",
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        CreateNoWindow = true,
-                        // 標準出力と標準エラー出力を UTF-8 で読み取る
-                        StandardOutputEncoding = Encoding.UTF8,
-                        StandardErrorEncoding = Encoding.UTF8
+                        logForm.AppendLog(message);
                     };
-                    foreach (string argument in arguments)
-                    {
-                        startInfo.ArgumentList.Add(argument);
-                    }
-                    using var process = Process.Start(startInfo)
-                ?? throw new InvalidOperationException(
-                    "Failed to start dotnet.");
-                    process.OutputDataReceived += (_, e) =>
-                    {
-                        if (e.Data != null)
-                        {
-                            logForm.AppendLog(e.Data);
-                        }
-                    };
-                    process.ErrorDataReceived += (_, e) =>
-                    {
-                        if (e.Data != null)
-                        {
-                            logForm.AppendLog("[Error] " + e.Data);
-                        }
-                    };
-                    process.BeginOutputReadLine();
-                    process.BeginErrorReadLine();
 
-                    process.WaitForExit();
-
-                    if (process.ExitCode != 0)
-                    {
-                        throw new InvalidOperationException(
-                            $"dotnet exited with code {process.ExitCode}.");
-                    }
+                    solutionFile.Build();
 
                     logForm.AppendLog("ビルドが完了しました。");
 
