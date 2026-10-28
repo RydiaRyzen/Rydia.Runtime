@@ -16,7 +16,7 @@ Rydia Engine は、以下のプロジェクトで構成されています。
 
 ソリューションファイルを開くときにはC:\などの浅い階層で開いてください
 
-WindowsとAndroidは正常に起動できています
+WindowsとAndroidは正常にビルド・起動できています
 
 ## `Rydia.Runtime`
 
