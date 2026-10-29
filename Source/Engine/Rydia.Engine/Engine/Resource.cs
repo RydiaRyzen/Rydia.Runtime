@@ -135,7 +135,7 @@ namespace Rydia.Engine
             where TResource : Resource
         {
             var serializer = new XmlResourceSerializer<TResource>();
-            TResource resource = ResourceCache.Load(path, typeof(TResource));
+            TResource resource = (TResource)ResourceCache.Load(path, typeof(TResource));
             
             serializer.Deserialize(path);
 
