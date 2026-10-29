@@ -1,7 +1,9 @@
-﻿using System.Xml;
-using static Rydia.Engine.Serialization.XmlSerializer;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
+using System.Xml.Serialization;
+using static Rydia.Engine.Serialization.XmlResourceSerializer<Rydia.Engine.Resource>;
+
 namespace Rydia.Engine.Serialization.Tests
 {
 
@@ -19,7 +21,7 @@ namespace Rydia.Engine.Serialization.Tests
         }
 
         [SetUp]
-        public void Setup()
+        public void SetUp()
         {
             this.writer = new XmlDataWriter();
         }
@@ -198,6 +200,67 @@ namespace Rydia.Engine.Serialization.Tests
         {
             Assert.Throws<ArgumentNullException>(
                 () => new XmlDataReader(null));
+        }
+
+        [Test(Description = "プロパティの値が正しく復元されること、および複数のリソースから同一のリソースインスタンスが参照されることを検証します。")]
+        public void XmlSerializerTest()
+        {
+            var obj2 = new TestObject2
+            {
+                Health = 150,
+                Level = 15,
+                Status = new short[] { 6, 7, 8, 9, 10 }
+            };
+            var obj1 = new TestObject1
+            {
+                Health = 100,
+                Level = 10,
+                Status = new int[] { 1, 2, 3, 4, 5 },
+                Obj = obj2
+            };
+
+            var obj3 = new TestObject1
+            {
+                Health = 200,
+                Level = 20,
+                Status = new int[] { 11, 12, 13, 14, 15 },
+                Obj = obj2
+            };
+
+            obj1.Path = "TestObject2.xml";
+            obj2.Path = "TestObject1.xml";
+            obj3.Path = "TestObject3.xml";
+
+            var serializer1 = new XmlResourceSerializer<TestObject1>();
+            var serializer2 = new XmlResourceSerializer<TestObject2>();
+            
+            serializer1.Serialize(obj1, obj1.Path);
+            serializer2.Serialize(obj2, obj2.Path);
+            serializer1.Serialize(obj3, obj3.Path);
+
+            var deserialized1 = serializer1.Deserialize(obj1.Path);
+            var deserialized2 = serializer2.Deserialize(obj2.Path);
+            var deserialized3 = serializer1.Deserialize(obj3.Path);
+
+            Assert.That(deserialized1, Is.Not.Null);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserialized1.Health, Is.EqualTo(obj1.Health));
+                Assert.That(deserialized1.Level, Is.EqualTo(obj1.Level));
+                Assert.That(deserialized1.Status, Is.EqualTo(obj1.Status));
+
+                Assert.That(deserialized2.Health, Is.EqualTo(obj1.Obj.Res.Health));
+                Assert.That(deserialized2.Level, Is.EqualTo(obj1.Obj.Res.Level));
+                Assert.That(deserialized2.Status, Is.EqualTo(obj1.Obj.Res.Status));
+
+                Assert.That(deserialized3.Health, Is.EqualTo(obj3.Health));
+                Assert.That(deserialized3.Level, Is.EqualTo(obj3.Level));
+                Assert.That(deserialized3.Status, Is.EqualTo(obj3.Status));
+
+                // deserialized3.Obj.Res と deserialized1.Obj.Res が同一インスタンスかどうか
+                Assert.That(deserialized3.Obj.Res, Is.SameAs(deserialized1.Obj.Res));
+            });
         }
 
     }

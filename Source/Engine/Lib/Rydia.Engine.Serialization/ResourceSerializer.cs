@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
+using System.Xml;
 
 namespace Rydia.Engine.Serialization
 {
 
     /// <summary>
-    /// オブジェクトのシリアライズおよびデシリアライズの
-    /// 共通機能を提供するベースクラスです。
+    /// Resource クラスの派生型をシリアライズおよびデシリアライズするための
+    /// 基底クラスを表します。
     /// </summary>
-    public abstract class SerializerBase
+    /// <typeparam name="TResource">
+    /// シリアライズ対象となる Resource クラスの派生型を指定します。
+    /// </typeparam>
+    public abstract class ResourceSerializer<TResource>
+        where TResource : Resource
     {
+
         private const string TypeKey = "$type";
 
         /// <summary>
@@ -26,14 +32,56 @@ namespace Rydia.Engine.Serialization
         protected abstract IDataReader Reader { get; }
 
         /// <summary>
-        /// オブジェクトをシリアライズします。
+        /// 指定された名前でデータを書き込みます。
         /// </summary>
-        /// <param name="obj">シリアライズするオブジェクト。</param>
-        public void Serialize(object obj)
+        /// <param name="name">書き込むデータの名前。</param>
+        /// <param name="value">書き込むデータ。</param>
+        public void WriteValue(string name, object value)
         {
-            ArgumentNullException.ThrowIfNull(obj);
+            Writer.WriteValue(name, value);
+        }
 
-            Type type = obj.GetType();
+        /// <summary>
+        /// 指定された名前のデータを読み取ります。
+        /// </summary>
+        /// <param name="name">読み取るデータの名前。</param>
+        /// <returns>読み取ったデータ。</returns>
+        public object ReadValue(string name)
+        {
+            return Reader.ReadValue(name);
+        }
+
+        /// <summary>
+        /// 指定された名前のデータを指定した型で読み取ります。
+        /// </summary>
+        /// <typeparam name="T">読み取るデータの型。</typeparam>
+        /// <param name="name">読み取るデータの名前。</param>
+        /// <returns>読み取ったデータ。</returns>
+        public T ReadValue<T>(string name)
+        {
+            return Reader.ReadValue<T>(name);
+        }
+
+        /// <summary>
+        /// 指定された名前のデータを読み取り、出力引数に格納します。
+        /// </summary>
+        /// <typeparam name="T">読み取るデータの型。</typeparam>
+        /// <param name="name">読み取るデータの名前。</param>
+        /// <param name="value">読み取ったデータ。</param>
+        public void ReadValue<T>(string name, out T value)
+        {
+            Reader.ReadValue(name, out value);
+        }
+
+        /// <summary>
+        /// 指定した Resource をストリームにシリアライズします。
+        /// </summary>
+        /// <param name="resource">シリアライズ対象の Resource。</param>
+        /// <param name="stream">シリアライズ先のストリーム。</param>
+        protected void Serialize(TResource resource)
+        {
+           
+            Type type = resource.GetType();
 
             // デシリアライズ時に使用する型情報
             Writer.WriteValue(
@@ -47,7 +95,7 @@ namespace Rydia.Engine.Serialization
             {
                 Writer.WriteValue(
                     property.Name,
-                    property.GetValue(obj));
+                    property.GetValue(resource));
             }
 
             // プロパティと重複しない公開フィールドを書き込む
@@ -55,16 +103,19 @@ namespace Rydia.Engine.Serialization
             {
                 Writer.WriteValue(
                     field.Name,
-                    field.GetValue(obj));
+                    field.GetValue(resource));
             }
+
         }
 
         /// <summary>
-        /// データをデシリアライズしてオブジェクトを復元します。
+        /// ストリームから Resource をデシリアライズします。
         /// </summary>
-        /// <returns>復元されたオブジェクト。</returns>
-        public object Deserialize()
+        /// <param name="stream">デシリアライズ元のストリーム。</param>
+        /// <returns>デシリアライズされた Resource。</returns>
+        protected TResource Deserialize()
         {
+
             string typeName = Reader.ReadValue<string>(TypeKey);
 
             Type type = Type.GetType(typeName)
@@ -99,7 +150,7 @@ namespace Rydia.Engine.Serialization
                     ConvertValue(value, field.FieldType));
             }
 
-            return obj;
+            return (TResource)obj;
         }
 
         /// <summary>
@@ -114,7 +165,6 @@ namespace Rydia.Engine.Serialization
                     p.SetMethod is { IsPublic: true, IsStatic: false })
                 .ToArray();
         }
-
         /// <summary>
         /// シリアライズ対象のフィールドを取得します。
         /// </summary>
@@ -167,6 +217,7 @@ namespace Rydia.Engine.Serialization
                 actualType,
                 CultureInfo.InvariantCulture);
         }
+
     }
 
 }

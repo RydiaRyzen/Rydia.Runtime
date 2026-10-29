@@ -9,11 +9,14 @@
     <Import_RootNamespace>Rydia.Engine.Serialization</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)BinarySerializer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DataType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BinaryResourceSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ContentRef.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DontSerializeAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IContentRef.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IDataReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IDataWriter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SerializerBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)XmlSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ResourceCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ResourceSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XmlResourceSerializer.cs" />
   </ItemGroup>
 </Project>

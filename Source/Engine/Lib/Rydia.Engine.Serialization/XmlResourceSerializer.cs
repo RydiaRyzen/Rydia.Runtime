@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection.Metadata.Ecma335;
+using System.Security.AccessControl;
 using System.Text;
 using System.Xml;
-using Newtonsoft.Json.Linq;
 
 namespace Rydia.Engine.Serialization
 {
 
-    /// <summary>
-    /// XML形式でオブジェクトをシリアライズおよび
-    /// デシリアライズするクラスのベースクラスです。
-    /// </summary>
-    public class XmlSerializer : SerializerBase
+    public sealed class XmlResourceSerializer<TResource>
+    : ResourceSerializer<TResource>
+    where TResource : Resource
     {
 
         /// <summary>
@@ -22,7 +21,7 @@ namespace Rydia.Engine.Serialization
         {
             private readonly XmlDocument document;
             private readonly XmlElement root;
-            
+
             /// <summary>
             /// XML データを書き込むためのインスタンスを初期化します。
             /// </summary>
@@ -57,44 +56,7 @@ namespace Rydia.Engine.Serialization
                 XmlElement element = this.document.CreateElement("Item");
                 element.SetAttribute("Name", name);
 
-                if (value is null)
-                {
-                    element.SetAttribute("Type", "null");
-                    element.InnerText = string.Empty;
-                }
-                else if (value is bool boolean)
-                {
-                    element.SetAttribute("Type", value.GetType().AssemblyQualifiedName);
-                    element.InnerText = XmlConvert.ToString(boolean);
-                }
-                else if (value is Type typeValue)
-                {
-                    element.SetAttribute(
-                        "Type",
-                        typeof(Type).AssemblyQualifiedName);
-
-                    element.InnerText =
-                        typeValue.AssemblyQualifiedName
-                        ?? typeValue.FullName
-                        ?? typeValue.Name;
-                }
-                else
-                {
-                    element.SetAttribute("Type", value.GetType().AssemblyQualifiedName);
-
-                    if (value is Type type)
-                    {
-                        element.InnerText = type.AssemblyQualifiedName ?? type.FullName ?? type.Name;
-                    }
-                    else if (value is IFormattable formattable)
-                    {
-                        element.InnerText = formattable.ToString(null, CultureInfo.InvariantCulture);
-                    }
-                    else
-                    {
-                        element.InnerText = value.ToString() ?? string.Empty;
-                    }
-                }
+                WriteElementValue(element, value);
 
                 // 同名要素が存在する場合は置き換える
                 foreach (XmlNode node in this.root.ChildNodes)
@@ -108,6 +70,68 @@ namespace Rydia.Engine.Serialization
                 }
 
                 this.root.AppendChild(element);
+            }
+
+            private void WriteElementValue(XmlElement element, object value)
+            {
+                if (value is null)
+                {
+                    element.SetAttribute("Type", "null");
+                    return;
+                }
+
+                Type valueType = value.GetType();
+
+                element.SetAttribute(
+                    "Type",
+                    valueType.FullName
+                    ?? valueType.Name);
+
+                if (value is Type typeValue)
+                {
+                    element.InnerText =
+                        typeValue.FullName
+                        ?? typeValue.Name;
+
+                    return;
+                }
+
+                if (value is bool boolean)
+                {
+                    element.InnerText = XmlConvert.ToString(boolean);
+                    return;
+                }
+
+                if (value is Array array)
+                {
+                    foreach (object item in array)
+                    {
+                        XmlElement child = this.document.CreateElement("Value");
+                        WriteElementValue(child, item);
+                        element.AppendChild(child);
+                    }
+
+                    return;
+                }
+
+                if (value is IFormattable formattable)
+                {
+                    element.InnerText = formattable.ToString(
+                        null,
+                        CultureInfo.InvariantCulture);
+
+                    return;
+                }
+                if (value is IContentRef contentRef)
+                {
+                    element.SetAttribute(
+                        "Type",
+                        value.GetType().AssemblyQualifiedName);
+
+                    element.InnerText = contentRef.Res?.Path ?? string.Empty;
+                    return;
+                }
+                element.InnerText = value.ToString() ?? string.Empty;
             }
         }
 
@@ -156,10 +180,17 @@ namespace Rydia.Engine.Serialization
             /// <returns>読み取ったデータ。</returns>
             public object ReadValue(string name)
             {
-                XmlElement element = FindElement(name);
+                return ReadElementValue(FindElement(name));
+            }
 
+            /// <summary>
+            /// XML 要素から値を読み取ります。
+            /// </summary>
+            /// <param name="element">読み取る XML 要素。</param>
+            /// <returns>読み取った値。</returns>
+            private object ReadElementValue(XmlElement element)
+            {
                 string typeName = element.GetAttribute("Type");
-                string text = element.InnerText;
 
                 if (typeName == "null")
                     return null;
@@ -167,6 +198,8 @@ namespace Rydia.Engine.Serialization
                 Type type = Type.GetType(typeName)
                     ?? throw new InvalidOperationException(
                         $"型 '{typeName}' を解決できません。");
+
+                string text = element.InnerText;
 
                 if (type == typeof(string))
                     return text;
@@ -176,6 +209,35 @@ namespace Rydia.Engine.Serialization
                     return Type.GetType(text)
                         ?? throw new InvalidOperationException(
                             $"型 '{text}' を解決できません。");
+                }
+
+                if (type.IsArray)
+                {
+                    Type elementType = type.GetElementType()
+                        ?? throw new InvalidOperationException(
+                            $"配列 '{type}' の要素型を取得できません。");
+
+                    XmlElement[] values = element.ChildNodes
+                        .OfType<XmlElement>()
+                        .Where(e => e.Name == "Value")
+                        .ToArray();
+
+                    Array array = Array.CreateInstance(elementType, values.Length);
+
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        object item = ReadElementValue(values[i]);
+
+                        if (item != null && !elementType.IsInstanceOfType(item))
+                        {
+                            throw new InvalidOperationException(
+                                $"配列 '{type}' の要素型と読み取った値の型が一致しません。");
+                        }
+
+                        array.SetValue(item, i);
+                    }
+
+                    return array;
                 }
 
                 if (type.IsEnum)
@@ -219,11 +281,27 @@ namespace Rydia.Engine.Serialization
 
                 if (type == typeof(char))
                     return XmlConvert.ToChar(text);
-                if (type == typeof(Type))
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ContentRef<>))
                 {
-                    return Type.GetType(text)
-                        ?? throw new InvalidOperationException(
-                            $"型 '{text}' を解決できませんでした。");
+                    string path = element.InnerText;
+                    Type resourceType = type.GetGenericArguments()[0];
+                    // path から ttype 型の Resource を取得
+                    Resource resource = ResourceCache.Load(path, resourceType);
+
+                    if (resource == null)
+                    {
+                        throw new InvalidOperationException(
+                            $"リソースを取得できませんでした。Path: {path}, Type: {resourceType.FullName}");
+                    }
+                    // ContentRef<T> を生成
+                    return Activator.CreateInstance(
+                        type,
+                        System.Reflection.BindingFlags.Instance |
+                        System.Reflection.BindingFlags.NonPublic,
+                        binder: null,
+                        args: new object[] { resource },
+                        culture: null
+                    );
                 }
                 return Convert.ChangeType(
                     text,
@@ -280,17 +358,14 @@ namespace Rydia.Engine.Serialization
                     $"キー '{name}' が XML データに存在しません。");
             }
         }
-
-        private XmlDataReader dataReader;
-        private XmlDataWriter dataWriter = new XmlDataWriter();
-
-        private string _Path;
+        private XmlDataWriter xmlDataWriter;
+        private XmlDataReader xmlDataReader;
 
         protected override IDataWriter Writer
         {
             get
             {
-                return this.dataWriter;
+                return this.xmlDataWriter;
             }
         }
 
@@ -298,32 +373,64 @@ namespace Rydia.Engine.Serialization
         {
             get
             {
-                return this.dataReader;
+                return this.xmlDataReader;
             }
         }
 
-        public XmlSerializer(string path)
+        public TResource Deserialize(string path)
         {
-            this._Path = path;
-            var doc = new XmlDocument();
-            doc.Load(File.OpenRead(path));
-            this.dataReader = new XmlDataReader(doc);
+            using (var fr = File.OpenRead(path))
+            {
+                return Deserialize(fr);
+            }
         }
 
-        public void Serialize(string path, object obj)
+        public TResource Deserialize(Stream stream)
         {
-            this.dataWriter = new XmlDataWriter();
-            base.Serialize(obj);
-            this.dataWriter.Document.Save(path);
-        }
+            ArgumentNullException.ThrowIfNull(stream);
 
-        public object Deserialize(string path)
-        {
+            if (!stream.CanRead)
+            {
+                throw new ArgumentException(
+                    "ストリームから読み込むことができません。",
+                    nameof(stream));
+            }
             var document = new XmlDocument();
-            document.Load(path);
+            document.Load(stream);
+
+            this.xmlDataReader = new XmlDataReader(document);
             return base.Deserialize();
         }
 
+        public void Serialize(TResource resource, string path)
+        {
+            using (var fs = new FileStream(
+                path,
+                FileMode.Create,
+                FileAccess.Write,
+                FileShare.None))
+            {
+                Serialize(resource, fs);
+            }
+        }
+
+        public void Serialize(TResource resource, Stream stream)
+        {
+            ArgumentNullException.ThrowIfNull(resource);
+            ArgumentNullException.ThrowIfNull(stream);
+
+
+            if (!stream.CanWrite)
+            {
+                throw new ArgumentException(
+                    "ストリームへの書き込みができません。",
+                    nameof(stream));
+            }
+            this.xmlDataWriter = new XmlDataWriter();
+            base.Serialize(resource);
+            stream.Position = 0;
+            this.xmlDataWriter.Document.Save(stream);
+        }
     }
 
 }

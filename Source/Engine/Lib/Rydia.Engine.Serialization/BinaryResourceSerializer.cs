@@ -5,12 +5,11 @@ using System.Text;
 namespace Rydia.Engine.Serialization
 {
 
-    /// <summary>
-    /// バイナリ形式でオブジェクトをシリアライズおよび
-    /// デシリアライズするクラスのベースクラスです。
-    /// </summary>
-    public class BinarySerializer : SerializerBase
+    public sealed class BinaryResourceSerializer<TResource>
+    : ResourceSerializer<TResource>
+    where TResource : Resource
     {
+
         protected override IDataWriter Writer
         {
             get
@@ -26,6 +25,7 @@ namespace Rydia.Engine.Serialization
                 throw new NotImplementedException();
             }
         }
+
     }
 
 }

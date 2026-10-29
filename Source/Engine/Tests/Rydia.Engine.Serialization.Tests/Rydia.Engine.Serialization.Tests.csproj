@@ -17,9 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="NUnit.Framework" />
+    <ProjectReference Include="..\..\Rydia.Engine\Rydia.Engine.csproj" />
   </ItemGroup>
 
-  <Import Project="..\..\Lib\Rydia.Engine.Serialization\Rydia.Engine.Serializer.projitems" Label="Shared" />
+  <ItemGroup>
+    <Using Include="NUnit.Framework" />
+  </ItemGroup>
 
 </Project>

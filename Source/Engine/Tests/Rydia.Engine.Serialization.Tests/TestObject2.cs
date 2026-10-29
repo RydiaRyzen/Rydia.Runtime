@@ -4,14 +4,18 @@ using System.Text;
 
 namespace Rydia.Engine.Serialization.Tests
 {
-    internal class XmlSerializerTestObject1
+    public class TestObject2 : Resource
     {
-
-        public string Name { get; set; } = "";
 
         public int Level { get; set; }
 
         public float Health { get; set; }
+
+        public short[] Status
+        {
+            get;
+            set;
+        }
 
     }
 }

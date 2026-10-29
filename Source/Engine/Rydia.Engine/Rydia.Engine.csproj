@@ -125,4 +125,6 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <Import Project="..\Lib\Rydia.Engine.Serialization\Rydia.Engine.Serializer.projitems" Label="Shared" />
+
 </Project>
