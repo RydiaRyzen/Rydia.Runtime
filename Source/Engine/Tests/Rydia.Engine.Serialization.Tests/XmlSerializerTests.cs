@@ -239,7 +239,6 @@ namespace Rydia.Engine.Serialization.Tests
             serializer1.Serialize(obj3, obj3.Path);
 
             var deserialized1 = serializer1.Deserialize(obj1.Path);
-            var deserialized2 = serializer2.Deserialize(obj2.Path);
             var deserialized3 = serializer1.Deserialize(obj3.Path);
 
             Assert.That(deserialized1, Is.Not.Null);
@@ -250,13 +249,17 @@ namespace Rydia.Engine.Serialization.Tests
                 Assert.That(deserialized1.Level, Is.EqualTo(obj1.Level));
                 Assert.That(deserialized1.Status, Is.EqualTo(obj1.Status));
 
-                Assert.That(deserialized2.Health, Is.EqualTo(obj1.Obj.Res.Health));
-                Assert.That(deserialized2.Level, Is.EqualTo(obj1.Obj.Res.Level));
-                Assert.That(deserialized2.Status, Is.EqualTo(obj1.Obj.Res.Status));
+                Assert.That(deserialized1.Obj.Res.Health, Is.EqualTo(obj1.Obj.Res.Health));
+                Assert.That(deserialized1.Obj.Res.Level, Is.EqualTo(obj1.Obj.Res.Level));
+                Assert.That(deserialized1.Obj.Res.Status, Is.EqualTo(obj1.Obj.Res.Status));
 
                 Assert.That(deserialized3.Health, Is.EqualTo(obj3.Health));
                 Assert.That(deserialized3.Level, Is.EqualTo(obj3.Level));
                 Assert.That(deserialized3.Status, Is.EqualTo(obj3.Status));
+
+                Assert.That(deserialized3.Obj.Res.Health, Is.EqualTo(obj3.Obj.Res.Health));
+                Assert.That(deserialized3.Obj.Res.Level, Is.EqualTo(obj3.Obj.Res.Level));
+                Assert.That(deserialized3.Obj.Res.Status, Is.EqualTo(obj3.Obj.Res.Status));
 
                 // deserialized3.Obj.Res と deserialized1.Obj.Res が同一インスタンスかどうか
                 Assert.That(deserialized3.Obj.Res, Is.SameAs(deserialized1.Obj.Res));

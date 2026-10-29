@@ -300,8 +300,8 @@ namespace Rydia.Engine.Serialization
                         System.Reflection.BindingFlags.NonPublic,
                         binder: null,
                         args: new object[] { resource },
-                        culture: null
-                    );
+                        culture: CultureInfo.InvariantCulture
+                        );
                 }
                 return Convert.ChangeType(
                     text,
