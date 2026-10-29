@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Android.Media;
 using Rydia.Drawing;
 using Rydia.Graphics.Api.ES20;
 using Rydia.Graphics.Backend;

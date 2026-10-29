@@ -47,7 +47,9 @@
     <Project Path="Source/Runtime/Tests/Rydia.Tests/Rydia.Tests.csproj" />
   </Folder>
   <Folder Name="/2000-Engine/" />
-  <Folder Name="/2000-Engine/2100-Lib/" />
+  <Folder Name="/2000-Engine/2100-Lib/">
+    <Project Path="Source/Engine/Lib/Rydia.Engine.Serialization/Rydia.Engine.Serialization.shproj" Id="c30fbada-c42a-4fca-b363-83fb303b8e87" />
+  </Folder>
   <Folder Name="/2000-Engine/2200-Api/" />
   <Folder Name="/2000-Engine/2300-Engine/">
     <Project Path="Source/Engine/Rydia.Engine/Rydia.Engine.csproj" />
@@ -56,7 +58,9 @@
     <Project Path="Source/Engine/Rydia.Engine.Windows.App/Rydia.Engine.Windows.App.csproj" />
   </Folder>
   <Folder Name="/2000-Engine/2800-Samples/" />
-  <Folder Name="/2000-Engine/2900-Tests/" />
+  <Folder Name="/2000-Engine/2900-Tests/">
+    <Project Path="Source/Engine/Tests/Rydia.Engine.Serialization.Tests/Rydia.Engine.Serialization.Tests.csproj" Id="637bbc4f-9387-4e32-a5dc-a3e278889cc6" />
+  </Folder>
   <Folder Name="/3000-Editor/" />
   <Folder Name="/3000-Editor/3100-Lib/">
     <Project Path="Source/Editor/Lib/Rydia.Windows.Forms.ColorControls/Rydia.Windows.Forms.ColorControls.shproj" Id="80d80faf-8ead-400b-a379-bd5a36280fb4" />

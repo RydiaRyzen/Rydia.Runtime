@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>c30fbada-c42a-4fca-b363-83fb303b8e87</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Rydia.Engine.Serialization</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BinarySerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IDataReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IDataWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializerBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XmlSerializer.cs" />
+  </ItemGroup>
+</Project>

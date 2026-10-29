@@ -19,12 +19,27 @@ namespace Rydia.IO
 
         private Assembly _assembly = null;
 
+        /// <summary>
+        /// プレフィックスを取得または設定します
+        /// </summary>
+        public string Prefix
+        {
+            get;
+            set;
+        }
+
         public EmbeddedResources()
         {
             Debug.Assert(this._assembly == null);
             if (this._assembly == null)
                 this._assembly = Assembly.GetAssembly(typeof(TTypeInAssetsAssembly));
             Debug.Assert(this._assembly != null);
+        }
+
+        public EmbeddedResources(string prefix)
+            : this()
+        {
+            Prefix = prefix;
         }
 
         /// <summary>
@@ -45,7 +60,14 @@ namespace Rydia.IO
             {
                 throw new Exception();
             }
-            return this._assembly.GetManifestResourceStream(filename); //(_prefix + filename);
+            if(string.IsNullOrEmpty(Prefix))
+            {
+                return this._assembly.GetManifestResourceStream(filename); //(_prefix + filename);
+            }
+            else
+            {
+                return this._assembly.GetManifestResourceStream(Prefix + filename); //(_prefix + filename);
+            }
         }
 
         /// <summary>
