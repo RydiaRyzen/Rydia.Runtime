@@ -13,6 +13,9 @@ namespace Rydia.Engine.Serialization.Tests
         private XmlDataWriter writer;
         private XmlDataReader reader;
 
+        private string _TestDirectory;
+        private string _TestFilePath;
+
         private enum TestEnum
         {
             None,
@@ -24,6 +27,17 @@ namespace Rydia.Engine.Serialization.Tests
         public void SetUp()
         {
             this.writer = new XmlDataWriter();
+
+            this._TestFilePath = Path.Combine("AudioData.xml");
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            if (Directory.Exists(this._TestDirectory))
+            {
+                Directory.Delete(this._TestDirectory, true);
+            }
         }
 
         /// <summary>
@@ -264,6 +278,155 @@ namespace Rydia.Engine.Serialization.Tests
                 // deserialized3.Obj.Res と deserialized1.Obj.Res が同一インスタンスかどうか
                 Assert.That(deserialized3.Obj.Res, Is.SameAs(deserialized1.Obj.Res));
             });
+        }
+
+        [Test(Description = "AudioDataをXMLにシリアライズできることを確認します。")]
+        public void SerializeTest()
+        {
+            // Arrange
+            var audioData = new AudioData
+            {
+                Channels = 2,
+                SampleRate = 44100,
+                PCMData = new short[]
+                {
+                0, 1000, -1000, 2000,
+                -2000, 3000, -3000, 4000
+                }
+            };
+
+            var serializer = new XmlResourceSerializer<AudioData>();
+
+            // Act
+            serializer.Serialize(audioData, this._TestFilePath);
+
+            // Assert
+            Assert.That(File.Exists(this._TestFilePath), Is.True);
+
+            string xml = File.ReadAllText(this._TestFilePath);
+
+            Assert.That(xml, Is.Not.Empty);
+            Assert.That(xml, Does.Contain("Channels"));
+            Assert.That(xml, Does.Contain("SampleRate"));
+            Assert.That(xml, Does.Contain("PCMData"));
+        }
+
+        [Test(Description = "XMLからAudioDataをデシリアライズできることを確認します。")]
+        public void DeserializeTest()
+        {
+            // Arrange
+            var source = new AudioData
+            {
+                Channels = 2,
+                SampleRate = 44100,
+                PCMData = new short[]
+                {
+                0, 1000, -1000, 2000,
+                -2000, 3000, -3000, 4000
+                }
+            };
+
+            var serializer = new XmlResourceSerializer<AudioData>();
+
+            serializer.Serialize(source, this._TestFilePath);
+
+            // Act
+            AudioData result = serializer.Deserialize(this._TestFilePath);
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Channels, Is.EqualTo(source.Channels));
+            Assert.That(result.SampleRate, Is.EqualTo(source.SampleRate));
+
+            Assert.That(result.PCMData, Is.Not.Null);
+            Assert.That(result.PCMData, Is.EqualTo(source.PCMData));
+        }
+
+        [Test(Description = "PCMDataが空の場合でもシリアライズ・デシリアライズできることを確認します。")]
+        public void SerializeDeserializeEmptyPCMDataTest()
+        {
+            // Arrange
+            var source = new AudioData
+            {
+                Channels = 1,
+                SampleRate = 22050,
+                PCMData = Array.Empty<short>()
+            };
+
+            var serializer = new XmlResourceSerializer<AudioData>();
+
+            // Act
+            serializer.Serialize(source, this._TestFilePath);
+            AudioData result = serializer.Deserialize(this._TestFilePath);
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Channels, Is.EqualTo(1));
+            Assert.That(result.SampleRate, Is.EqualTo(22050));
+            Assert.That(result.PCMData, Is.Not.Null);
+            Assert.That(result.PCMData, Is.Empty);
+        }
+
+        [Test(Description = "PixelDataをXMLにシリアライズできることを確認します。")]
+        public void PixelData_SerializeTest()
+        {
+            // Arrange
+            PixelData pixelData = CreatePixelData();
+
+            var serializer = new XmlResourceSerializer<PixelData>();
+
+            // Act
+            serializer.Serialize(pixelData, this._TestFilePath);
+
+            // Assert
+            Assert.That(File.Exists(this._TestFilePath), Is.True);
+
+            string xml = File.ReadAllText(this._TestFilePath);
+
+            Assert.That(xml, Is.Not.Empty);
+            Assert.That(xml, Does.Contain("Width"));
+            Assert.That(xml, Does.Contain("Height"));
+            Assert.That(xml, Does.Contain("Data"));
+        }
+
+        [Test(Description = "PixelDataをXMLからデシリアライズできることを確認します。")]
+        public void PixelData_DeserializeTest()
+        {
+            // Arrange
+            PixelData source = CreatePixelData();
+
+            var serializer = new XmlResourceSerializer<PixelData>();
+
+            serializer.Serialize(source, this._TestFilePath);
+
+            // Act
+            PixelData result = serializer.Deserialize(this._TestFilePath);
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Width, Is.EqualTo(source.Width));
+            Assert.That(result.Height, Is.EqualTo(source.Height));
+            Assert.That(result.Data, Is.EqualTo(source.Data));
+        }
+
+        /// <summary>
+        /// テスト用のPixelDataを生成します。
+        /// </summary>
+        /// <returns>テスト用のPixelData。</returns>
+        private static PixelData CreatePixelData()
+        {
+            return new PixelData
+            {
+                Width = 2,
+                Height = 2,
+                Data =
+                [
+                    255, 0, 0, 255,
+            0, 255, 0, 255,
+            0, 0, 255, 255,
+            255, 255, 255, 255
+                ]
+            };
         }
 
     }

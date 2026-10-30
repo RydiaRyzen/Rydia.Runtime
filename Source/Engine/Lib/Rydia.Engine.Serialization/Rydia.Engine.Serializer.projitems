@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ContentRef.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DontSerializeAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IContentRef.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ICustomSerializable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IDataReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IDataWriter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ResourceCache.cs" />

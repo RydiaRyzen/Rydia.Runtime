@@ -90,20 +90,27 @@ namespace Rydia.Engine.Serialization
                     ?? throw new InvalidOperationException(
                         "型情報を取得できません。"));
 
-            // プロパティを書き込む
-            foreach (PropertyInfo property in GetSerializableProperties(type))
+            if (typeof(ICustomSerializable).IsAssignableFrom(type))
             {
-                Writer.WriteValue(
-                    property.Name,
-                    property.GetValue(resource));
+                ((ICustomSerializable)resource).WriteData(Writer);
             }
-
-            // プロパティと重複しない公開フィールドを書き込む
-            foreach (FieldInfo field in GetSerializableFields(type))
+            else
             {
-                Writer.WriteValue(
-                    field.Name,
-                    field.GetValue(resource));
+                // プロパティを書き込む
+                foreach (PropertyInfo property in GetSerializableProperties(type))
+                {
+                    Writer.WriteValue(
+                        property.Name,
+                        property.GetValue(resource));
+                }
+
+                // プロパティと重複しない公開フィールドを書き込む
+                foreach (FieldInfo field in GetSerializableFields(type))
+                {
+                    Writer.WriteValue(
+                        field.Name,
+                        field.GetValue(resource));
+                }
             }
 
         }
@@ -119,36 +126,51 @@ namespace Rydia.Engine.Serialization
             string typeName = Reader.ReadValue<string>(TypeKey);
 
             Type type = Type.GetType(typeName)
-                ?? throw new InvalidOperationException(
-                    $"型 '{typeName}' を解決できません。");
+        ?? throw new InvalidOperationException(
+            $"型 '{typeName}' を解決できません。");
+
+            if (!typeof(TResource).IsAssignableFrom(type))
+            {
+                throw new InvalidOperationException(
+                    $"型 '{type.FullName}' は '{typeof(TResource).FullName}' と互換性がありません。");
+            }
 
             object obj = Activator.CreateInstance(type)
                 ?? throw new InvalidOperationException(
                     $"型 '{type.FullName}' のインスタンスを生成できません。");
 
-            foreach (PropertyInfo property in GetSerializableProperties(type))
+            if (obj is ICustomSerializable customSerializable)
             {
-                if (!Reader.Keys.Contains(property.Name))
-                    continue;
+                customSerializable.ReadData(Reader);
+            }
+            else
+            {
+                foreach (PropertyInfo property in GetSerializableProperties(type))
+                {
+                    if (!Reader.Keys.Contains(property.Name))
+                        continue;
 
-                object value = Reader.ReadValue(property.Name);
+                    object value = Reader.ReadValue(property.Name);
 
-                property.SetValue(
-                    obj,
-                    ConvertValue(value, property.PropertyType));
+                    property.SetValue(
+                        obj,
+                        ConvertValue(value, property.PropertyType));
+                }
+
+                foreach (FieldInfo field in GetSerializableFields(type))
+                {
+                    if (!Reader.Keys.Contains(field.Name))
+                        continue;
+
+                    object value = Reader.ReadValue(field.Name);
+
+                    field.SetValue(
+                        obj,
+                        ConvertValue(value, field.FieldType));
+                }
             }
 
-            foreach (FieldInfo field in GetSerializableFields(type))
-            {
-                if (!Reader.Keys.Contains(field.Name))
-                    continue;
-
-                object value = Reader.ReadValue(field.Name);
-
-                field.SetValue(
-                    obj,
-                    ConvertValue(value, field.FieldType));
-            }
+            
 
             return (TResource)obj;
         }

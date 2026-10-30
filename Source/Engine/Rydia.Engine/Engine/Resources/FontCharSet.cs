@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Formats.Tar;
 using System.Runtime.InteropServices;
 using System.Text;
+using Rydia.Engine.Serialization;
 using Rydia.Serialization;
 
 namespace Rydia.Engine.Resources
@@ -13,7 +14,7 @@ namespace Rydia.Engine.Resources
     /// 各文字に対応する<see cref="PixelData"/>を保持し、
     /// フォント描画に使用する文字画像データを提供します。
     /// </summary>
-    public class FontCharSet : Resource
+    public class FontCharSet : Resource, ICustomSerializable
     {
 
         /// <summary>
@@ -96,6 +97,55 @@ namespace Rydia.Engine.Resources
             return result;
         }
 
+        public void WriteData(IDataWriter writer)
+        {
+            writer.WriteValue("CharCount", this._CharSet.Count);
+
+            int index = 0;
+
+            foreach (var entry in this._CharSet)
+            {
+                string prefix = $"Char_{index++}";
+
+                writer.WriteValue($"{prefix}_Character", entry.Value.Character);
+                writer.WriteValue($"{prefix}_Width", entry.Value.PixelData.Width);
+                writer.WriteValue($"{prefix}_Height", entry.Value.PixelData.Height);
+                writer.WriteValue($"{prefix}_Data", entry.Value.PixelData.Data);
+            }
+        }
+
+        public void ReadData(IDataReader reader)
+        {
+            this._CharSet.Clear();
+
+            int count = reader.ReadValue<int>("CharCount");
+
+            for (int i = 0; i < count; i++)
+            {
+                string prefix = $"Char_{i}";
+
+                char character = reader.ReadValue<char>(
+                    $"{prefix}_Character");
+
+                int width = reader.ReadValue<int>(
+                    $"{prefix}_Width");
+
+                int height = reader.ReadValue<int>(
+                    $"{prefix}_Height");
+
+                byte[] data = reader.ReadValue<byte[]>(
+                    $"{prefix}_Data");
+
+                PixelData pixelData = new PixelData
+                {
+                    Width = width,
+                    Height = height,
+                    Data = data
+                };
+
+                Add(character, pixelData);
+            }
+        }
     }
 
 }

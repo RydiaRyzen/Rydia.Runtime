@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.AccessControl;
 using System.Text;
 using System.Xml;
+using Rydia.Engine.Resources;
 
 namespace Rydia.Engine.Serialization
 {
@@ -80,19 +83,32 @@ namespace Rydia.Engine.Serialization
                     return;
                 }
 
-                Type valueType = value.GetType();
+                Type valueType = value is Type
+                    ? typeof(Type)
+                    : value.GetType();
 
                 element.SetAttribute(
                     "Type",
-                    valueType.FullName
-                    ?? valueType.Name);
+                    valueType.AssemblyQualifiedName);
 
+                if (value is IDictionary dictionary)
+                {
+                    foreach (DictionaryEntry entry in dictionary)
+                    {
+                        XmlElement child = Document.CreateElement("Item");
+                        child.SetAttribute("Name", entry.Key.ToString());
+
+                        WriteElementValue(child, entry.Value);
+                        element.AppendChild(child);
+                    }
+
+                    return;
+                }
                 if (value is Type typeValue)
                 {
-                    element.InnerText =
+                    element.InnerText = typeValue.AssemblyQualifiedName ??
                         typeValue.FullName
                         ?? typeValue.Name;
-
                     return;
                 }
 
@@ -101,7 +117,12 @@ namespace Rydia.Engine.Serialization
                     element.InnerText = XmlConvert.ToString(boolean);
                     return;
                 }
-
+                if (value.GetType().IsEnum)
+                {
+                    element.SetAttribute("Type", value.GetType().AssemblyQualifiedName);
+                    element.InnerText = value.ToString();
+                    return;
+                }
                 if (value is Array array)
                 {
                     foreach (object item in array)
@@ -113,7 +134,6 @@ namespace Rydia.Engine.Serialization
 
                     return;
                 }
-
                 if (value is IFormattable formattable)
                 {
                     element.InnerText = formattable.ToString(
@@ -241,7 +261,7 @@ namespace Rydia.Engine.Serialization
                 }
 
                 if (type.IsEnum)
-                    return Enum.Parse(type, text);
+                    return Enum.Parse(type, element.InnerText);
 
                 if (type == typeof(bool))
                     return XmlConvert.ToBoolean(text);
@@ -281,6 +301,7 @@ namespace Rydia.Engine.Serialization
 
                 if (type == typeof(char))
                     return XmlConvert.ToChar(text);
+
                 if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ContentRef<>))
                 {
                     string path = element.InnerText;
@@ -303,6 +324,36 @@ namespace Rydia.Engine.Serialization
                         culture: CultureInfo.InvariantCulture
                         );
                 }
+                if (type.IsGenericType &&
+                    type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                {
+                    Type[] arguments = type.GetGenericArguments();
+                    Type keyType = arguments[0];
+                    Type valueType = arguments[1];
+
+                    IDictionary dictionary = (IDictionary)Activator.CreateInstance(type);
+
+                    foreach (XmlElement item in element.ChildNodes
+                        .OfType<XmlElement>()
+                        .Where(e => e.Name == "Item"))
+                    {
+                        string keyText = item.GetAttribute("Name");
+
+                        object key = keyType == typeof(char)
+                            ? keyText[0]
+                            : Convert.ChangeType(
+                                keyText,
+                                keyType,
+                                CultureInfo.InvariantCulture);
+
+
+                        object value = ReadElementValue(item);
+                        dictionary.Add(key, value);
+                    }
+
+                    return dictionary;
+                }
+
                 return Convert.ChangeType(
                     text,
                     type,
