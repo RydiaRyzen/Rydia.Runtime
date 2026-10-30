@@ -102,6 +102,7 @@
 
   <ItemGroup>
     <Folder Include="Engine\Backend\Audio\" />
+    <Folder Include="Engine\Backend\Graphics\Enums\" />
     <Folder Include="Engine\Backend\Physics\" />
     <Folder Include="Engine\Backend\FileSystem\" />
   </ItemGroup>

@@ -7,7 +7,6 @@ using System.Reflection.Metadata.Ecma335;
 using System.Security.AccessControl;
 using System.Text;
 using System.Xml;
-using Rydia.Engine.Resources;
 
 namespace Rydia.Engine.Serialization
 {

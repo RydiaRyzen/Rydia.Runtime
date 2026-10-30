@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Rydia.Engine
+{
+
+
+    public class VertexShader : Shader
+    {
+
+
+    }
+
+}

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Rydia.Engine.Resources;
 
 namespace Rydia.Engine.Serialization.Tests
 {

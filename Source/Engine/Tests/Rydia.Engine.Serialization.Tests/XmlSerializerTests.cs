@@ -281,8 +281,9 @@ namespace Rydia.Engine.Serialization.Tests
         }
 
         [Test(Description = "AudioDataをXMLにシリアライズできることを確認します。")]
-        public void SerializeTest()
+        public void AudioData_SerializeTest()
         {
+            this._TestFilePath = "AudioData.xml";
             // Arrange
             var audioData = new AudioData
             {
@@ -312,8 +313,9 @@ namespace Rydia.Engine.Serialization.Tests
         }
 
         [Test(Description = "XMLからAudioDataをデシリアライズできることを確認します。")]
-        public void DeserializeTest()
+        public void AudioData_DeserializeTest()
         {
+            this._TestFilePath = "AudioData.xml";
             // Arrange
             var source = new AudioData
             {
@@ -345,6 +347,7 @@ namespace Rydia.Engine.Serialization.Tests
         [Test(Description = "PCMDataが空の場合でもシリアライズ・デシリアライズできることを確認します。")]
         public void SerializeDeserializeEmptyPCMDataTest()
         {
+            this._TestFilePath = "AudioData.xml";
             // Arrange
             var source = new AudioData
             {
@@ -370,6 +373,7 @@ namespace Rydia.Engine.Serialization.Tests
         [Test(Description = "PixelDataをXMLにシリアライズできることを確認します。")]
         public void PixelData_SerializeTest()
         {
+            this._TestFilePath = "PixelData.xml";
             // Arrange
             PixelData pixelData = CreatePixelData();
 
@@ -392,6 +396,7 @@ namespace Rydia.Engine.Serialization.Tests
         [Test(Description = "PixelDataをXMLからデシリアライズできることを確認します。")]
         public void PixelData_DeserializeTest()
         {
+            this._TestFilePath = "PixelData.xml";
             // Arrange
             PixelData source = CreatePixelData();
 
@@ -425,6 +430,228 @@ namespace Rydia.Engine.Serialization.Tests
             0, 255, 0, 255,
             0, 0, 255, 255,
             255, 255, 255, 255
+                ]
+            };
+        }
+
+        [Test(Description = "VertexShaderをXMLにシリアライズできることを確認します。")]
+        public void VertexShader_SerializeTest()
+        {
+            this._TestFilePath = "VertexShader.xml";
+            // Arrange
+            VertexShader vertexShader = CreateVertexShader();
+
+            var serializer = new XmlResourceSerializer<VertexShader>();
+
+            // Act
+            serializer.Serialize(vertexShader, this._TestFilePath);
+
+            // Assert
+            Assert.That(File.Exists(this._TestFilePath), Is.True);
+
+            string xml = File.ReadAllText(this._TestFilePath);
+
+            Assert.That(xml, Is.Not.Empty);
+            Assert.That(xml, Does.Contain("Source"));
+            Assert.That(xml, Does.Contain("attribute"));
+            Assert.That(xml, Does.Contain("gl_Position"));
+        }
+
+        [Test(Description = "VertexShaderをXMLからデシリアライズできることを確認します。")]
+        public void VertexShader_DeserializeTest()
+        {
+            this._TestFilePath = "VertexShader.xml";
+            // Arrange
+            VertexShader source = CreateVertexShader();
+
+            var serializer = new XmlResourceSerializer<VertexShader>();
+
+            serializer.Serialize(source, this._TestFilePath);
+
+            // Act
+            VertexShader result = serializer.Deserialize(this._TestFilePath);
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Source, Is.EqualTo(source.Source));
+        }
+
+        /// <summary>
+        /// テスト用のVertexShaderを生成します。
+        /// </summary>
+        /// <returns>テスト用のVertexShader。</returns>
+        private static VertexShader CreateVertexShader()
+        {
+            return new VertexShader
+            {
+                Source = """
+            attribute vec3 aPosition;
+
+            void main()
+            {
+                gl_Position = vec4(aPosition, 1.0);
+            }
+            """
+            };
+        }
+
+        [Test(Description = "FragmentShaderをXMLにシリアライズできることを確認します。")]
+        public void FragmentShader_SerializeTest()
+        {
+            this._TestFilePath = "FragmentShader.xml";
+            // Arrange
+            FragmentShader fragmentShader = CreateFragmentShader();
+
+            var serializer = new XmlResourceSerializer<FragmentShader>();
+
+            // Act
+            serializer.Serialize(fragmentShader, this._TestFilePath);
+
+            // Assert
+            Assert.That(File.Exists(this._TestFilePath), Is.True);
+
+            string xml = File.ReadAllText(this._TestFilePath);
+
+            Assert.That(xml, Is.Not.Empty);
+            Assert.That(xml, Does.Contain("Source"));
+            Assert.That(xml, Does.Contain("precision"));
+            Assert.That(xml, Does.Contain("gl_FragColor"));
+        }
+
+        [Test(Description = "FragmentShaderをXMLからデシリアライズできることを確認します。")]
+        public void FragmentShader_DeserializeTest()
+        {
+            this._TestFilePath = "FragmentShader.xml";
+            // Arrange
+            FragmentShader source = CreateFragmentShader();
+
+            var serializer = new XmlResourceSerializer<FragmentShader>();
+
+            serializer.Serialize(source, this._TestFilePath);
+
+            // Act
+            FragmentShader result = serializer.Deserialize(this._TestFilePath);
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Source, Is.EqualTo(source.Source));
+        }
+
+        /// <summary>
+        /// テスト用のFragmentShaderを生成します。
+        /// </summary>
+        /// <returns>テスト用のFragmentShader。</returns>
+        private static FragmentShader CreateFragmentShader()
+        {
+            return new FragmentShader
+            {
+                Source = """
+            precision mediump float;
+
+            void main()
+            {
+                gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+            }
+            """
+            };
+        }
+
+        [Test(Description = "PixmapをXMLにシリアライズできることを確認します。")]
+        public void Pixmap_SerializeTest()
+        {
+            this._TestFilePath = "Pixmap.xml";
+
+            // Arrange
+            Pixmap pixmap = CreatePixmap();
+
+            var serializer = new XmlResourceSerializer<Pixmap>();
+
+            // Act
+            serializer.Serialize(pixmap, this._TestFilePath);
+
+            // Assert
+            Assert.That(File.Exists(this._TestFilePath), Is.True);
+
+            string xml = File.ReadAllText(this._TestFilePath);
+
+            Assert.That(xml, Is.Not.Empty);
+
+            // PixelDataの情報が保存されていること
+            Assert.That(xml, Does.Contain("PixelDataCount"));
+            Assert.That(xml, Does.Contain("PixelData_0_Width"));
+            Assert.That(xml, Does.Contain("PixelData_0_Height"));
+            Assert.That(xml, Does.Contain("PixelData_0_Data"));
+
+            // MainLayerや通常のPixelDataプロパティが保存されていないこと
+            Assert.That(xml, Does.Not.Contain("MainLayer"));
+            Assert.That(xml, Does.Not.Contain("Name=\"PixelData\""));
+        }
+
+        [Test(Description = "PixmapをXMLからデシリアライズできることを確認します。")]
+        public void Pixmap_DeserializeTest()
+        {
+
+            this._TestFilePath = "Pixmap.xml";
+            // Arrange
+            Pixmap source = CreatePixmap();
+
+            var serializer = new XmlResourceSerializer<Pixmap>();
+
+            serializer.Serialize(source, this._TestFilePath);
+
+            // Act
+            Pixmap result = serializer.Deserialize(this._TestFilePath);
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.PixelData, Is.Not.Null);
+            Assert.That(result.PixelData.Count, Is.EqualTo(source.PixelData.Count));
+
+            for (int i = 0; i < source.PixelData.Count; i++)
+            {
+                PixelData expected = source.PixelData[i];
+                PixelData actual = result.PixelData[i];
+
+                Assert.That(actual.Width, Is.EqualTo(expected.Width));
+                Assert.That(actual.Height, Is.EqualTo(expected.Height));
+                Assert.That(actual.Data, Is.EqualTo(expected.Data));
+            }
+
+            // MainLayerが先頭のPixelDataを参照していること
+            Assert.That(result.MainLayer, Is.SameAs(result.PixelData[0]));
+        }
+
+        /// <summary>
+        /// テスト用のPixmapを生成します。
+        /// </summary>
+        /// <returns>テスト用のPixmap。</returns>
+        private static Pixmap CreatePixmap()
+        {
+            return new Pixmap
+            {
+                PixelData =
+                [
+                    new PixelData
+                    {
+                        Width = 2,
+                        Height = 2,
+                        Data =
+                        [
+                            255, 0, 0, 255,
+                            0, 255, 0, 255,
+                            0, 0, 255, 255,
+                            255, 255, 255, 255
+                        ]
+                    },
+                    new PixelData
+                    {
+                        Width = 1,
+                        Height = 1,
+                        Data =
+                        [
+                            128, 128, 128, 255
+                        ]
+                    }
                 ]
             };
         }

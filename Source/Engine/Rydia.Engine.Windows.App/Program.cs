@@ -61,6 +61,8 @@ namespace Rydia.Engine.Windows.App
                 platform.AudioOptions.Refresh = 60;
                 // ƒNƒƒbƒN“¯Šú‚ğ–³Œø‚Éİ’è
                 platform.AudioOptions.Sync = false;
+                // Rydia.Engine‚Ì‰Šú‰»
+
                 platform.Run(app);
             }
         }
