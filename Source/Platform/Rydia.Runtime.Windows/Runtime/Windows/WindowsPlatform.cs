@@ -123,7 +123,7 @@ namespace Rydia.Runtime.Windows
             AudioOptions = new AudioOptions();
             Keyboard = new KeyboardInput();
             Mouse = new MouseInput();
-            RuntimeHost.Init(new GLES30Bindings());
+            GraphicsHost.Init(new GLES30Bindings());
             AudioHost.Init(new ALBindings(), new AlcBindings());
         }
 

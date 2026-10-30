@@ -106,5 +106,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Graphics\Api\ES20\RenderbufferTargetExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Graphics\Api\ES20\ShaderException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Graphics\Api\ES20\TextureTargetTypeExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GraphicsHost.cs" />
   </ItemGroup>
 </Project>

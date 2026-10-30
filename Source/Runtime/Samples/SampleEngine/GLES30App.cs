@@ -16,7 +16,7 @@ namespace Rydia.Runtime.ES30
         {
             get
             {
-                return RuntimeHost.GLES30;
+                return GraphicsHost.GLES30;
             }
         }
 

@@ -360,7 +360,7 @@ namespace Rydia.GameStudio
                             launcherAppClass.AddProperty("GL", "static IGLES30", """
                                 get
                                 {
-                                    return RuntimeHost.GLES30;
+                                    return GraphicsHost.GLES30;
                                 }
                                 """);
 

@@ -13,23 +13,11 @@ namespace Rydia.Graphics.Backend
     public abstract class GLObject : DisposableBase, IEquatable<GLObject>
     {
 
-        //Buffer
-        //VertexArray
-        //Shader
-        //Program
-        //Texture2D
-        //Framebuffer
-        //
-
-
-
-
-
         public static IGLES30 GL
         {
             get
             {
-                return RuntimeHost.GLES30;
+                return GraphicsHost.GLES30;
             }
         }
 

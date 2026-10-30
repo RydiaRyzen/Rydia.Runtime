@@ -17,7 +17,7 @@ namespace Rydia.Graphics.Api.ES20
         {
             get
             {
-                return RuntimeHost.GLES30;
+                return GraphicsHost.GLES30;
             }
         }
 

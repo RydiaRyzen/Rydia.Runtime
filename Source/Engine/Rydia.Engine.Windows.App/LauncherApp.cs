@@ -16,7 +16,7 @@ namespace Rydia.Engine
         {
             get
             {
-                return RuntimeHost.GLES30;
+                return GraphicsHost.GLES30;
             }
         }
 

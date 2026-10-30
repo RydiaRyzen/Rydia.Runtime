@@ -165,6 +165,7 @@ namespace Rydia.Engine.Serialization
                     p.SetMethod is { IsPublic: true, IsStatic: false })
                 .ToArray();
         }
+
         /// <summary>
         /// シリアライズ対象のフィールドを取得します。
         /// </summary>
@@ -174,11 +175,15 @@ namespace Rydia.Engine.Serialization
                 .Select(p => p.Name)
                 .ToArray();
 
-            return type.GetFields(BindingFlags.Instance | BindingFlags.Public)
+            return type.GetFields(
+            BindingFlags.Instance |
+            BindingFlags.Public |
+            BindingFlags.NonPublic)
                 .Where(f =>
-                    !f.IsStatic &&
-                    !f.IsInitOnly &&
-                    !propertyNames.Contains(f.Name))
+                !f.IsStatic &&
+                !f.IsInitOnly &&
+                !propertyNames.Contains(f.Name) &&
+                !Attribute.IsDefined(f, typeof(DontSerializeAttribute)))
                 .ToArray();
         }
 

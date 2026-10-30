@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Rydia</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -101,7 +102,6 @@
 
   <ItemGroup>
     <Folder Include="Engine\Backend\Audio\" />
-    <Folder Include="Engine\Backend\Graphics\" />
     <Folder Include="Engine\Backend\Physics\" />
     <Folder Include="Engine\Backend\FileSystem\" />
   </ItemGroup>

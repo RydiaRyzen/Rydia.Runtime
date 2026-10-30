@@ -22,7 +22,7 @@ namespace Rydia.Graphics.Backend
         {
             get
             {
-                return RuntimeHost.GLES30;
+                return GraphicsHost.GLES30;
             }
         }
 

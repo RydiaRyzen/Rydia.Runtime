@@ -14,7 +14,7 @@ namespace Rydia.Runtime.GLES2Samples.Shared
         {
             get
             {
-                return RuntimeHost.GLES30;
+                return GraphicsHost.GLES30;
             }
         }
 

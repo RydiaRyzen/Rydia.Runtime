@@ -15,7 +15,7 @@ namespace Rydia.Runtime.GLES2Samples.ImGui
         {
             get
             {
-                return RuntimeHost.GLES30;
+                return GraphicsHost.GLES30;
             }
         }
 

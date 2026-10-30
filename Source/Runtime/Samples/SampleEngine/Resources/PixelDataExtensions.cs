@@ -18,7 +18,7 @@ namespace Rydia.Resources
             texture.Bind();
             texture.MinificationFilter = TextureMinFilter.LinearMipmapLinear;
             texture.MagnificationFilter = TextureMagFilter.Linear;
-            RuntimeHost.GLES30.PixelStore(PixelStoreParameter.UnpackAlignment, PixelStoreValue.One);
+            GraphicsHost.GLES30.PixelStore(PixelStoreParameter.UnpackAlignment, PixelStoreValue.One);
             texture.TexImage2D(PixelFormat.Rgba, pixelData.Width, pixelData.Height, pixelData.Data);
             texture.GenerateMipmap();
             return texture;

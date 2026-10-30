@@ -77,7 +77,7 @@ namespace Rydia.Runtime.Droid
             App = runner;
             AudioOptions = new AudioOptions();
             IniyAudioSettings();
-            RuntimeHost.Init(new GLES30Bindings());
+            GraphicsHost.Init(new GLES30Bindings());
             AudioHost.Init(new ALBindings(), new AlcBindings());
             AudioHost.CreateDeviceContext(AudioOptions);
         }

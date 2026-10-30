@@ -10,7 +10,7 @@ namespace Rydia
 {
 
 
-    public static class RuntimeHost
+    public static class GraphicsHost
     {
 
         public static IGLES30 GLES30

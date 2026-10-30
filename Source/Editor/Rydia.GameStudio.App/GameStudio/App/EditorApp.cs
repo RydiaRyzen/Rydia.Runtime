@@ -15,7 +15,7 @@ namespace Rydia.GameStudio.App
         {
             get
             {
-                return RuntimeHost.GLES30;
+                return GraphicsHost.GLES30;
             }
         }
 
