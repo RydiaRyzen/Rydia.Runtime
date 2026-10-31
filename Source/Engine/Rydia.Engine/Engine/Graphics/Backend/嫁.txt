@@ -1,0 +1,8 @@
+﻿IGraphicsBackend
+INativeGraphicsBuffer	: IGraphicsResource
+INativeRenderTarget		: IGraphicsResource
+INativeShaderPart		: IGraphicsResource
+INativeShaderProgram	: IGraphicsResource
+INativeTexture			: IGraphicsResource
+
+さてさて、どうしましょうか？

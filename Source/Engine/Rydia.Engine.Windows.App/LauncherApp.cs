@@ -20,9 +20,11 @@ namespace Rydia.Engine
             }
         }
 
+
         public override void Load()
         {
-            
+
+
         }
 
         public override void Update(float deltaTimeSec, float totalTimeSec)
