@@ -4,7 +4,9 @@
 
 **WindowsとAndroidは正常にビルド・起動できています**
 
-Rydia Engine は、以下のプロジェクトで構成されています。
+**Rydia Engine は、別Repositoryに移行しました**
+
+Rydia.Runtimeは以下のプロジェクトで構成されています。
 
 | プロジェクト | 説明 ||
 |---|---|---|
