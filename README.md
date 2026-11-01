@@ -15,10 +15,11 @@ Rydia Engine は、以下のプロジェクトで構成されています。
 | `Rydia.Runtime.Droid` | Android 向けランタイム |実装済み|
 | `Rydia.Runtime.iOS` | iOS 向けランタイム |未実装|
 | `Rydia.Runtime.NintendoSwitch` | Nintendo Switch 向けランタイム |未実装|
-| `Rydia.Engine` | ECS(Entity Component System)などのゲームの実行に必要な機能を提供するゲームエンジン |実装中|
-| `Rydia.GameStudio` | ゲームオブジェクトやコンポーネントを作成・管理するためのエディター |実装中|
 
-
+| プロジェクト | **別Repositoryに移行** ||
+|---|---|---|
+| `Rydia.Engine` | **別Repositoryに移行** ECS(Entity Component System)などのゲームの実行に必要な機能を提供するゲームエンジン |実装中|
+| `Rydia.GameStudio` | **別Repositoryに移行**ゲームオブジェクトやコンポーネントを作成・管理するためのエディター |実装中|
 
 ## `Rydia.Runtime`
 
@@ -70,14 +71,14 @@ Google Angle for Metalを使用する予定です。
 ## Rydia. Runtime.NintendoSwitchはまだ作っていません
 Nintendo SwitchはOpenGL ES, OpenALをスイッチ用に書き換えるラッパークラスを作成し、使用する予定です。
 
-## Rydia Engine
+## Rydia Engine　別Repositoryに移行
 
 Rydia Engine は、クロスプラットフォームでのゲーム開発を目指すゲームエンジンプロジェクトです。
 
 共通ランタイム、ゲームエンジン、エディターを分離することで、ゲームの実行に必要な機能を提供し、
 プラットフォーム固有の処理をランタイム側に分離することで、複数のプラットフォームに対応したゲーム開発環境を提供します。
 
-## Rydia.GameStudio
+## Rydia.GameStudio　別Repositoryに移行
 
 `Rydia.GameStudio` は、`Rydia.Engine` で使用するゲームオブジェクトやコンポーネントを動的に作成・管理するためのツールです。
 
@@ -96,13 +97,7 @@ Rydia Engine では、以下の API を利用したグラフィックスおよ�
 
 各プラットフォーム向けのランタイムが、対応する実行環境でこれらの API を利用するための機能を提供します。
 
-## ドキュメント
-
-導入方法、プロジェクト構成、開発に関する情報については、公式ドキュメントを参照してください。
-
-**[Rydia Engine 公式ドキュメント](https://rydiaryzen.github.io/RydiaEngine.Docs/index.html)**
-
-## ロードマップ
+## ロードマップ **別Repositoryに移行**
 |対応|補足|
 |---|---|
 |ECS(Entity Component System)の構築||
