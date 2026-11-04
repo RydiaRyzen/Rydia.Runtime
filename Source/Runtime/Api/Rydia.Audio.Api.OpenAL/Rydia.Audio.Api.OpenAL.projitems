@@ -15,7 +15,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Alc\AlcGetString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Alc\AlcGetStringList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ALException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ALHost.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)AudioHost.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)AudioOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\ALBufferState.cs" />

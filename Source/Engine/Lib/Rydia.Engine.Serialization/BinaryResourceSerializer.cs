@@ -5,8 +5,7 @@ using System.Text;
 namespace Rydia.Engine.Serialization
 {
 
-    public sealed class BinaryResourceSerializer<TResource>
-    : ResourceSerializer<TResource>
+    public sealed class BinaryResourceSerializer<TResource> : ResourceSerializer<TResource>
     where TResource : Resource
     {
 

@@ -26,6 +26,6 @@ namespace Rydia
             GlobalLogger.Core.Debug("Runtime Host initialized.");
         }
 
-
     }
+
 }

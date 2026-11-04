@@ -9,29 +9,29 @@ namespace Rydia.GameStudio
 
     public sealed class InspectorView : EditorDockContent
     {
-        private readonly PropertyGrid propertyGrid;
+        private readonly AdamsLair.WinForms.PropertyEditing.PropertyGrid propertyGrid;
 
         public InspectorView()
             : base("Inspector")
         {
-            this.propertyGrid = new PropertyGrid
+            this.propertyGrid = new AdamsLair.WinForms.PropertyEditing.PropertyGrid()
             {
                 Dock = DockStyle.Fill,
-                ToolbarVisible = false,
-                HelpVisible = true,
+                //ToolbarVisible = false,
+                //HelpVisible = true,
                 BackColor = BackColor,
                 ForeColor = ForeColor,
-                ViewBackColor = BackColor,
-                ViewForeColor = ForeColor,
-                LineColor = Color.FromArgb(60, 64, 73)
+                //ViewBackColor = BackColor,
+                //ViewForeColor = ForeColor,
+                //LineColor = Color.FromArgb(60, 64, 73)
             };
-
+            
             Controls.Add(this.propertyGrid);
         }
 
         public void SetObject(SceneObject obj)
         {
-            this.propertyGrid.SelectedObject = obj;
+            this.propertyGrid.SelectObject(obj);
         }
     }
 

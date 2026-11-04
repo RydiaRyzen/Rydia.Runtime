@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ICustomSerializable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IDataReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IDataWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ResourceCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ResourceSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XmlResourceSerializer.cs" />

@@ -11,8 +11,7 @@ using System.Xml;
 namespace Rydia.Engine.Serialization
 {
 
-    public sealed class XmlResourceSerializer<TResource>
-    : ResourceSerializer<TResource>
+    public sealed class XmlResourceSerializer<TResource> : ResourceSerializer<TResource>
     where TResource : Resource
     {
 
@@ -21,7 +20,9 @@ namespace Rydia.Engine.Serialization
         /// </summary>
         public class XmlDataWriter : IDataWriter
         {
+
             private readonly XmlDocument document;
+
             private readonly XmlElement root;
 
             /// <summary>
@@ -468,7 +469,6 @@ namespace Rydia.Engine.Serialization
         {
             ArgumentNullException.ThrowIfNull(resource);
             ArgumentNullException.ThrowIfNull(stream);
-
 
             if (!stream.CanWrite)
             {
