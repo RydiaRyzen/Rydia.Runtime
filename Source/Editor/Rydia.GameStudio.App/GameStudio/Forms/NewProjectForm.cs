@@ -394,7 +394,7 @@ namespace Rydia.GameStudio
                         // アセンブリ参照を追加
                         windowsDebuggerProject.AddAssemblyReference("Rydia.Runtime", editordirectory + "/Rydia.Runtime.dll");
                         windowsDebuggerProject.AddAssemblyReference("Rydia.Engine", editordirectory + "/Rydia.Engine.dll");
-                        windowsDebuggerProject.AddAssemblyReference("Rydia.Runtime.Windows", editordirectory + "/Rydia.Runtime.Windows.dll");
+                        windowsDebuggerProject.AddAssemblyReference("Rydia.Engine.Windows", editordirectory + "/Rydia.Engine.Windows.dll");
 
                         // プロジェクト参照を追加
                         windowsDebuggerProject.AddReference(sharedProject);
@@ -492,7 +492,7 @@ namespace Rydia.GameStudio
                         droidDebuggerProject.AddAssemblyReference("Rydia.Engine", editordirectory + "/Rydia.Engine.dll");
                         
                         // プロジェクト参照を追加
-                        droidDebuggerProject.AddReference("Rydia.Runtime.Droid", "../../../../../../../../../../../Platform/Rydia.Runtime.Droid/Rydia.Runtime.Droid.csproj");
+                        droidDebuggerProject.AddReference("Rydia.Runtime.Droid", "../../../../../../../../../../../Platform/Rydia.Engine.Droid/Rydia.Engine.Droid.csproj");
                         droidDebuggerProject.AddReference(sharedProject);
 
                         // クラスAを生成

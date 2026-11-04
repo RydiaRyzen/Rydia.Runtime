@@ -107,6 +107,8 @@
     <Folder Include="Engine\Backend\Physics\" />
     <Folder Include="Engine\Backend\FileSystem\" />
     <Folder Include="Engine\Drawing\" />
+    <Folder Include="Engine\Graphics\" />
+    <Folder Include="Graphics\Backend\ES30\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -270,6 +270,12 @@ namespace Rydia.SolutionBuilder
             {
                 sb.AppendLine(this._constructer);
             }
+
+            foreach (var field in this._fields)
+            {
+                sb.AppendLine($"    {field}");
+            }
+
             foreach (var property in this._properties)
             {
                 sb.AppendLine(
@@ -317,6 +323,12 @@ namespace Rydia.SolutionBuilder
             return sb.ToString();
         }
 
+        private List<string> _fields = new List<string>();
+
+        internal void AddField(string v)
+        {
+            this._fields.Add(v);
+        }
     }
 
 }

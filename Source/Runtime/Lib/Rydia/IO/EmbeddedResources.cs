@@ -19,6 +19,14 @@ namespace Rydia.IO
 
         private Assembly _assembly = null;
 
+        public Assembly Assembly
+        {
+            get
+            {
+                return this._assembly;
+            }
+        }
+
         /// <summary>
         /// プレフィックスを取得または設定します
         /// </summary>
@@ -56,16 +64,20 @@ namespace Rydia.IO
             Debug.Assert(this._assembly != null, "Did you forget to call Initialize()?");
             var names = this._assembly.GetManifestResourceNames();
             var modules = this._assembly.GetLoadedModules();
-            if(!names.Contains(filename))
+            if (string.IsNullOrEmpty(Prefix))
             {
-                throw new Exception();
-            }
-            if(string.IsNullOrEmpty(Prefix))
-            {
+                if (!names.Contains(filename))
+                {
+                    throw new Exception();
+                }
                 return this._assembly.GetManifestResourceStream(filename); //(_prefix + filename);
             }
             else
             {
+                if (!names.Contains(Prefix + filename))
+                {
+                    throw new Exception();
+                }
                 return this._assembly.GetManifestResourceStream(Prefix + filename); //(_prefix + filename);
             }
         }

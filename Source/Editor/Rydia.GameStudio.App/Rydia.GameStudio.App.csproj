@@ -36,6 +36,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\0_001.AudioData.ryd" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\background.AudioData.ryd" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\chicken_cluck_happy.AudioData.ryd" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-hdpi\appicon.png" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-hdpi\appicon_background.png" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-hdpi\appicon_foreground.png" />
