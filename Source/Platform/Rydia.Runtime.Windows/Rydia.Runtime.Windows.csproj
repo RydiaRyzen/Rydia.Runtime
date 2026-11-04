@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Runtime\Rydia.Runtime\Rydia.Runtime.csproj" />
+    <ProjectReference Include="..\..\Runtime\Samples\SampleEngine.ES30\SampleEngine.ES30.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,22 +52,12 @@
 
   <Import Project="..\..\Runtime\Api\Rydia.Audio.Api.NVorbis\Rydia.Audio.Api.NVorbis.projitems" Label="Shared" />
 
-  <Import Project="..\..\Runtime\Api\Rydia.Audio.Api.OpenAL\Rydia.Audio.Api.OpenAL.projitems" Label="Shared" />
-
-  <Import Project="..\..\Runtime\Api\Rydia.Graphics.Api.ES30\Rydia.Graphics.Api.ES20.projitems" Label="Shared" />
-
   <Import Project="..\..\Runtime\Api\Rydia.Graphics.Api.ES30.OpenTKBindings\Rydia.Graphics.Api.ES30.OpenTKBindings.projitems" Label="Shared" />
-	<Target Name="SignReleaseOutput"
-			AfterTargets="Build"
-			Condition="'$(Configuration)' == 'Release'
-                   and '$(TargetExt)' == '.dll'
-                   and '$(EnableCodeSigning)' == 'true'">
+	<Target Name="SignReleaseOutput" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'&#xD;&#xA;                   and '$(TargetExt)' == '.dll'&#xD;&#xA;                   and '$(EnableCodeSigning)' == 'true'">
 
-		<Error Condition="!Exists('$(SignToolPath)')"
-			   Text="SignTool.exe が見つかりません: $(SignToolPath)" />
+		<Error Condition="!Exists('$(SignToolPath)')" Text="SignTool.exe が見つかりません: $(SignToolPath)" />
 
-		<Error Condition="!Exists('$(TargetPath)')"
-			   Text="署名対象が見つかりません: $(TargetPath)" />
+		<Error Condition="!Exists('$(TargetPath)')" Text="署名対象が見つかりません: $(TargetPath)" />
 
 		<Exec Command="&quot;$(SignToolPath)&quot; sign /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 /a /v &quot;$(TargetPath)&quot;" />
 

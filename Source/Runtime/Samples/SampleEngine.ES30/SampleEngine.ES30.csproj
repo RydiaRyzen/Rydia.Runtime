@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <Import Project="..\..\Api\Rydia.Graphics.Api.ES30\Rydia.Graphics.Api.ES20.projitems" Label="Shared" />
+
+  <Import Project="..\SampleEngine\SampleEngine.projitems" Label="Shared" />
+
+  <Import Project="..\..\Api\Rydia.Audio.Api.OpenAL\Rydia.Audio.Api.OpenAL.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Rydia.Runtime\Rydia.Runtime.csproj" />
+  </ItemGroup>
+
+</Project>

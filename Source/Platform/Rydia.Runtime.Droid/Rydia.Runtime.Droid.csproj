@@ -12,12 +12,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Runtime\Rydia.Runtime\Rydia.Runtime.csproj" />
+	  <ProjectReference Include="..\..\Runtime\Samples\SampleEngine.ES30\SampleEngine.ES30.csproj" />
 	</ItemGroup>
-
-	<Import Project="..\..\Runtime\Api\Rydia.Graphics.Api.ES30\Rydia.Graphics.Api.ES20.projitems" Label="Shared" />
-
-	<Import Project="..\..\Runtime\Api\Rydia.Audio.Api.OpenAL\Rydia.Audio.Api.OpenAL.projitems" Label="Shared" />
 
 	<Import Project="..\..\Runtime\Api\Rydia.Audio.Api.NVorbis\Rydia.Audio.Api.NVorbis.projitems" Label="Shared" />
 
