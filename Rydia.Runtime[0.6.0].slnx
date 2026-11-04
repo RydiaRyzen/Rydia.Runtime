@@ -55,6 +55,10 @@
   <Folder Name="/2000-Engine/2300-Engine/">
     <Project Path="E:/Rydia.Runtime/Rydia.Runtime[0.6.0]/Source/Engine/Rydia.Engine/Rydia.Engine.csproj" />
   </Folder>
+  <Folder Name="/2000-Engine/2400-Platform/">
+    <Project Path="Source/Platform/Rydia.Engine.Droid/Rydia.Engine.Droid.csproj" Id="15cf3d20-633d-4223-9e75-e38ee2fc76e8" />
+    <Project Path="Source/Platform/Rydia.Engine.Windows/Rydia.Engine.Windows.csproj" Id="afffff6c-64a1-4da9-a013-722eb8e91596" />
+  </Folder>
   <Folder Name="/2000-Engine/2600-Launcher/">
     <Project Path="E:/Rydia.Runtime/Rydia.Runtime[0.6.0]/Source/Engine/Rydia.Engine.Windows.App/Rydia.Engine.Windows.App.csproj" />
   </Folder>

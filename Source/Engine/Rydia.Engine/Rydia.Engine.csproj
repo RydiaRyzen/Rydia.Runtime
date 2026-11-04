@@ -130,4 +130,8 @@
 
   <Import Project="..\Lib\Rydia.Engine.Serialization\Rydia.Engine.Serializer.projitems" Label="Shared" />
 
+  <Import Project="..\..\Runtime\Api\Rydia.Graphics.Api.ES30\Rydia.Graphics.Api.ES20.projitems" Label="Shared" />
+
+  <Import Project="..\..\Runtime\Api\Rydia.Audio.Api.OpenAL\Rydia.Audio.Api.OpenAL.projitems" Label="Shared" />
+
 </Project>

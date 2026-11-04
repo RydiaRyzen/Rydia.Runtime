@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Xamarin.Legacy.OpenTK" Version="1.0.2" />
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Engine\Rydia.Engine\Rydia.Engine.csproj" />
+  </ItemGroup>
+  <Import Project="..\..\Runtime\Api\Rydia.Graphics.Api.ES30.OpenTKBindings\Rydia.Graphics.Api.ES30.OpenTKBindings.projitems" Label="Shared" />
+
+</Project>

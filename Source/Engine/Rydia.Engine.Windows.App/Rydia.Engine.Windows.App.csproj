@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Platform\Rydia.Runtime.Windows\Rydia.Runtime.Windows.csproj" />
+    <ProjectReference Include="..\..\Platform\Rydia.Engine.Windows\Rydia.Engine.Windows.csproj" />
     <ProjectReference Include="..\Rydia.Engine\Rydia.Engine.csproj" />
   </ItemGroup>
 
