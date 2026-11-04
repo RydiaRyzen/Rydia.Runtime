@@ -18,6 +18,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="GameStudio\EmbeddedResources\add.png" />
+    <None Remove="GameStudio\EmbeddedResources\application_bug.png" />
+    <None Remove="GameStudio\EmbeddedResources\application_create.png" />
+    <None Remove="GameStudio\EmbeddedResources\application_go.png" />
+    <None Remove="GameStudio\EmbeddedResources\application_stopwatch.png" />
+    <None Remove="GameStudio\EmbeddedResources\arrow_redo.png" />
+    <None Remove="GameStudio\EmbeddedResources\arrow_refresh.png" />
+    <None Remove="GameStudio\EmbeddedResources\arrow_undo.png" />
+    <None Remove="GameStudio\EmbeddedResources\AssetImporter.png" />
+    <None Remove="GameStudio\EmbeddedResources\clock.png" />
+    <None Remove="GameStudio\EmbeddedResources\color_pick.png" />
+    <None Remove="GameStudio\EmbeddedResources\control_pause_blue.png" />
+    <None Remove="GameStudio\EmbeddedResources\control_play_blue.png" />
+    <None Remove="GameStudio\EmbeddedResources\control_step_blue.png" />
+    <None Remove="GameStudio\EmbeddedResources\control_stop_blue.png" />
+    <None Remove="GameStudio\EmbeddedResources\cross.png" />
+    <None Remove="GameStudio\EmbeddedResources\CursorArrow.png" />
+    <None Remove="GameStudio\EmbeddedResources\CursorArrowAction.png" />
+    <None Remove="GameStudio\EmbeddedResources\CursorArrowActionMove.png" />
+    <None Remove="GameStudio\EmbeddedResources\CursorArrowActionRotate.png" />
+    <None Remove="GameStudio\EmbeddedResources\CursorArrowActionScale.png" />
+    <None Remove="GameStudio\EmbeddedResources\CursorHandGrab.png" />
+    <None Remove="GameStudio\EmbeddedResources\CursorHandGrabbing.png" />
+    <None Remove="GameStudio\EmbeddedResources\disk_multiple.png" />
+    <None Remove="GameStudio\EmbeddedResources\drive_disk.png" />
+    <None Remove="GameStudio\EmbeddedResources\icon_color.png" />
     <None Remove="GameStudio\EmbeddedResources\mipmap-hdpi\appicon.png" />
     <None Remove="GameStudio\EmbeddedResources\mipmap-hdpi\appicon_background.png" />
     <None Remove="GameStudio\EmbeddedResources\mipmap-hdpi\appicon_foreground.png" />
@@ -33,12 +59,43 @@
     <None Remove="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon.png" />
     <None Remove="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon_background.png" />
     <None Remove="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon_foreground.png" />
+    <None Remove="GameStudio\EmbeddedResources\namespace.png" />
+    <None Remove="GameStudio\EmbeddedResources\page_code.png" />
+    <None Remove="GameStudio\EmbeddedResources\page_gear.png" />
+    <None Remove="GameStudio\EmbeddedResources\page_white.png" />
+    <None Remove="GameStudio\EmbeddedResources\page_white_csharp.png" />
+    <None Remove="GameStudio\EmbeddedResources\template_current.png" />
+    <None Remove="GameStudio\EmbeddedResources\template_empty.png" />
+    <None Remove="GameStudio\EmbeddedResources\working_bigtask.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="GameStudio\EmbeddedResources\0_001.AudioData.ryd" />
-    <EmbeddedResource Include="GameStudio\EmbeddedResources\background.AudioData.ryd" />
-    <EmbeddedResource Include="GameStudio\EmbeddedResources\chicken_cluck_happy.AudioData.ryd" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\add.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\application_bug.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\application_create.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\application_go.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\application_stopwatch.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\arrow_redo.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\arrow_refresh.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\arrow_undo.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\AssetImporter.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\clock.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\color_pick.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\control_pause_blue.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\control_play_blue.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\control_step_blue.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\control_stop_blue.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\cross.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\CursorArrow.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\CursorArrowAction.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\CursorArrowActionMove.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\CursorArrowActionRotate.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\CursorArrowActionScale.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\CursorHandGrab.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\CursorHandGrabbing.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\disk_multiple.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\drive_disk.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\icon_color.png" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-hdpi\appicon.png" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-hdpi\appicon_background.png" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-hdpi\appicon_foreground.png" />
@@ -54,7 +111,15 @@
     <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon.png" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon_background.png" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\mipmap-xxxhdpi\appicon_foreground.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\namespace.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\page_code.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\page_gear.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\page_white.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\page_white_csharp.png" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\SplashLogo.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\template_current.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\template_empty.png" />
+    <EmbeddedResource Include="GameStudio\EmbeddedResources\working_bigtask.png" />
   </ItemGroup>
 
   <ItemGroup>

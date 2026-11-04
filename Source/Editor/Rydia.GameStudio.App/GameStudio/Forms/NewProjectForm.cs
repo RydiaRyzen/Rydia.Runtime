@@ -315,6 +315,12 @@ namespace Rydia.GameStudio
             Directory.CreateDirectory(projectDirectory);
             var assetsDirectory = Path.Combine(projectDirectory, "Assets");
             Directory.CreateDirectory(assetsDirectory);
+            Directory.CreateDirectory(Path.Combine(assetsDirectory, "Textures"));
+            Directory.CreateDirectory(Path.Combine(assetsDirectory, "AudioDatas"));
+            Directory.CreateDirectory(Path.Combine(assetsDirectory, "Pixmaps"));
+            Directory.CreateDirectory(Path.Combine(assetsDirectory, "Shaders"));
+            Directory.CreateDirectory(Path.Combine(assetsDirectory, "Scenes"));
+
             var mediaDirectory = Path.Combine(projectDirectory, "Source", "Media");
             Directory.CreateDirectory(mediaDirectory);
             var sourceDirectory = Path.Combine(projectDirectory, "Source", "Code");

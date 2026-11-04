@@ -19,10 +19,10 @@ namespace Rydia.Engine.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CoreResource {
+    public class CoreResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Rydia.Engine.Properties {
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Rydia.Engine.Properties.CoreResource", typeof(CoreResource).Assembly);
@@ -51,7 +51,7 @@ namespace Rydia.Engine.Properties {
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] Array {
+        public static byte[] Array {
             get {
                 object obj = ResourceManager.GetObject("Array", resourceCulture);
                 return ((byte[])(obj));
@@ -73,7 +73,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] Class {
+        public static byte[] Class {
             get {
                 object obj = ResourceManager.GetObject("Class", resourceCulture);
                 return ((byte[])(obj));
@@ -83,7 +83,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] Delegate {
+        public static byte[] Delegate {
             get {
                 object obj = ResourceManager.GetObject("Delegate", resourceCulture);
                 return ((byte[])(obj));
@@ -93,7 +93,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] Event {
+        public static byte[] Event {
             get {
                 object obj = ResourceManager.GetObject("Event", resourceCulture);
                 return ((byte[])(obj));
@@ -103,7 +103,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] Field {
+        public static byte[] Field {
             get {
                 object obj = ResourceManager.GetObject("Field", resourceCulture);
                 return ((byte[])(obj));
@@ -113,7 +113,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconBinarySerializer {
+        public static byte[] iconBinarySerializer {
             get {
                 object obj = ResourceManager.GetObject("iconBinarySerializer", resourceCulture);
                 return ((byte[])(obj));
@@ -123,7 +123,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpCamera {
+        public static byte[] iconCmpCamera {
             get {
                 object obj = ResourceManager.GetObject("iconCmpCamera", resourceCulture);
                 return ((byte[])(obj));
@@ -133,7 +133,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpCapsuleCollider {
+        public static byte[] iconCmpCapsuleCollider {
             get {
                 object obj = ResourceManager.GetObject("iconCmpCapsuleCollider", resourceCulture);
                 return ((byte[])(obj));
@@ -143,7 +143,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpCircleCollider {
+        public static byte[] iconCmpCircleCollider {
             get {
                 object obj = ResourceManager.GetObject("iconCmpCircleCollider", resourceCulture);
                 return ((byte[])(obj));
@@ -153,7 +153,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpEdgeCollider {
+        public static byte[] iconCmpEdgeCollider {
             get {
                 object obj = ResourceManager.GetObject("iconCmpEdgeCollider", resourceCulture);
                 return ((byte[])(obj));
@@ -163,7 +163,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpLoopCollider {
+        public static byte[] iconCmpLoopCollider {
             get {
                 object obj = ResourceManager.GetObject("iconCmpLoopCollider", resourceCulture);
                 return ((byte[])(obj));
@@ -173,7 +173,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpProfileRenderer {
+        public static byte[] iconCmpProfileRenderer {
             get {
                 object obj = ResourceManager.GetObject("iconCmpProfileRenderer", resourceCulture);
                 return ((byte[])(obj));
@@ -183,7 +183,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpRectCollider {
+        public static byte[] iconCmpRectCollider {
             get {
                 object obj = ResourceManager.GetObject("iconCmpRectCollider", resourceCulture);
                 return ((byte[])(obj));
@@ -193,7 +193,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpRigidBodyRenderer {
+        public static byte[] iconCmpRigidBodyRenderer {
             get {
                 object obj = ResourceManager.GetObject("iconCmpRigidBodyRenderer", resourceCulture);
                 return ((byte[])(obj));
@@ -203,7 +203,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpSoundListener {
+        public static byte[] iconCmpSoundListener {
             get {
                 object obj = ResourceManager.GetObject("iconCmpSoundListener", resourceCulture);
                 return ((byte[])(obj));
@@ -213,7 +213,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpSpriteAnimator {
+        public static byte[] iconCmpSpriteAnimator {
             get {
                 object obj = ResourceManager.GetObject("iconCmpSpriteAnimator", resourceCulture);
                 return ((byte[])(obj));
@@ -223,7 +223,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpSpriteRenderer {
+        public static byte[] iconCmpSpriteRenderer {
             get {
                 object obj = ResourceManager.GetObject("iconCmpSpriteRenderer", resourceCulture);
                 return ((byte[])(obj));
@@ -233,7 +233,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpTransform {
+        public static byte[] iconCmpTransform {
             get {
                 object obj = ResourceManager.GetObject("iconCmpTransform", resourceCulture);
                 return ((byte[])(obj));
@@ -243,7 +243,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpUnknown {
+        public static byte[] iconCmpUnknown {
             get {
                 object obj = ResourceManager.GetObject("iconCmpUnknown", resourceCulture);
                 return ((byte[])(obj));
@@ -253,7 +253,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconCmpVelocityTracker {
+        public static byte[] iconCmpVelocityTracker {
             get {
                 object obj = ResourceManager.GetObject("iconCmpVelocityTracker", resourceCulture);
                 return ((byte[])(obj));
@@ -263,7 +263,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconGameObj {
+        public static byte[] iconGameObj {
             get {
                 object obj = ResourceManager.GetObject("iconGameObj", resourceCulture);
                 return ((byte[])(obj));
@@ -273,7 +273,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResAudioData {
+        public static byte[] iconResAudioData {
             get {
                 object obj = ResourceManager.GetObject("iconResAudioData", resourceCulture);
                 return ((byte[])(obj));
@@ -283,7 +283,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResDrawTechnique {
+        public static byte[] iconResDrawTechnique {
             get {
                 object obj = ResourceManager.GetObject("iconResDrawTechnique", resourceCulture);
                 return ((byte[])(obj));
@@ -293,7 +293,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResFont {
+        public static byte[] iconResFont {
             get {
                 object obj = ResourceManager.GetObject("iconResFont", resourceCulture);
                 return ((byte[])(obj));
@@ -303,7 +303,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResFragmentShader {
+        public static byte[] iconResFragmentShader {
             get {
                 object obj = ResourceManager.GetObject("iconResFragmentShader", resourceCulture);
                 return ((byte[])(obj));
@@ -313,7 +313,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResMaterial {
+        public static byte[] iconResMaterial {
             get {
                 object obj = ResourceManager.GetObject("iconResMaterial", resourceCulture);
                 return ((byte[])(obj));
@@ -323,7 +323,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResPixmap {
+        public static byte[] iconResPixmap {
             get {
                 object obj = ResourceManager.GetObject("iconResPixmap", resourceCulture);
                 return ((byte[])(obj));
@@ -333,7 +333,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResPrefabEmpty {
+        public static byte[] iconResPrefabEmpty {
             get {
                 object obj = ResourceManager.GetObject("iconResPrefabEmpty", resourceCulture);
                 return ((byte[])(obj));
@@ -343,7 +343,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResPrefabFull {
+        public static byte[] iconResPrefabFull {
             get {
                 object obj = ResourceManager.GetObject("iconResPrefabFull", resourceCulture);
                 return ((byte[])(obj));
@@ -353,7 +353,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResRenderSetup {
+        public static byte[] iconResRenderSetup {
             get {
                 object obj = ResourceManager.GetObject("iconResRenderSetup", resourceCulture);
                 return ((byte[])(obj));
@@ -363,7 +363,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResRenderTarget {
+        public static byte[] iconResRenderTarget {
             get {
                 object obj = ResourceManager.GetObject("iconResRenderTarget", resourceCulture);
                 return ((byte[])(obj));
@@ -373,7 +373,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResScene {
+        public static byte[] iconResScene {
             get {
                 object obj = ResourceManager.GetObject("iconResScene", resourceCulture);
                 return ((byte[])(obj));
@@ -383,7 +383,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResShaderProgram {
+        public static byte[] iconResShaderProgram {
             get {
                 object obj = ResourceManager.GetObject("iconResShaderProgram", resourceCulture);
                 return ((byte[])(obj));
@@ -393,7 +393,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResSound {
+        public static byte[] iconResSound {
             get {
                 object obj = ResourceManager.GetObject("iconResSound", resourceCulture);
                 return ((byte[])(obj));
@@ -403,7 +403,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResTexture {
+        public static byte[] iconResTexture {
             get {
                 object obj = ResourceManager.GetObject("iconResTexture", resourceCulture);
                 return ((byte[])(obj));
@@ -413,7 +413,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResUnknown {
+        public static byte[] iconResUnknown {
             get {
                 object obj = ResourceManager.GetObject("iconResUnknown", resourceCulture);
                 return ((byte[])(obj));
@@ -423,7 +423,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconResVertexShader {
+        public static byte[] iconResVertexShader {
             get {
                 object obj = ResourceManager.GetObject("iconResVertexShader", resourceCulture);
                 return ((byte[])(obj));
@@ -433,7 +433,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] iconXmlSerializer {
+        public static byte[] iconXmlSerializer {
             get {
                 object obj = ResourceManager.GetObject("iconXmlSerializer", resourceCulture);
                 return ((byte[])(obj));
@@ -443,7 +443,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] Method {
+        public static byte[] Method {
             get {
                 object obj = ResourceManager.GetObject("Method", resourceCulture);
                 return ((byte[])(obj));
@@ -453,7 +453,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] Object {
+        public static byte[] Object {
             get {
                 object obj = ResourceManager.GetObject("Object", resourceCulture);
                 return ((byte[])(obj));
@@ -463,7 +463,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] ObjectRef {
+        public static byte[] ObjectRef {
             get {
                 object obj = ResourceManager.GetObject("ObjectRef", resourceCulture);
                 return ((byte[])(obj));
@@ -473,7 +473,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] Primitive {
+        public static byte[] Primitive {
             get {
                 object obj = ResourceManager.GetObject("Primitive", resourceCulture);
                 return ((byte[])(obj));
@@ -483,7 +483,7 @@ namespace Rydia.Engine.Properties {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] Property {
+        public static byte[] Property {
             get {
                 object obj = ResourceManager.GetObject("Property", resourceCulture);
                 return ((byte[])(obj));

@@ -125,7 +125,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Engine\Properties\CoreResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CoreResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

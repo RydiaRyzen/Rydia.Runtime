@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 using Status = Rydia.Graphics.Api.ES20.FramebufferStatus;
 using Attachment = Rydia.Graphics.Api.ES20.FramebufferAttachment;
-using AttachmentType = Rydia.Graphics.Api.ES20.FramebufferAttachmentType;
 using TKAttachment = Rydia.Graphics.Api.ES20.FramebufferAttachment;
+using AttachmentType = Rydia.Graphics.Api.ES20.FramebufferAttachmentType;
 using Rydia.Graphics.Api;
 using Rydia.Graphics.Api.ES20;
 
@@ -18,29 +18,34 @@ namespace Rydia.Graphics.Backend
 {
 
     /// <summary>
-    /// A framebuffer
+    /// フレームバッファを表すクラスです
     /// </summary>
+    /// <seealso cref="Rydia.Graphics.Backend.GLObject" />
     public class NativeFramebuffer : GLObject
     {
 
         /// <summary>
-        /// Returns the current framebuffer.
+        /// 現在のフレームバッファを取得します。
         /// </summary>
         /// <remarks>
-        /// <b>Note</b>: do <b>not</b> dispose this framebuffer.
+        /// <b>注意</b>: このフレームバッファは破棄しないでください。
         ///
-        /// <para><b>Note</b>: if you access Current <b>before</b> you create any custom framebuffers, 
-        /// then the returned value can be regarded as the default framebuffer.
-        /// Note that this is not always the 'system' framebuffer, since you are not allowed to access that framebuffer on some devices.</para>
+        /// <para>
+        /// <b>注意</b>: カスタムフレームバッファを一度も作成していない状態で
+        /// Current にアクセスした場合、取得したフレームバッファはデフォルトフレームバッファとして扱うことができます。
+        /// ただし、デバイスによってはシステムのフレームバッファに直接アクセスできない場合があるため、
+        /// 必ずしもシステムのフレームバッファと同一であるとは限りません。
+        /// </para>
         /// </remarks>
         public static NativeFramebuffer Current
         {
             get
             {
-                // NOTE: The default framebuffer is not always 0. For example, on iOS, you
-                // cannot write to framebuffer 0, and you must always create a framebuffer and
-                // attach it to a view. So the default framebuffer for our purposes, would be
-                // the one attached to that view.
+                // 注意: デフォルトフレームバッファは、必ずしも 0 とは限りません。
+                // 例えば iOS では、フレームバッファ 0 への書き込みが許可されておらず、
+                // 常にビューに関連付けられたフレームバッファを作成する必要があります。
+                // そのため、この実装では、ビューに関連付けられたフレームバッファを
+                // 独自のデフォルトフレームバッファとして扱います。
                 GL.GetInteger(GetPName.FramebufferBinding, out int value);
                 GL.CheckError("Framebuffer");
                 return new NativeFramebuffer(value);
@@ -48,9 +53,12 @@ namespace Rydia.Graphics.Backend
         }
 
         /// <summary>
-        /// Checks if this framebuffer is currently bound.
+        /// このフレームバッファが現在バインドされているかどうかを取得します。
         /// </summary>
-        /// <value>True if this is the currently bound framebuffer, False otherwise.</value>
+        /// <value>
+        /// このフレームバッファが現在バインドされている場合は <see langword="true"/>、
+        /// そうでない場合は<see langword = "false" /> を返します。
+        /// </value>
         public bool IsBound
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -63,30 +71,48 @@ namespace Rydia.Graphics.Backend
         }
 
         /// <summary>
-        /// Return the framebuffer completeness status.
+        /// フレームバッファのコンプリートステータスを取得します。
         /// </summary>
         /// <remarks>
-        /// The returned value identifies whether or not the currently bound framebuffer is framebuffer complete, 
-        /// and if not, which of the rules of framebuffer completeness is violated.
+        /// 返される値は、現在バインドされているフレームバッファが完全な状態であるかどうかを示します。
+        /// 完全でない場合は、フレームバッファの完全性に関するどの条件に違反しているかを示します。
         ///
-        /// <para>If the currently bound framebuffer is not framebuffer complete, 
-        /// then it is an error to attempt to use the framebuffer for writing or reading.
-        /// This means that rendering commands (<see cref="GLES2.Clear"/>, <see cref="GLES2.DrawArrays(GLES2.PrimitiveType, int)"/>, 
-        /// and <see cref="GLES2.DrawElements(GLES2.PrimitiveType, byte[])"/>) as well as commands that read the framebuffer (<see cref="ReadPixels"/>, 
-        /// <see cref="NativeTexture.CopyTexImage2D"/>, and <see cref="NativeTexture.CopyTexSubImage2D"/>) will generate the error <see cref="ErrorCode.InvalidFramebufferOperation"/>
-        /// if called while the framebuffer is not framebuffer complete.</para>
+        /// <para>
+        /// 現在バインドされているフレームバッファが完全な状態でない場合、
+        /// そのフレームバッファに対して読み取りまたは書き込みを行うことはできません。
+        /// 具体的には、描画コマンド（<see cref="GLES2.Clear"/>、
+        /// <see cref="GLES2.DrawArrays(GLES2.PrimitiveType, int)"/>、
+        /// <see cref="GLES2.DrawElements(GLES2.PrimitiveType, byte[])"/>）や、
+        /// フレームバッファの内容を読み取るコマンド（<see cref="ReadPixels"/>、
+        /// <see cref="NativeTexture.CopyTexImage2D"/>、
+        /// <see cref="NativeTexture.CopyTexSubImage2D"/>）を実行すると、
+        /// <see cref="ErrorCode.InvalidFramebufferOperation"/> エラーが発生します。
+        /// </para>
         ///
-        /// <para><b>Note</b>: it is strongly advised, thought not required, that an application call <c>Status</c> to see if the framebuffer is complete prior to rendering.
-        /// This is because some implementations may not support rendering to particular combinations of internal formats.</para>
+        /// <para>
+        /// <b>注意</b>: 必須ではありませんが、描画を行う前に <c>Status</c> を呼び出し、
+        /// フレームバッファが完全な状態であることを確認することを強く推奨します。
+        /// 実装によっては、特定の内部フォーマットの組み合わせに対する描画をサポートしていない場合があるためです。
+        /// </para>
         ///
-        /// <para><b>Note</b>: the default window-system-provided framebuffer is always framebuffer complete, 
-        /// and thus <see cref="Status.Complete"/> is returned when there is no bound application created framebuffer.</para>
+        /// <para>
+        /// <b>注意</b>: ウィンドウシステムによって提供されるデフォルトフレームバッファは、
+        /// 常に完全な状態です。
+        /// そのため、アプリケーションが作成したフレームバッファがバインドされていない場合は、
+        /// <see cref="Status.Complete"/> が返されます。
+        /// </para>
         ///
-        /// <para><b>Note</b>: in DEBUG mode with assertions enabled, an error will be logged to the debug console if this framebuffer is not bound.</para>
+        /// <para>
+        /// <b>注意</b>: DEBUG モードでアサーションが有効になっている場合、
+        /// このフレームバッファがバインドされていない状態で呼び出すと、
+        /// デバッグコンソールにエラーが出力されます。
+        /// </para>
         ///
-        /// <para><b>OpenGL API</b>: glCheckFramebufferStatus</para>
+        /// <para>
+        /// <b>OpenGL API</b>: glCheckFramebufferStatus
+        /// </para>
         /// </remarks>
-        /// <returns>The completeness <c>status</c>.</returns>
+        /// <returns>フレームバッファの完全性ステータスを返します。</returns>
         /// <seealso cref="NativeRenderbuffer.Bind"/>
         /// <seealso cref="NativeTexture.CopyTexImage2D"/>
         /// <seealso cref="NativeTexture.CopyTexSubImage2D"/>
@@ -94,7 +120,7 @@ namespace Rydia.Graphics.Backend
         /// <seealso cref="GLES2.DrawElements(GLES2.PrimitiveType, byte[])"/>
         /// <seealso cref="ReadPixels"/>
         /// <seealso cref="NativeRenderbuffer.Storage"/>
-        public Status CompletenessStatus
+        public Rydia.Graphics.Api.ES20.FramebufferStatus CompletenessStatus
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -102,19 +128,22 @@ namespace Rydia.Graphics.Backend
                 FramebufferTarget.Framebuffer.CheckBinding(Handle, this);
                 var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
                 GL.CheckError(this);
-                return (Status)status;
+                return (Rydia.Graphics.Api.ES20.FramebufferStatus)status;
             }
         }
 
         /// <summary>
-        /// Get the number of red bitplanes in the color buffer of the framebuffer.
+        /// フレームバッファのカラーバッファにおける赤色成分のビット数を取得します。
         /// </summary>
         /// <remarks>
-        /// <b>Note</b>: in DEBUG mode with assertions enabled, an error will be logged to the debug console if this framebuffer is not bound.
-        ///
-        /// <para><b>OpenGL API</b>: glGetIntegerv(GL_RED_BITS)</para>
+        /// <b>注意</b>: DEBUG モードでアサーションが有効になっている場合、
+        /// このフレームバッファがバインドされていない状態で呼び出すと、
+        /// デバッグコンソールにエラーが出力されます。
+        /// <para>
+        /// <b>OpenGL API</b>: glGetIntegerv(GL_RED_BITS)
+        /// </para>
         /// </remarks>
-        /// <value>The number of red bitplanes.</value>
+        /// <value>赤色成分のビット数を返します。</value>
         /// <seealso cref="GreenBits"/>
         /// <seealso cref="BlueBits"/>
         /// <seealso cref="AlphaBits"/>
