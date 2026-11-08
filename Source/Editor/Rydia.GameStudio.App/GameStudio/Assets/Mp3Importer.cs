@@ -54,11 +54,7 @@ namespace Rydia.GameStudio.Assets
         {
             try
             {
-                var audioData = new AudioData();
-                audioData.PCMData = DecodeMp3(data, out int channels, out int sampleRate);
-                audioData.SampleRate = sampleRate;
-                audioData.Channels = channels;
-                resource = audioData;
+                DecodeMp3(data, out resource);
                 return true;
             }
             catch
@@ -68,7 +64,7 @@ namespace Rydia.GameStudio.Assets
             }
         }
 
-        private short[] DecodeMp3(byte[] data, out int channels, out int sampleRate)
+        private void DecodeMp3(byte[] data, out AudioData audioData)
         {
             var tempPath = Path.GetTempPath();
             tempPath = Path.Combine(tempPath, "Temp45963.mp3");
@@ -94,12 +90,7 @@ namespace Rydia.GameStudio.Assets
                 }
             }
             var importer = new OggImporter();
-            importer.TryImport(oggData, out AudioData resource);
-            sampleRate = resource.SampleRate;
-            channels = resource.Channels;
-            var result = resource.PCMData;
-
-            return result;
+            importer.TryImport(oggData, out audioData);
         }
 
     }

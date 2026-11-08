@@ -203,67 +203,61 @@ namespace Rydia.GameStudio
                 }
                 // インポート操作
                 var ext = Path.GetExtension(file);
-                var targetFilename = Path.GetFileNameWithoutExtension(destination) + ".ryd";
-                var assetsFilepPath = Path.Combine("Assets", Path.Combine(EditorContext.AssetsPath, targetFilename));
+                var targetFileName = Path.GetFileNameWithoutExtension(destination) + ".ryd";
+                var assetsFilepPath = Path.Combine("Assets", Path.Combine(EditorContext.AssetsPath, targetFileName));
+                var pixelDataSerializer = new XmlResourceSerializer<PixelData>();
+                var audioDataSerializer = new XmlResourceSerializer<AudioData>();
+
                 if (ext == ".jpeg" || ext == ".jpg")
                 {
                     var importer = new Assets.JpegImporter();
                     importer.TryImport(File.ReadAllBytes(destination), out PixelData pixdata);
-                    pixdata.Path = assetsFilepPath;
-                    var serializer = new XmlResourceSerializer<PixelData>();
-                    serializer.Serialize(pixdata, assetsFilepPath);
+                    pixdata.Path = assetsFilepPath; 
+                    pixelDataSerializer.Serialize(pixdata, assetsFilepPath);
                 }
                 else if (ext == ".png")
                 {
                     var importer = new Assets.JpegImporter();
                     importer.TryImport(File.ReadAllBytes(destination), out PixelData pixdata);
                     pixdata.Path = assetsFilepPath;
-                    var serializer = new XmlResourceSerializer<PixelData>();
-                    serializer.Serialize(pixdata, assetsFilepPath);
+                    pixelDataSerializer.Serialize(pixdata, assetsFilepPath);
                 }
                 else if (ext == ".bmp")
                 {
                     var importer = new Assets.JpegImporter();
                     importer.TryImport(File.ReadAllBytes(destination), out PixelData pixdata);
                     pixdata.Path = assetsFilepPath;
-                    var serializer = new XmlResourceSerializer<PixelData>();
-                    serializer.Serialize(pixdata, assetsFilepPath);
+                    pixelDataSerializer.Serialize(pixdata, assetsFilepPath);
                 }
                 else if (ext == ".tga")
                 {
                     var importer = new Assets.TgaImporter();
                     importer.TryImport(File.ReadAllBytes(destination), out PixelData pixdata);
                     pixdata.Path = assetsFilepPath;
-                    var serializer = new XmlResourceSerializer<PixelData>();
-                    serializer.Serialize(pixdata, assetsFilepPath);
+                    pixelDataSerializer.Serialize(pixdata, assetsFilepPath);
                 }
                 else if (ext == ".wav")
                 {
                     var importer = new Assets.WavImporter();
                     importer.TryImport(File.ReadAllBytes(destination), out AudioData audioData);
                     audioData.Path = assetsFilepPath;
-                    var serializer = new XmlResourceSerializer<AudioData>();
-                    serializer.Serialize(audioData, assetsFilepPath);
+                    audioDataSerializer.Serialize(audioData, assetsFilepPath);
                 }
                 else if (ext == ".ogg")
                 {
                     var importer = new Assets.OggImporter();
                     importer.TryImport(File.ReadAllBytes(destination), out AudioData audioData);
                     audioData.Path = assetsFilepPath;
-                    var serializer = new XmlResourceSerializer<AudioData>();
-                    serializer.Serialize(audioData, assetsFilepPath);
+                    audioDataSerializer.Serialize(audioData, assetsFilepPath);
                 }
                 else if (ext == ".mp3")
                 {
                     var importer = new Assets.Mp3Importer();
                     importer.TryImport(File.ReadAllBytes(destination), out AudioData audioData);
                     audioData.Path = assetsFilepPath;
-                    var serializer = new XmlResourceSerializer<AudioData>();
-                    serializer.Serialize(audioData, assetsFilepPath);
+                    audioDataSerializer.Serialize(audioData, assetsFilepPath);
                 }
             }
-
-            
 
             // Assets ビューを更新
             RefreshAssets();
