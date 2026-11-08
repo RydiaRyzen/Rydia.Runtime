@@ -124,8 +124,8 @@ namespace Rydia.GameStudio
             ProjectPath = path;
             ProjectName = Path.GetFileNameWithoutExtension(path);
             SolutionPath = Path.Combine(path, "Source", "Code", ProjectName + ".slnx");
+            MediaPath = Path.Combine(path, "Source", "Media");
             AssetsPath = Path.Combine(path, "Assets");
-            MediaPath = Path.Combine(path, "Media");
         }
 
     }

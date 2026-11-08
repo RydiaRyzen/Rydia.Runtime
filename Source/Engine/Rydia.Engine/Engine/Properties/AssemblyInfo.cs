@@ -14,3 +14,4 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("c5dcf372-7921-4934-af00-4e662e49fd12")]
 [assembly: InternalsVisibleTo("Rydia.Engine.Serialization.Tests")]
+[assembly: InternalsVisibleTo("Rydia.GameStudio.App")]

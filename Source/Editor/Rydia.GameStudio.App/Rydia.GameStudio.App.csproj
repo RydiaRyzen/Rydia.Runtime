@@ -17,6 +17,10 @@
 	  <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="SixLabors.ImageSharp" Version="4.1.3" />
+		<PackageReference Include="SixLabors.ImageSharp.Drawing" Version="3.1.3" />
+	</ItemGroup>
   <ItemGroup>
     <None Remove="GameStudio\EmbeddedResources\add.png" />
     <None Remove="GameStudio\EmbeddedResources\application_bug.png" />
@@ -120,6 +124,12 @@
     <EmbeddedResource Include="GameStudio\EmbeddedResources\template_current.png" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\template_empty.png" />
     <EmbeddedResource Include="GameStudio\EmbeddedResources\working_bigtask.png" />
+    <EmbeddedResource Include="x64\SoXWrapper_x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="x86\SoXWrapper_x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -550,5 +560,7 @@
   </ItemGroup>
 
   <Import Project="..\Rydia.SolutionBuilder\Rydia.SolutionBuilder.projitems" Label="Shared" />
+
+  <Import Project="..\..\Runtime\Api\Rydia.Audio.Api.NVorbis\Rydia.Audio.Api.NVorbis.projitems" Label="Shared" />
 
 </Project>

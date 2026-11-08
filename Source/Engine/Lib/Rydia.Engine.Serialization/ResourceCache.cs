@@ -78,7 +78,8 @@ namespace Rydia.Engine.Serialization
         {
             if (resource == null)
                 return;
-
+            if (string.IsNullOrWhiteSpace(resource.Path))
+                return;
             string fullPath = Path.GetFullPath(resource.Path);
 
             if (Resources.TryGetValue(fullPath, out var cachedResource) &&
