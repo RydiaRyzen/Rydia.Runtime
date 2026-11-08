@@ -40,7 +40,6 @@ Rydia.Runtimeは以下のプロジェクトで構成されています。
 |---|---|
 | Desktop | Windows、macOS、Linux |
 | Mobile | Android、iOS |
-| Game Console | Nintendo Switch |
 
 ## Rydia.Runtime.Windows
 
