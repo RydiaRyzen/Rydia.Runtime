@@ -16,7 +16,6 @@ Rydia.Runtimeは以下のプロジェクトで構成されています。
 | `Rydia.Runtime.Linux` | Linux 向けランタイム |未実装|
 | `Rydia.Runtime.Droid` | Android 向けランタイム |実装済み|
 | `Rydia.Runtime.iOS` | iOS 向けランタイム |未実装|
-| `Rydia.Runtime.NintendoSwitch` | Nintendo Switch 向けランタイム |未実装|
 
 | プロジェクト | **別Repositoryに移行** ||
 |---|---|---|
@@ -68,9 +67,6 @@ LinuxはGoogle Angle for Vulkan or OpenGLを使用する予定です。
 
 ## Rydia. Runtime.iOSはまだ作っていません
 Google Angle for Metalを使用する予定です。
-
-## Rydia. Runtime.NintendoSwitchはまだ作っていません
-Nintendo SwitchはOpenGL ES, OpenALをスイッチ用に書き換えるラッパークラスを作成し、使用する予定です。
 
 ## Rydia Engine　別Repositoryに移行
 
