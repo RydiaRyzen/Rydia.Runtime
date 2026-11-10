@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Design;
@@ -47,6 +49,7 @@ namespace Rydia.GameStudio
             // ドラッグ＆ドロップイベント
             this.treeView.DragEnter += TreeView_DragEnter;
             this.treeView.DragDrop += TreeView_DragDrop;
+            this.treeView.ItemDrag += TreeView_ItemDrag;
 
             // ノードのテキスト表示設定
             TreeColumn column = new TreeColumn();
@@ -126,14 +129,55 @@ namespace Rydia.GameStudio
         }
 
         /// <summary>
+        /// ノードのドラッグを開始します。
+        /// </summary>
+        private void TreeView_ItemDrag(object? sender, ItemDragEventArgs e)
+        {
+            Debug.WriteLine($"Item Type: {e.Item?.GetType().FullName}");
+            Debug.WriteLine($"Item Value: {e.Item}");
+            if (e.Item != null)
+            {
+                foreach (PropertyInfo property in e.Item.GetType().GetProperties())
+                {
+                    try
+                    {
+                        Debug.WriteLine(
+                            $"{property.Name}: {property.GetValue(e.Item)}");
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            if (e.Item is not TreeNodeAdv[] nodes || nodes.Length == 0)
+                return;
+            TreeNodeAdv node = nodes[0];
+
+            if (node.Tag is not Node model)
+                return;
+
+            if (model.Tag is not string path || !File.Exists(path))
+                return;
+
+            this.treeView.DoDragDrop(
+                path,
+                DragDropEffects.Move);
+        }
+
+        /// <summary>
         /// ファイルがドラッグされたときの処理を行います。
         /// </summary>
         private void TreeView_DragEnter(object? sender, DragEventArgs e)
         {
-            if (e.Data != null &&
-                e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e.Data == null)
+                return;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 e.Effect = DragDropEffects.Copy;
+            }
+            else if (e.Data.GetDataPresent(typeof(string)))
+            {
+                e.Effect = DragDropEffects.Move;
             }
             else
             {
@@ -146,20 +190,57 @@ namespace Rydia.GameStudio
         /// </summary>
         private void TreeView_DragDrop(object? sender, DragEventArgs e)
         {
-            if (e.Data == null ||
-                !e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
+            if (e.Data == null)
                 return;
+
+            // ドロップ位置のノードを取得
+            Point clientPoint = this.treeView.PointToClient(new Point(e.X, e.Y));
+            TreeNodeAdv? treeNode = this.treeView.GetNodeAt(clientPoint);
+
+            // ノードが取得できない場合はAssetsルートを対象にする
+            Node? targetNode = treeNode?.Tag as Node;
+
+            string targetDirectory = targetNode?.Tag as string ?? this.assetsDirectory;
+            // ファイルノードにドロップされた場合は親ディレクトリを対象にする
+            if (File.Exists(targetDirectory))
+            {
+                targetDirectory = Path.GetDirectoryName(targetDirectory)
+                    ?? this.assetsDirectory;
             }
 
-            if (e.Data.GetData(DataFormats.FileDrop) is not string[] files)
-            {
-                return;
-            }
-
-            // Media ディレクトリを作成
+            // ディレクトリを作成
             Directory.CreateDirectory(this.mediaDirectory);
+            Directory.CreateDirectory(targetDirectory);
 
+            // Assets内のファイル移動
+            if (e.Data.GetDataPresent(typeof(string)))
+            {
+                if (e.Data.GetData(typeof(string)) is string sourcePath)
+                {
+                    MoveAsset(sourcePath, targetDirectory);
+                }
+            }
+            // 外部ファイルのインポート
+            else if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                if (e.Data.GetData(DataFormats.FileDrop) is string[] files)
+                {
+                    ImportExternalFiles(files, targetDirectory);
+                }
+            }
+
+            // Assets ビューを更新
+            RefreshAssets();
+            this.treeView.ExpandAll();
+        }
+
+        /// <summary>
+        /// 外部ファイルをMediaにコピーしてインポートします。
+        /// </summary>
+        private void ImportExternalFiles(
+            string[] files,
+            string targetDirectory)
+        {
             foreach (string file in files)
             {
                 if (!File.Exists(file))
@@ -175,7 +256,10 @@ namespace Rydia.GameStudio
 
                 try
                 {
+                    // Mediaにコピー
                     File.Copy(file, destination);
+                    // インポート
+                    ImportAsset(destination, targetDirectory);
                 }
                 catch (IOException ex)
                 {
@@ -196,72 +280,181 @@ namespace Rydia.GameStudio
                 catch (Exception ex)
                 {
                     MessageBox.Show(
-                        $"予期せぬエラーが発生しました。\n{file}\n\n{ex.Message}",
-                        "エラー",
+                        $"ファイルのインポートに失敗しました。\n{file}\n\n{ex.Message}",
+                        "インポートエラー",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
-                // インポート操作
-                var ext = Path.GetExtension(file);
-                var targetFileName = Path.GetFileNameWithoutExtension(destination) + ".ryd";
-                var assetsFilepPath = Path.Combine("Assets", Path.Combine(EditorContext.AssetsPath, targetFileName));
-                var pixelDataSerializer = new XmlResourceSerializer<PixelData>();
-                var audioDataSerializer = new XmlResourceSerializer<AudioData>();
+            }
+        }
 
-                if (ext == ".jpeg" || ext == ".jpg")
-                {
-                    var importer = new Assets.JpegImporter();
-                    importer.TryImport(File.ReadAllBytes(destination), out PixelData pixdata);
-                    pixdata.Path = assetsFilepPath; 
-                    pixelDataSerializer.Serialize(pixdata, assetsFilepPath);
-                }
-                else if (ext == ".png")
-                {
-                    var importer = new Assets.JpegImporter();
-                    importer.TryImport(File.ReadAllBytes(destination), out PixelData pixdata);
-                    pixdata.Path = assetsFilepPath;
-                    pixelDataSerializer.Serialize(pixdata, assetsFilepPath);
-                }
-                else if (ext == ".bmp")
-                {
-                    var importer = new Assets.JpegImporter();
-                    importer.TryImport(File.ReadAllBytes(destination), out PixelData pixdata);
-                    pixdata.Path = assetsFilepPath;
-                    pixelDataSerializer.Serialize(pixdata, assetsFilepPath);
-                }
-                else if (ext == ".tga")
-                {
-                    var importer = new Assets.TgaImporter();
-                    importer.TryImport(File.ReadAllBytes(destination), out PixelData pixdata);
-                    pixdata.Path = assetsFilepPath;
-                    pixelDataSerializer.Serialize(pixdata, assetsFilepPath);
-                }
-                else if (ext == ".wav")
-                {
-                    var importer = new Assets.WavImporter();
-                    importer.TryImport(File.ReadAllBytes(destination), out AudioData audioData);
-                    audioData.Path = assetsFilepPath;
-                    audioDataSerializer.Serialize(audioData, assetsFilepPath);
-                }
-                else if (ext == ".ogg")
-                {
-                    var importer = new Assets.OggImporter();
-                    importer.TryImport(File.ReadAllBytes(destination), out AudioData audioData);
-                    audioData.Path = assetsFilepPath;
-                    audioDataSerializer.Serialize(audioData, assetsFilepPath);
-                }
-                else if (ext == ".mp3")
-                {
-                    var importer = new Assets.Mp3Importer();
-                    importer.TryImport(File.ReadAllBytes(destination), out AudioData audioData);
-                    audioData.Path = assetsFilepPath;
-                    audioDataSerializer.Serialize(audioData, assetsFilepPath);
-                }
+        /// <summary>
+        /// Assets内のファイルを指定されたディレクトリに移動します。
+        /// </summary>
+        /// <param name="sourcePath">移動元のファイルパス。</param>
+        /// <param name="targetDirectory">移動先のディレクトリ。</param>
+        private void MoveAsset(string sourcePath, string targetDirectory)
+        {
+            if (!File.Exists(sourcePath))
+                return;
+
+            string fullAssetsPath = Path.GetFullPath(this.assetsDirectory)
+                .TrimEnd(Path.DirectorySeparatorChar) +
+                Path.DirectorySeparatorChar;
+
+            string fullSourcePath = Path.GetFullPath(sourcePath);
+            string fullTargetDirectory = Path.GetFullPath(targetDirectory);
+
+            // Assets外のファイルは移動しない
+            if (!fullSourcePath.StartsWith(
+                fullAssetsPath,
+                StringComparison.OrdinalIgnoreCase))
+            {
+                return;
             }
 
-            // Assets ビューを更新
-            RefreshAssets();
-            this.treeView.ExpandAll();
+            // Assets外への移動を禁止
+            if (!fullTargetDirectory.StartsWith(
+                fullAssetsPath,
+                StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            // 同じディレクトリなら何もしない
+            if (string.Equals(
+                Path.GetDirectoryName(fullSourcePath),
+                fullTargetDirectory,
+                StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            string destination = Path.Combine(
+                fullTargetDirectory,
+                Path.GetFileName(fullSourcePath));
+
+            // 同名ファイルが存在する場合は移動しない
+            if (File.Exists(destination))
+            {
+                MessageBox.Show(
+                    "移動先に同名のファイルが存在します。",
+                    "ファイル移動",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            File.Move(fullSourcePath, destination);
+
+        }
+
+        /// <summary>
+        /// 指定されたファイルをアセットとしてインポートします。
+        /// </summary>
+        /// <param name="sourcePath">インポート元のファイルパス。</param>
+        /// <param name="targetDirectory">インポート先のディレクトリ。</param>
+        private static void ImportAsset(
+            string sourcePath,
+            string targetDirectory)
+        {
+
+            string ext = Path.GetExtension(sourcePath).ToLowerInvariant();
+
+            string targetFileName =
+                Path.GetFileNameWithoutExtension(sourcePath) + ".ryd";
+
+            string assetFilePath = Path.Combine(
+                targetDirectory,
+                targetFileName);
+
+            var pixelDataSerializer = new XmlResourceSerializer<PixelData>();
+            var audioDataSerializer = new XmlResourceSerializer<AudioData>();
+            if (ext == ".jpeg" || ext == ".jpg")
+            {
+                var importer = new Assets.JpegImporter();
+
+                if (importer.TryImport(
+                    File.ReadAllBytes(sourcePath),
+                    out PixelData pixdata))
+                {
+                    pixdata.Path = assetFilePath;
+                    pixelDataSerializer.Serialize(pixdata, assetFilePath);
+                }
+            }
+            else if (ext == ".png")
+            {
+                var importer = new Assets.JpegImporter();
+
+                if (importer.TryImport(
+                    File.ReadAllBytes(sourcePath),
+                    out PixelData pixdata))
+                {
+                    pixdata.Path = assetFilePath;
+                    pixelDataSerializer.Serialize(pixdata, assetFilePath);
+                }
+            }
+            else if (ext == ".bmp")
+            {
+                var importer = new Assets.JpegImporter();
+
+                if (importer.TryImport(
+                    File.ReadAllBytes(sourcePath),
+                    out PixelData pixdata))
+                {
+                    pixdata.Path = assetFilePath;
+                    pixelDataSerializer.Serialize(pixdata, assetFilePath);
+                }
+            }
+            else if (ext == ".tga")
+            {
+                var importer = new Assets.TgaImporter();
+
+                if (importer.TryImport(
+                    File.ReadAllBytes(sourcePath),
+                    out PixelData pixdata))
+                {
+                    pixdata.Path = assetFilePath;
+                    pixelDataSerializer.Serialize(pixdata, assetFilePath);
+                }
+            }
+            else if (ext == ".wav")
+            {
+                var importer = new Assets.WavImporter();
+
+                if (importer.TryImport(
+                    File.ReadAllBytes(sourcePath),
+                    out AudioData audioData))
+                {
+                    audioData.Path = assetFilePath;
+                    audioDataSerializer.Serialize(audioData, assetFilePath);
+                }
+            }
+            else if (ext == ".ogg")
+            {
+                var importer = new Assets.OggImporter();
+
+                if (importer.TryImport(
+                    File.ReadAllBytes(sourcePath),
+                    out AudioData audioData))
+                {
+                    audioData.Path = assetFilePath;
+                    audioDataSerializer.Serialize(audioData, assetFilePath);
+                }
+            }
+            else if (ext == ".mp3")
+            {
+                var importer = new Assets.Mp3Importer();
+
+                if (importer.TryImport(
+                    File.ReadAllBytes(sourcePath),
+                    out AudioData audioData))
+                {
+                    audioData.Path = assetFilePath;
+                    audioDataSerializer.Serialize(audioData, assetFilePath);
+                }
+            }
         }
 
         /// <summary>
